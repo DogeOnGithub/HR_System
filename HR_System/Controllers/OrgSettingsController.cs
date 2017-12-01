@@ -187,6 +187,16 @@ namespace HR_System.Controllers
 
 
 
+        public ActionResult AddFirstOrg()
+        {
+            return View();
+        }
+
+
+
+
+
+
 
 
 
