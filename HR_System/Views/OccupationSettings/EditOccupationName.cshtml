@@ -1,0 +1,41 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "EditOccupationName";
+    OccupationName occupationName = ViewData["occupationNameView"] as OccupationName;
+}
+
+<h1 class="text-center">EditOccupationName</h1>
+<br />
+<br />
+<br />
+<br />
+<div class="container col-lg-6" style="float:none; display:block; margin-left:auto; margin-right:auto">
+    <form method="post" action="/OccupationSettings/SaveOccupationName">
+        <div class="form-group input-group-lg">
+            <label for="OccpationNameId">职位编号</label>
+            <input type="text" class="form-control" id="OccpationNameId" placeholder="OccpationNameId" disabled value="@occupationName.Id">
+        </div>
+        <input type="hidden" name="OccpationNameId" value="@occupationName.Id">
+        <div class="form-group input-group-lg">
+            <label for="OccpationName">职位名称</label>
+            <input type="text" class="form-control" id="OccpationName" placeholder="OccpationName" name="OccpationName" value="@occupationName.Name">
+        </div>
+        <div class="form-group input-group-lg">
+            <label for="OccpationClassName">职位类型</label>
+            <select name="classId" class="form-control">
+                @foreach (var oc in (ViewData["occupationClassList"] as List<OccupationClass>))
+                {
+                    if (oc.Id == occupationName.OccupationClass.Id)
+                    {
+                        <option value="@oc.Id" selected>@oc.Name</option>
+                        continue;
+                    }
+                    <option value="@oc.Id">@oc.Name</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block input-group-lg">Submit</button>
+    </form>
+</div>
+

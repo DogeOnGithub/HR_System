@@ -1,0 +1,32 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "EditFirstOrg";
+    FirstOrg firstOrg = ViewData["firstOrgView"] as FirstOrg;
+}
+
+<h1 class="text-center">EditFirstOrg</h1>
+<br />
+<br />
+<br />
+<br />
+<div class="container col-lg-6" style="float:none; display:block; margin-left:auto; margin-right:auto">
+    <form method="post" action="/OrgSettings/SaveFirstOrg">
+        <div class="form-group input-group-lg">
+            <label for="FirstOrgId">机构编号</label>
+            <input type="text" class="form-control" id="FirstOrgId" placeholder="FirstOrgId" disabled value="@firstOrg.Id">
+        </div>
+        <input type="hidden" name="FirstOrgId" value="@firstOrg.Id">
+        <div class="form-group input-group-lg">
+            <label for="FirstOrgName">机构名称</label>
+            <input type="text" class="form-control" id="FirstOrgName" placeholder="FirstOrgName" name="FirstOrgName" value="@firstOrg.OrgName">
+        </div>
+        <div class="form-group input-group-lg">
+            <label for="FirstOrgLevel">机构编号</label>
+            <input type="text" class="form-control" id="FirstOrgLevel" placeholder="FirstOrgLevel" disabled value="@firstOrg.OrgLevel">
+        </div>
+        <input type="hidden" name="FirstOrgLevel" value="@firstOrg.OrgLevel">
+        <button type="submit" class="btn btn-primary btn-block input-group-lg">Submit</button>
+    </form>
+</div>
+

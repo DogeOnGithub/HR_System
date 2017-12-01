@@ -1,0 +1,155 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "OccupationSettings";
+}
+
+<div class="body">
+    <h1 class="text-center">OccupationSettings</h1>
+    <!-- 导航标签 -->
+    <ul class="nav nav-tabs" role="tablist">
+        <!-- 默认标签 -->
+        <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab">所有职位信息</a></li>
+        <li role="presentation"><a href="#OccupationClass" role="tab" data-toggle="tab">职位类型</a></li>
+        <li role="presentation"><a href="#OccupationName" role="tab" data-toggle="tab">职位名称</a></li>
+    </ul>
+
+    <!-- 选项卡内容 -->
+    <div class="tab-content">
+        <!-- 默认显示内容 -->
+        <div role="tabpanel" class="tab-pane active" id="home">
+
+            <!--职位类型开始-->
+            <br />
+            <h2>职位类型</h2>
+            <div class="container-fluid">
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>职位类型编号</th>
+                        <th>职位类型名称</th>
+                    </tr>
+                    @foreach (var oc in (ViewData["occupationClassList"] as List<OccupationClass>))
+                    {
+                        <tr>
+                            <td>@oc.Id</td>
+                            <td>@oc.Name</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+            <!--职位名称开始-->
+            <br />
+            <h2>职位名称</h2>
+            <div class="container-fluid">
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>职位名称编号</th>
+                        <th>职位名称</th>
+                        <th>所属职位类型</th>
+                    </tr>
+                    @foreach (var on in (ViewData["occupationNameList"] as List<OccupationName>))
+                    {
+                        <tr>
+                            <td>@on.Id</td>
+                            <td>@on.Name</td>
+                            <td>@on.OccupationClass.Name</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+        </div>
+        <div role="tabpanel" class="tab-pane" id="OccupationClass">
+            <!--职位类型选项卡-->
+            <br />
+            <h2>职位类型</h2>
+
+            <p><a href="/OccupationSettings/AddOccupationClass" class="btn btn-success btn-lg">添加职位类型</a></p>
+
+            <div class="container-fluid">
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>职位类型编号</th>
+                        <th>职位类型名称</th>
+                        <th>选项</th>
+                    </tr>
+                    @foreach (var oc in (ViewData["occupationClassList"] as List<OccupationClass>))
+                    {
+                        <tr>
+                            <td>@oc.Id</td>
+                            <td>@oc.Name</td>
+                            <td>@Html.ActionLink("编辑", "EditOccupationClass", "OccupationSettings", new { id = oc.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="Delete(@oc.Id, '@oc.Name', 'DeleteOccupationClass')" data-toggle="modal" data-target="#deleteModal">删除</button></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="OccupationName">
+            <!--职位名称选项卡-->
+            <br />
+            <h2>职位名称</h2>
+
+            <p><a href="/OccupationSettings/AddOccupationName" class="btn btn-success btn-lg">添加职位</a></p>
+
+            <div class="container-fluid">
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>职位名称编号</th>
+                        <th>职位名称</th>
+                        <th>所属职位类型</th>
+                        <th>选项</th>
+                    </tr>
+                    @foreach (var on in (ViewData["occupationNameList"] as List<OccupationName>))
+                    {
+                        <tr>
+                            <td>@on.Id</td>
+                            <td>@on.Name</td>
+                            <td>@on.OccupationClass.Name</td>
+                            <td>@Html.ActionLink("编辑", "EditOccupationName", "OccupationSettings", new { id = on.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="Delete(@on.Id, '@on.Name', 'DeleteOccuptaionName')" data-toggle="modal" data-target="#deleteModal">删除</button></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!--删除对话框-->
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteModalLabel">Warning</h4>
+            </div>
+            <div class="modal-body">
+                <p id="deleteTip" style="font-size:16px"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <a id="requestBtn" href="#" class="btn btn-primary">确定</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (TempData["info"] != null)
+{
+    <script>alert('@TempData["info"]');</script>
+}
+
+
+<script>
+    function Delete(id, name, action) {
+        //console.log(id);
+        $("#deleteTip").html("是否删除" + name + "?");
+        $("#requestBtn").attr("href", "/OccupationSettings/" + action + "/" + id);
+    }
+</script>
+
+

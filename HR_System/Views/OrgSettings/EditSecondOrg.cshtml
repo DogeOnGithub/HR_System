@@ -1,0 +1,47 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "EditSecondOrg";
+    SecondeOrg secondeOrg = ViewData["secondeOrgView"] as SecondeOrg;
+    List<FirstOrg> firstOrgList = ViewData["firstOrgList"] as List<FirstOrg>;
+}
+
+<h1 class="text-center">EditSecondOrg</h1>
+<br />
+<br />
+<br />
+<br />
+<div class="container col-lg-6" style="float:none; display:block; margin-left:auto; margin-right:auto">
+    <form method="post" action="/OrgSettings/SaveSecondOrg">
+        <div class="form-group input-group-lg">
+            <label for="SecondOrgId">机构编号</label>
+            <input type="text" class="form-control" id="SecondOrgId" placeholder="SecondOrgId" disabled value="@secondeOrg.Id">
+        </div>
+        <input type="hidden" name="SecondOrgId" value="@secondeOrg.Id">
+        <div class="form-group input-group-lg">
+            <label for="SecondOrgName">机构名称</label>
+            <input type="text" class="form-control" id="SecondOrgName" placeholder="SecondOrgName" name="SecondOrgName" value="@secondeOrg.OrgName">
+        </div>
+        <div class="form-group input-group-lg">
+            <label for="SecondOrgLevel">机构编号</label>
+            <input type="text" class="form-control" id="SecondOrgLevel" placeholder="SecondOrgLevel" disabled value="@secondeOrg.OrgLevel">
+        </div>
+        <input type="hidden" name="SecondOrgLevel" value="@secondeOrg.OrgLevel">
+        <div class="form-group input-group-lg">
+            <label for="secondOrg">所属1级机构</label>
+            <select name="parentOrgId" class="form-control" id="secondOrg">
+                @foreach (var fo in firstOrgList)
+                {
+                    if (fo.Id == secondeOrg.ParentOrg.Id)
+                    {
+                        <option value="@fo.Id" selected>@fo.OrgName</option>
+                        continue;
+                    }
+                    <option value="@fo.Id">@fo.OrgName</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block input-group-lg">Submit</button>
+    </form>
+</div>
+

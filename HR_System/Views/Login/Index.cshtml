@@ -1,0 +1,86 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HR_System/Login</title>
+    @Styles.Render("~/Content/css")
+    <style>
+        body {
+            background-color: white;
+        }
+
+        .mycenter {
+            margin-top: 100px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            width: 500px;
+            padding: 5%;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+
+            .mycenter mysign {
+                width: 440px;
+            }
+
+            .mycenter input, checkbox, button {
+                margin-top: 2%;
+                margin-left: 10%;
+                margin-right: 10%;
+            }
+
+        .mycheckbox {
+            margin-top: 10px;
+            margin-left: 40px;
+            margin-bottom: 10px;
+            height: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="jumbotron">
+        <h1>HR-System</h1>
+    </div>
+
+    <form action="Login/Login" method="post">
+        <div class="mycenter">
+            <div class="mysign">
+                <div class="col-lg-11 text-center text-info">
+                    <h2>请登录</h2>
+                </div>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="username" placeholder="请输入账户名" required autofocus value="@TempData["usernameInput"]" />
+                </div>
+                <div class="col-lg-10"></div>
+                <div class="col-lg-10">
+                    <input type="password" class="form-control" name="password" placeholder="请输入密码" required autofocus value="@TempData["passwordInput"]" />
+                </div>
+                <div class="col-lg-10"></div>
+                <div class="col-lg-10"></div>
+                <div class="col-lg-10">
+                    <button type="submit" class="btn btn-success col-lg-12">登录</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <footer class="navbar navbar-default navbar-fixed-bottom">
+        <div class="navbar-inner navbar-content-center">
+            <p style="text-align:center;padding:10px">&copy; @DateTime.Now.Year - HR-System&nbsp;&nbsp;&nbsp;Power By TjSanshao</p>
+        </div>
+    </footer>
+
+    @if (TempData["Error"] != null)
+    {
+        <script>alert('@TempData["Error"]');</script>
+    }
+</body>
+</html>

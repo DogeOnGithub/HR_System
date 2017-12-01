@@ -1,0 +1,178 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "OrgSettings";
+}
+
+<div class="body">
+    <h1 class="text-center">OrgSettings</h1>
+    <!-- 导航标签 -->
+    <ul class="nav nav-tabs" role="tablist">
+        <!-- 默认标签 -->
+        <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab">全部机构</a></li>
+        <li role="presentation"><a href="#FirstOrg" role="tab" data-toggle="tab">1级机构</a></li>
+        <li role="presentation"><a href="#SecondOrg" role="tab" data-toggle="tab">2级机构</a></li>
+        <li role="presentation"><a href="#ThirdOrg" role="tab" data-toggle="tab">3级机构</a></li>
+    </ul>
+
+    <!-- 选项卡内容 -->
+    <div class="tab-content">
+        <!-- 默认显示内容 -->
+        <div role="tabpanel" class="tab-pane active" id="home">
+            <!--1级机构开始-->
+            <br />
+            <h2>1级机构</h2>
+            <div class="container-fluid">
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>机构编号</th>
+                        <th>机构名称</th>
+                        <th>机构等级</th>
+                    </tr>
+                    @foreach (FirstOrg fo in (ViewData["firstOrgList"] as List<FirstOrg>))
+                    {
+                        <tr>
+                            <td>@fo.Id</td>
+                            <td>@fo.OrgName</td>
+                            <td>@fo.OrgLevel</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+            <!--2级机构开始-->
+            <br />
+            <h2>2级机构</h2>
+            <div class="container-fluid">
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>机构编号</th>
+                        <th>机构名称</th>
+                        <th>机构等级</th>
+                        <th>所属1级机构</th>
+                    </tr>
+                    @foreach (SecondeOrg so in (ViewData["secondOrgList"] as List<SecondeOrg>))
+                    {
+                        <tr>
+                            <td>@so.Id</td>
+                            <td>@so.OrgName</td>
+                            <td>@so.OrgLevel</td>
+                            <td>@so.ParentOrg.OrgName</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+            <!--3级机构开始-->
+            <br />
+            <h2>3级机构</h2>
+            <div class="container-fluid">
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>机构编号</th>
+                        <th>机构名称</th>
+                        <th>机构等级</th>
+                        <th>所属2级机构</th>
+                        <th>所属1级机构</th>
+                    </tr>
+                    @foreach (ThirdOrg to in (ViewData["thirdOrgList"] as List<ThirdOrg>))
+                    {
+                        <tr>
+                            <td>@to.Id</td>
+                            <td>@to.OrgName</td>
+                            <td>@to.OrgLevel</td>
+                            <td>@to.ParentOrg.OrgName</td>
+                            <td>@to.ParentOrg.ParentOrg.OrgName</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="FirstOrg">
+            <!--1级机构选项卡-->
+            <br />
+            <h2>1级机构</h2>
+            <div class="container-fluid">
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>机构编号</th>
+                        <th>机构名称</th>
+                        <th>机构等级</th>
+                        <th>选项</th>
+                    </tr>
+                    @foreach (FirstOrg fo in (ViewData["firstOrgList"] as List<FirstOrg>))
+                    {
+                        <tr>
+                            <td>@fo.Id</td>
+                            <td>@fo.OrgName</td>
+                            <td>@fo.OrgLevel</td>
+                            <td>@Html.ActionLink("编辑", "EditFirstOrg", "OrgSettings", new { id = fo.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger">删除</button></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="SecondOrg">
+            <!--2级机构选项卡-->
+            <br />
+            <h2>2级机构</h2>
+            <div class="container-fluid">
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>机构编号</th>
+                        <th>机构名称</th>
+                        <th>机构等级</th>
+                        <th>所属1级机构</th>
+                        <th>选项</th>
+                    </tr>
+                    @foreach (SecondeOrg so in (ViewData["secondOrgList"] as List<SecondeOrg>))
+                    {
+                        <tr>
+                            <td>@so.Id</td>
+                            <td>@so.OrgName</td>
+                            <td>@so.OrgLevel</td>
+                            <td>@so.ParentOrg.OrgName</td>
+                            <td>@Html.ActionLink("编辑", "EditSecondOrg", "OrgSettings", new { id = so.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger">删除</button></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="ThirdOrg">
+            <!--3级机构选项卡-->
+            <br />
+            <h2>3级机构</h2>
+            <div class="container-fluid">
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>机构编号</th>
+                        <th>机构名称</th>
+                        <th>机构等级</th>
+                        <th>所属2级机构</th>
+                        <th>所属1级机构</th>
+                        <th>选项</th>
+                    </tr>
+                    @foreach (ThirdOrg to in (ViewData["thirdOrgList"] as List<ThirdOrg>))
+                    {
+                        <tr>
+                            <td>@to.Id</td>
+                            <td>@to.OrgName</td>
+                            <td>@to.OrgLevel</td>
+                            <td>@to.ParentOrg.OrgName</td>
+                            <td>@to.ParentOrg.ParentOrg.OrgName</td>
+                            <td>@Html.ActionLink("编辑", "EditThirdOrg", "OrgSettings", new { id = to.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger">删除</button></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@if (TempData["info"] != null)
+{
+    <script>alert('@TempData["info"]');</script>
+}
+

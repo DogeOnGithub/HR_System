@@ -1,0 +1,82 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "EditThirdOrg";
+    ThirdOrg thirdOrg = ViewData["thirdOrgView"] as ThirdOrg;
+    List<SecondeOrg> secondOrgList = ViewData["secondOrgList"] as List<SecondeOrg>;
+    List<FirstOrg> firstOrgList = ViewData["firstOrgList"] as List<FirstOrg>;
+}
+
+<h1 class="text-center">EditSecondOrg</h1>
+<br />
+<br />
+<br />
+<br />
+<div class="container col-lg-6" style="float:none; display:block; margin-left:auto; margin-right:auto">
+    <form method="post" action="/OrgSettings/SaveThirdOrg">
+        <div class="form-group input-group-lg">
+            <label for="ThirdOrgId">机构编号</label>
+            <input type="text" class="form-control" id="ThirdOrgId" placeholder="ThirdOrgId" disabled value="@thirdOrg.Id">
+        </div>
+        <input type="hidden" name="ThirdOrgId" value="@thirdOrg.Id">
+        <div class="form-group input-group-lg">
+            <label for="ThirdOrgName">机构名称</label>
+            <input type="text" class="form-control" id="ThirdOrgName" placeholder="ThirdOrgName" name="ThirdOrgName" value="@thirdOrg.OrgName">
+        </div>
+        <div class="form-group input-group-lg">
+            <label for="ThirdOrgLevel">机构等级</label>
+            <input type="text" class="form-control" id="ThirdOrgLevel" placeholder="ThirdOrgLevel" disabled value="@thirdOrg.OrgLevel">
+        </div>
+        <input type="hidden" name="ThirdOrgLevel" value="@thirdOrg.OrgLevel">
+        <div class="form-group input-group-lg">
+            <label for="secondOrg">所属2级机构</label>
+            <select name="secondOrg" class="form-control" id="secondOrg">
+                @foreach (var so in secondOrgList)
+                {
+                    if (so.ParentOrg.Id == thirdOrg.ParentOrg.ParentOrg.Id)
+                    {
+                        if (so.Id == thirdOrg.ParentOrg.Id)
+                        {
+                            <option value="@so.Id" selected>@so.OrgName</option>
+                            continue;
+                        }
+                        <option value="@so.Id">@so.OrgName</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group input-group-lg">
+            <label for="firstOrg">所属1级机构</label>
+            <select class="form-control" id="firstOrg">
+                @foreach (var fo in firstOrgList)
+                {
+                    if (fo.Id == thirdOrg.ParentOrg.Id)
+                    {
+                        <option value="@fo.Id" selected>@fo.OrgName</option>
+                        continue;
+                    }
+                    <option value="@fo.Id">@fo.OrgName</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block input-group-lg">Submit</button>
+    </form>
+</div>
+
+<script>
+    //console.log($("#firstOrg"));
+    $("#firstOrg").change(
+        function () {
+            var id = $(this).val();
+            $.post("/OrgSettings/DynamicSecondOrg", { "id": id }, function (data) {
+                $("#secondOrg").html("");
+                $.each(data, function (i, s) {
+                    console.log(s['Id']);
+                    console.log(s.OrgName);
+                    $("#secondOrg").append($("<option value='" + s.Id + "'>" + s.OrgName + "</option>"));
+                });
+            });
+        }
+    );
+</script>
+

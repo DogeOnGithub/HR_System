@@ -1,0 +1,30 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "AddOccupationName";
+}
+
+<h1 class="text-center">AddOccupationName</h1>
+<br />
+<br />
+<br />
+<br />
+<div class="container col-lg-6" style="float:none; display:block; margin-left:auto; margin-right:auto">
+    <form method="post" action="/OccupationSettings/SaveOccupationName">
+        <div class="form-group input-group-lg">
+            <label for="OccpationName">职位名称</label>
+            <input type="text" class="form-control" id="OccpationName" placeholder="OccpationName" name="OccpationName">
+        </div>
+        <div class="form-group input-group-lg">
+            <label for="OccpationClassName">职位类型</label>
+            <select name="classId" class="form-control">
+                @foreach (var oc in (ViewData["occupationClassList"] as List<OccupationClass>))
+                {
+                    <option value="@oc.Id">@oc.Name</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block input-group-lg">Submit</button>
+    </form>
+</div>
+
