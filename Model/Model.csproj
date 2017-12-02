@@ -45,6 +45,7 @@
     <Compile Include="OccupationClass.cs" />
     <Compile Include="OccupationName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SalaryItem.cs" />
     <Compile Include="SecondOrg.cs" />
     <Compile Include="TechnicalTitle.cs" />
     <Compile Include="ThirdOrg.cs" />

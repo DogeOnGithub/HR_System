@@ -1,28 +1,28 @@
 ﻿@using HR_System.Models;
 
 @{
-    ViewBag.Title = "TitleSettings";
+    ViewBag.Title = "SalaryItemSettings";
 }
 
-<!--职称-->
+<!--薪酬项目-->
 <br />
-<h2>所有职称</h2>
+<h2>所有薪酬项目</h2>
 
-<p><a href="/OccupationSettings/AddTechnicalTitle" class="btn btn-success btn-lg">添加职称</a></p>
+<p><a href="/SalaryItemSettings/AddSalaryItem" class="btn btn-success btn-lg">添加薪酬项目</a></p>
 
 <div class="container-fluid">
     <table class="table table-striped table-bordered table-hover">
         <tr>
-            <th>职称编号</th>
-            <th>职称</th>
+            <th>薪酬项目编号</th>
+            <th>薪酬项目</th>
             <th>选项</th>
         </tr>
-        @foreach (var tt in (ViewData["titleList"] as List<TechnicalTitle>))
+        @foreach (var si in (ViewData["itemList"] as List<SalaryItem>))
         {
             <tr>
-                <td>@tt.Id</td>
-                <td>@tt.Name</td>
-                <td>@Html.ActionLink("编辑", "EditTechnicalTitle", "OccupationSettings", new { id = tt.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="Delete(@tt.Id, '@tt.Name', 'DeleteTechnicalTitle')" data-toggle="modal" data-target="#deleteModal">删除</button></td>
+                <td>@si.Id</td>
+                <td>@si.Name</td>
+                <td>@Html.ActionLink("编辑", "EditSalatyItem", "SalaryItemSettings", new { id = si.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="Delete(@si.Id, '@si.Name', 'DeleteSalaryItem')" data-toggle="modal" data-target="#deleteModal">删除</button></td>
             </tr>
         }
     </table>
@@ -67,9 +67,7 @@
     function Delete(id, name, action) {
         //console.log(id);
         $("#deleteTip").html("是否删除" + name + "?");
-        $("#requestBtn").attr("href", "/OccupationSettings/" + action + "/" + id);
+        $("#requestBtn").attr("href", "/SalaryItemSettings/" + action + "/" + id);
     }
 </script>
-
-
 

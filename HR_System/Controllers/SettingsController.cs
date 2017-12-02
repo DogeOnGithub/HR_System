@@ -163,5 +163,33 @@ namespace HR_System.Controllers
 
             return View();
         }
+
+        /// <summary>
+        /// 处理薪酬项目管理请求
+        /// </summary>
+        /// <returns>返回视图,包含所有薪酬项目信息</returns>
+        public ActionResult SalaryItemSettings()
+        {
+
+            ISalaryItemBLL bLL = new SalaryItemBLL();
+
+            //装载所有薪酬项目信息
+            List<Models.SalaryItem> itemList = new List<Models.SalaryItem>();
+
+            foreach (var si in bLL.GetAllSalaryItem())
+            {
+                Models.SalaryItem tempItem = new Models.SalaryItem
+                {
+                    Id = si.Id,
+                    Name = si.Name
+                };
+                itemList.Add(tempItem);
+            }
+
+            ViewData["itemList"] = itemList;
+
+            return View();
+
+        }
     }
 }
