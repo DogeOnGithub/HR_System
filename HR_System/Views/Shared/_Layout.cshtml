@@ -30,7 +30,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("主页", "Index", "Main")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">档案管理<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("档案登记", "StaffRegist", "StaffManage")</li>
+                        </ul>
+                    </li>
                     <li>@Html.ActionLink("关于", "About", "Main")</li>
                     @if (Session["loginUser"] != null && (int)(Session["loginUser"] as LoginUser).RoleLevel > 2)
                     {
