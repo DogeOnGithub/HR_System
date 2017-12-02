@@ -26,13 +26,7 @@ namespace HR_System.Controllers
             ILoginUserBLL bLL = new LoginUserBLL();
             LoginUser loginUser = bLL.GetLoginUserByUsername(username);
 
-            Models.LoginUser viewLoginUser = new Models.LoginUser()
-            {
-                Id = loginUser.Id,
-                Username = loginUser.Username,
-                Password = loginUser.Password,
-                RoleLevel = loginUser.RoleLevel
-            };
+            
 
             if (loginUser == null)
             {
@@ -41,6 +35,15 @@ namespace HR_System.Controllers
             }
             else
             {
+
+                Models.LoginUser viewLoginUser = new Models.LoginUser()
+                {
+                    Id = loginUser.Id,
+                    Username = loginUser.Username,
+                    Password = loginUser.Password,
+                    RoleLevel = loginUser.RoleLevel
+                };
+
                 if (loginUser.Password == password)
                 {
                     Session["loginUser"] = viewLoginUser;
