@@ -1,0 +1,27 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "EditTechnicalTitle";
+    TechnicalTitle technicalTitle = ViewData["technicalTitleView"] as TechnicalTitle;
+}
+
+<h1 class="text-center">EditTechnicalTitle</h1>
+<br />
+<br />
+<br />
+<br />
+<div class="container col-lg-6" style="float:none; display:block; margin-left:auto; margin-right:auto">
+    <form method="post" action="/OccupationSettings/SaveTechnicalTitle">
+        <div class="form-group input-group-lg">
+            <label for="TitleId">职位类型编号</label>
+            <input type="text" class="form-control" id="TitleId" placeholder="TitleId" disabled value="@technicalTitle.Id">
+        </div>
+        <input type="hidden" name="TitleId" value="@technicalTitle.Id">
+        <div class="form-group input-group-lg">
+            <label for="TitleName">职位类型名称</label>
+            <input type="text" class="form-control" id="TitleName" placeholder="TitleName" name="TitleName" value="@technicalTitle.Name" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block input-group-lg">Submit</button>
+    </form>
+</div>
+

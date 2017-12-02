@@ -56,5 +56,15 @@ namespace HR_System.Controllers
                 }
             }
         }
+
+        public ActionResult Logout()
+        {
+            if (Session["loginUser"] != null)
+            {
+                Session["loginUser"] = null;
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

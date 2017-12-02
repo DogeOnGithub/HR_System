@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "AddTechnicalTitle";
+}
+
+<h1 class="text-center">AddTechnicalTitle</h1>
+<br />
+<br />
+<br />
+<br />
+<div class="container col-lg-6" style="float:none; display:block; margin-left:auto; margin-right:auto">
+    <form method="post" action="/OccupationSettings/SaveTechnicalTitle">
+        <div class="form-group input-group-lg">
+            <label for="TitleName">职称</label>
+            <input type="text" class="form-control" id="TitleName" placeholder="TitleName" name="TitleName" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block input-group-lg">Submit</button>
+    </form>
+</div>
+

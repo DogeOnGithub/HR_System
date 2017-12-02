@@ -159,6 +159,7 @@
     <Compile Include="Models\OccupationClass.cs" />
     <Compile Include="Models\OccupationName.cs" />
     <Compile Include="Models\SecondeOrg.cs" />
+    <Compile Include="Models\TechnicalTitle.cs" />
     <Compile Include="Models\ThirdOrg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -213,6 +214,9 @@
     <Content Include="Views\OrgSettings\AddFirstOrg.cshtml" />
     <Content Include="Views\OrgSettings\AddSecondOrg.cshtml" />
     <Content Include="Views\OrgSettings\AddThirdOrg.cshtml" />
+    <Content Include="Views\Settings\TitleSettings.cshtml" />
+    <Content Include="Views\OccupationSettings\EditTechnicalTitle.cshtml" />
+    <Content Include="Views\OccupationSettings\AddTechnicalTitle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

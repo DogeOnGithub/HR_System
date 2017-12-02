@@ -55,6 +55,23 @@ namespace HR_SystemBLL
 
         }
 
+        public bool DeleteTechnicalTitle(int id)
+        {
+            //throw new System.NotImplementedException();
+
+            ITechnicalTitleDAL dAL = new TechnicalTitleDAL();
+
+            if (dAL.Remove(id) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
         /// <summary>
         /// 实现IOccupationBLL接口
         /// </summary>
@@ -78,6 +95,16 @@ namespace HR_SystemBLL
             //throw new NotImplementedException();
 
             IOccupationNameDAL dAL = new OccupationNameDAL();
+
+            return dAL.Query();
+
+        }
+
+        public List<TechnicalTitle> GetAllTechnicalTitle()
+        {
+            //throw new System.NotImplementedException();
+
+            ITechnicalTitleDAL dAL = new TechnicalTitleDAL();
 
             return dAL.Query();
 
@@ -108,6 +135,16 @@ namespace HR_SystemBLL
             //throw new NotImplementedException();
 
             IOccupationNameDAL dAL = new OccupationNameDAL();
+
+            return dAL.QueryById(id);
+
+        }
+
+        public TechnicalTitle GetTechnicalTitleById(int id)
+        {
+            //throw new System.NotImplementedException();
+
+            ITechnicalTitleDAL dAL = new TechnicalTitleDAL();
 
             return dAL.QueryById(id);
 
@@ -177,6 +214,37 @@ namespace HR_SystemBLL
             else
             {
                 if (dAL.Add(occupationName) > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+        }
+
+        public bool SaveTechnicalTitle(TechnicalTitle technicalTitle)
+        {
+            //throw new System.NotImplementedException();
+
+            ITechnicalTitleDAL dAL = new TechnicalTitleDAL();
+
+            if (dAL.QueryById(technicalTitle.Id) != null)
+            {
+                if (dAL.Update(technicalTitle) > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (dAL.Add(technicalTitle) > 0)
                 {
                     return true;
                 }

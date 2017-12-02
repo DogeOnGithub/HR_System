@@ -1,5 +1,9 @@
 ﻿@using HR_System.Models;
 
+@{ 
+    LoginUser loginUser = Session["loginUser"] as LoginUser;
+}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,11 +39,21 @@
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("机构设置", "OrgSettings", "Settings")</li>
                                 <li>@Html.ActionLink("职位设置", "OccupationSettings", "Settings")</li>
-                                <li><a href="#">Something else here</a></li>
+                                <li>@Html.ActionLink("职称设置", "TitleSettings", "Settings")</li>
                             </ul>
                         </li>
                     }
                 </ul>
+
+                @if (Session["loginUser"] != null)
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">当前用户&nbsp;:&nbsp;@loginUser.Username</a></li>
+                        <li><a href="#">当前权限&nbsp;:&nbsp;@loginUser.RoleLevel.ToString()</a></li>
+                        <li>@Html.ActionLink("退出", "Logout", "Login")</li>
+                    </ul>
+                }
+
             </div>
         </div>
     </div>

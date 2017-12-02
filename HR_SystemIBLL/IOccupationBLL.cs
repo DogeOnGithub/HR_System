@@ -22,6 +22,12 @@ namespace HR_SystemIBLL
         List<OccupationName> GetAllOccupationName();
 
         /// <summary>
+        /// 获取所有职称
+        /// </summary>
+        /// <returns>List类型，所有职称</returns>
+        List<TechnicalTitle> GetAllTechnicalTitle();
+
+        /// <summary>
         /// 通过Id获取职位类型
         /// </summary>
         /// <param name="id">主键id</param>
@@ -34,6 +40,13 @@ namespace HR_SystemIBLL
         /// <param name="id">主键id</param>
         /// <returns>返回该id对应的职位名称</returns>
         OccupationName GetOccupationNameById(int id);
+
+        /// <summary>
+        /// 通过Id获取职称
+        /// </summary>
+        /// <param name="id">主键id</param>
+        /// <returns>返回对应的职称</returns>
+        TechnicalTitle GetTechnicalTitleById(int id);
 
         /// <summary>
         /// 保存职位类型
@@ -50,6 +63,13 @@ namespace HR_SystemIBLL
         bool SaveOccupationName(OccupationName occupationName);
 
         /// <summary>
+        /// 保存职称
+        /// </summary>
+        /// <param name="technicalTitle">需要保存的职称，Model中的类型</param>
+        /// <returns>返回是否成功的布尔值</returns>
+        bool SaveTechnicalTitle(TechnicalTitle technicalTitle);
+
+        /// <summary>
         /// 通过Id删除职位类型
         /// </summary>
         /// <param name="id">主键id</param>
@@ -59,9 +79,16 @@ namespace HR_SystemIBLL
         /// <summary>
         /// 通过Id删除职位
         /// </summary>
-        /// <param name="id">逐渐id</param>
+        /// <param name="id">主键id</param>
         /// <returns>返回是否成功的布尔值</returns>
         bool DeleteOccupationNameById(int id);
+
+        /// <summary>
+        /// 通过Id删除职称
+        /// </summary>
+        /// <param name="id">主键id</param>
+        /// <returns>返回是否成功的布尔值</returns>
+        bool DeleteTechnicalTitle(int id);
 
     }
 }

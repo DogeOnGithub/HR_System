@@ -122,6 +122,49 @@ namespace HR_System.Controllers
         }
 
 
+        //处理编辑职称请求
+        public ActionResult EditTechnicalTitle(string id)
+        {
+
+            IOccupationBLL bLL = new OccupationBLL();
+
+            TechnicalTitle technicalTitle = bLL.GetTechnicalTitleById(Convert.ToInt32(id));
+
+            Models.TechnicalTitle technicalTitleView = new Models.TechnicalTitle
+            {
+                Id = technicalTitle.Id,
+                Name = technicalTitle.Name
+            };
+
+            ViewData["technicalTitleView"] = technicalTitleView;
+
+            return View();
+
+        }
+
+        //处理保存职称请求
+        public ActionResult SaveTechnicalTitle(string TitleId, string TitleName)
+        {
+
+            IOccupationBLL bLL = new OccupationBLL();
+
+            TechnicalTitle technicalTitle = new TechnicalTitle { Id = Convert.ToInt32(TitleId), Name = TitleName };
+
+            if (bLL.SaveTechnicalTitle(technicalTitle))
+            {
+                TempData["info"] = "保存成功";
+                return Redirect("/Settings/TitleSettings");
+            }
+            else
+            {
+                TempData["error"] = "保存失败";
+                return Redirect(Request.UrlReferrer.AbsoluteUri);
+            }
+
+        }
+
+
+
 
         //删除职位
         public ActionResult DeleteOccuptaionName(string id)
@@ -160,6 +203,25 @@ namespace HR_System.Controllers
 
         }
 
+        //删除职称
+        public ActionResult DeleteTechnicalTitle(string id)
+        {
+
+            IOccupationBLL bLL = new OccupationBLL();
+
+            if (bLL.DeleteTechnicalTitle(Convert.ToInt32(id)))
+            {
+                TempData["info"] = "已删除";
+                return Redirect("/Settings/TitleSettings");
+            }
+            else
+            {
+                TempData["error"] = "删除失败";
+                return Redirect(Request.UrlReferrer.AbsoluteUri);
+            }
+
+        }
+
 
 
         //添加职位类型
@@ -190,6 +252,11 @@ namespace HR_System.Controllers
             ViewData["occupationClassList"] = occupationgClassList;
 
 
+            return View();
+        }
+
+        public ActionResult AddTechnicalTitle()
+        {
             return View();
         }
 

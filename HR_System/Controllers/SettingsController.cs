@@ -140,5 +140,28 @@ namespace HR_System.Controllers
 
             return View();
         }
+
+        /// <summary>
+        /// 处理职称管理请求
+        /// </summary>
+        /// <returns>返回视图,包含所有职称信息</returns>
+        public ActionResult TitleSettings()
+        {
+
+            IOccupationBLL bLL = new OccupationBLL();
+
+            //装载所有职称信息
+            List<Models.TechnicalTitle> titleList = new List<Models.TechnicalTitle>();
+
+            foreach (var tt in bLL.GetAllTechnicalTitle())
+            {
+                Models.TechnicalTitle tempTitle = new Models.TechnicalTitle { Id = tt.Id, Name = tt.Name };
+                titleList.Add(tempTitle);
+            }
+
+            ViewData["titleList"] = titleList;
+
+            return View();
+        }
     }
 }
