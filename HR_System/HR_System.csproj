@@ -211,6 +211,8 @@
     <Content Include="Views\OrgSettings\EditSecondOrg.cshtml" />
     <Content Include="Views\OrgSettings\EditThirdOrg.cshtml" />
     <Content Include="Views\OrgSettings\AddFirstOrg.cshtml" />
+    <Content Include="Views\OrgSettings\AddSecondOrg.cshtml" />
+    <Content Include="Views\OrgSettings\AddThirdOrg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -19,11 +19,11 @@
         <input type="hidden" name="OccpationNameId" value="@occupationName.Id">
         <div class="form-group input-group-lg">
             <label for="OccpationName">职位名称</label>
-            <input type="text" class="form-control" id="OccpationName" placeholder="OccpationName" name="OccpationName" value="@occupationName.Name">
+            <input type="text" class="form-control" id="OccpationName" placeholder="OccpationName" name="OccpationName" value="@occupationName.Name" required>
         </div>
         <div class="form-group input-group-lg">
             <label for="OccpationClassName">职位类型</label>
-            <select name="classId" class="form-control">
+            <select name="classId" class="form-control" required>
                 @foreach (var oc in (ViewData["occupationClassList"] as List<OccupationClass>))
                 {
                     if (oc.Id == occupationName.OccupationClass.Id)

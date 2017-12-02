@@ -1,0 +1,69 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "AddThirdOrg";
+    List<FirstOrg> firstOrgList = ViewData["firstOrgList"] as List<FirstOrg>;
+    List<SecondeOrg> secondOrgList = ViewData["secondOrgList"] as List<SecondeOrg>;
+}
+
+<h1 class="text-center">AddSecondOrg</h1>
+<br />
+<br />
+<br />
+<br />
+<div class="container col-lg-6" style="float:none; display:block; margin-left:auto; margin-right:auto">
+    <form method="post" action="/OrgSettings/SaveThirdOrg">
+        <div class="form-group input-group-lg">
+            <label for="ThirdOrgName">2级机构名称</label>
+            <input type="text" class="form-control" id="ThirdOrgName" placeholder="ThirdOrgName" name="ThirdOrgName" required>
+        </div>
+        <input type="hidden" name="ThirdOrgLevel" value="3" />
+
+
+        <!--1级机构-->
+        <div class="form-group input-group-lg">
+            <label for="firstOrg">所属1级机构</label>
+            <select class="form-control" id="firstOrg" required>
+                @foreach (var fo in firstOrgList)
+                {
+                    <option value="@fo.Id">@fo.OrgName</option>
+                }
+            </select>
+        </div>
+
+        <!--2级机构-->
+        <div class="form-group input-group-lg">
+            <label for="secondOrg">所属2级机构</label>
+            <select name="secondOrg" class="form-control" id="secondOrg" required>
+                @foreach (var so in secondOrgList)
+                {
+                    if (so.ParentOrg.Id == firstOrgList.ElementAt(0).Id)
+                    {
+                        <option value="@so.Id">@so.OrgName</option>
+                    }
+                }
+            </select>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary btn-block input-group-lg">Submit</button>
+    </form>
+</div>
+
+
+<script>
+    //console.log($("#firstOrg"));
+    $("#firstOrg").change(
+        function () {
+            var id = $(this).val();
+            $.post("/OrgSettings/DynamicSecondOrg", { "id": id }, function (data) {
+                $("#secondOrg").html("");
+                $.each(data, function (i, s) {
+                    console.log(s['Id']);
+                    console.log(s.OrgName);
+                    $("#secondOrg").append($("<option value='" + s.Id + "'>" + s.OrgName + "</option>"));
+                });
+            });
+        }
+    );
+</script>

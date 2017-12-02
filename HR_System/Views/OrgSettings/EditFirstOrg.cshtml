@@ -19,10 +19,10 @@
         <input type="hidden" name="FirstOrgId" value="@firstOrg.Id">
         <div class="form-group input-group-lg">
             <label for="FirstOrgName">机构名称</label>
-            <input type="text" class="form-control" id="FirstOrgName" placeholder="FirstOrgName" name="FirstOrgName" value="@firstOrg.OrgName">
+            <input type="text" class="form-control" id="FirstOrgName" placeholder="FirstOrgName" name="FirstOrgName" value="@firstOrg.OrgName" required>
         </div>
         <div class="form-group input-group-lg">
-            <label for="FirstOrgLevel">机构编号</label>
+            <label for="FirstOrgLevel">机构等级</label>
             <input type="text" class="form-control" id="FirstOrgLevel" placeholder="FirstOrgLevel" disabled value="@firstOrg.OrgLevel">
         </div>
         <input type="hidden" name="FirstOrgLevel" value="@firstOrg.OrgLevel">

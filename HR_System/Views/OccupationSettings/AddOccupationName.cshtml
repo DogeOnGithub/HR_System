@@ -13,11 +13,11 @@
     <form method="post" action="/OccupationSettings/SaveOccupationName">
         <div class="form-group input-group-lg">
             <label for="OccpationName">职位名称</label>
-            <input type="text" class="form-control" id="OccpationName" placeholder="OccpationName" name="OccpationName">
+            <input type="text" class="form-control" id="OccpationName" placeholder="OccpationName" name="OccpationName" required>
         </div>
         <div class="form-group input-group-lg">
             <label for="OccpationClassName">职位类型</label>
-            <select name="classId" class="form-control">
+            <select name="classId" class="form-control" required>
                 @foreach (var oc in (ViewData["occupationClassList"] as List<OccupationClass>))
                 {
                     <option value="@oc.Id">@oc.Name</option>

@@ -20,16 +20,16 @@
         <input type="hidden" name="SecondOrgId" value="@secondeOrg.Id">
         <div class="form-group input-group-lg">
             <label for="SecondOrgName">机构名称</label>
-            <input type="text" class="form-control" id="SecondOrgName" placeholder="SecondOrgName" name="SecondOrgName" value="@secondeOrg.OrgName">
+            <input type="text" class="form-control" id="SecondOrgName" placeholder="SecondOrgName" name="SecondOrgName" value="@secondeOrg.OrgName" required>
         </div>
         <div class="form-group input-group-lg">
-            <label for="SecondOrgLevel">机构编号</label>
+            <label for="SecondOrgLevel">机构等级</label>
             <input type="text" class="form-control" id="SecondOrgLevel" placeholder="SecondOrgLevel" disabled value="@secondeOrg.OrgLevel">
         </div>
         <input type="hidden" name="SecondOrgLevel" value="@secondeOrg.OrgLevel">
         <div class="form-group input-group-lg">
             <label for="secondOrg">所属1级机构</label>
-            <select name="parentOrgId" class="form-control" id="secondOrg">
+            <select name="parentOrgId" class="form-control" id="secondOrg" required>
                 @foreach (var fo in firstOrgList)
                 {
                     if (fo.Id == secondeOrg.ParentOrg.Id)

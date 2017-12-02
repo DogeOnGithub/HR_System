@@ -1,0 +1,37 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "AddSecondOrg";
+    List<FirstOrg> firstOrgList = ViewData["firstOrgList"] as List<FirstOrg>;
+}
+
+<h1 class="text-center">AddSecondOrg</h1>
+<br />
+<br />
+<br />
+<br />
+<div class="container col-lg-6" style="float:none; display:block; margin-left:auto; margin-right:auto">
+    <form method="post" action="/OrgSettings/SaveSecondOrg">
+        <div class="form-group input-group-lg">
+            <label for="SecondOrgName">2级机构名称</label>
+            <input type="text" class="form-control" id="SecondOrgName" placeholder="SecondOrgName" name="SecondOrgName" required>
+        </div>
+        <input type="hidden" name="SecondOrgLevel" value="2" />
+
+
+        <!--1级机构-->
+        <div class="form-group input-group-lg">
+            <label for="firstOrg">所属1级机构</label>
+            <select class="form-control" id="firstOrg" name="parentOrgId" required>
+                @foreach (var fo in firstOrgList)
+                {
+                    <option value="@fo.Id">@fo.OrgName</option>
+                }
+            </select>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary btn-block input-group-lg">Submit</button>
+    </form>
+</div>
+
