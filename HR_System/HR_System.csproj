@@ -149,6 +149,7 @@
     <Compile Include="Controllers\OrgSettingsController.cs" />
     <Compile Include="Controllers\SalaryItemSettingsController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\StaffManageController.cs" />
     <Compile Include="Filters\LoginUserAuthorizationAttribute.cs" />
     <Compile Include="Filters\ManagerAuthorizationAttribute.cs" />
     <Compile Include="Filters\SystemManagerAuthorizationAttrbute.cs" />
@@ -222,6 +223,7 @@
     <Content Include="Views\Settings\SalaryItemSettings.cshtml" />
     <Content Include="Views\SalaryItemSettings\EditSalatyItem.cshtml" />
     <Content Include="Views\SalaryItemSettings\AddSalaryItem.cshtml" />
+    <Content Include="Views\StaffManage\StaffRegist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
