@@ -47,6 +47,7 @@
     <Compile Include="IOccupationNameDAL.cs" />
     <Compile Include="ISalaryItemDAL.cs" />
     <Compile Include="ISecondOrgDAL.cs" />
+    <Compile Include="IStaffDAL.cs" />
     <Compile Include="ITechnicalTitleDAL.cs" />
     <Compile Include="IThirdOrgDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

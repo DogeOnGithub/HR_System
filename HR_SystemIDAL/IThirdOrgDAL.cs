@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace HR_SystemIDAL
 {
+    /// <summary>
+    /// 3级机构数据层接口
+    /// </summary>
     public interface IThirdOrgDAL : IHRSystemDAL<ThirdOrg>
     {
 
