@@ -142,6 +142,10 @@
 {
     <script>alert('@TempData["info"]');</script>
 }
+@if (TempData["error"] != null)
+{
+    <script>alert('@TempData["error"]');</script>
+}
 
 
 <script>

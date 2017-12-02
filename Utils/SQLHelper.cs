@@ -14,19 +14,27 @@ namespace Utils
         /// <returns>返回影响行数</returns>
         public static int ExecuteNonQuery(string sql, params SqlParameter[] parameters)
         {
-            using (SqlConnection con = DBUtil.GetConnection())
+            try
             {
-                using (SqlCommand cmd = new SqlCommand(sql, con))
+                using (SqlConnection con = DBUtil.GetConnection())
                 {
-                    if (parameters != null)
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
-                        cmd.Parameters.AddRange(parameters);
+                        if (parameters != null)
+                        {
+                            cmd.Parameters.AddRange(parameters);
+                        }
+
+                        con.Open();
+
+                        return cmd.ExecuteNonQuery();
                     }
-
-                    con.Open();
-
-                    return cmd.ExecuteNonQuery();
                 }
+            }
+            catch (System.Exception)
+            {
+                return -1;
+                //throw;
             }
         }
 

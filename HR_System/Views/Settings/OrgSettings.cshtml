@@ -109,7 +109,7 @@
                             <td>@fo.Id</td>
                             <td>@fo.OrgName</td>
                             <td>@fo.OrgLevel</td>
-                            <td>@Html.ActionLink("编辑", "EditFirstOrg", "OrgSettings", new { id = fo.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger">删除</button></td>
+                            <td>@Html.ActionLink("编辑", "EditFirstOrg", "OrgSettings", new { id = fo.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="Delete(@fo.Id,'@fo.OrgName', 'DeleteFirstOrg')" data-toggle="modal" data-target="#deleteModal">删除</button></td>
                         </tr>
                     }
                 </table>
@@ -138,7 +138,7 @@
                             <td>@so.OrgName</td>
                             <td>@so.OrgLevel</td>
                             <td>@so.ParentOrg.OrgName</td>
-                            <td>@Html.ActionLink("编辑", "EditSecondOrg", "OrgSettings", new { id = so.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger">删除</button></td>
+                            <td>@Html.ActionLink("编辑", "EditSecondOrg", "OrgSettings", new { id = so.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="Delete(@so.Id,'@so.OrgName', 'DeleteSecondOrg')" data-toggle="modal" data-target="#deleteModal">删除</button></td>
                         </tr>
                     }
                 </table>
@@ -169,7 +169,7 @@
                             <td>@to.OrgLevel</td>
                             <td>@to.ParentOrg.OrgName</td>
                             <td>@to.ParentOrg.ParentOrg.OrgName</td>
-                            <td>@Html.ActionLink("编辑", "EditThirdOrg", "OrgSettings", new { id = to.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger">删除</button></td>
+                            <td>@Html.ActionLink("编辑", "EditThirdOrg", "OrgSettings", new { id = to.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="Delete(@to.Id,'@to.OrgName', 'DeleteThirdOrg')" data-toggle="modal" data-target="#deleteModal">删除</button></td>
                         </tr>
                     }
                 </table>
@@ -180,8 +180,42 @@
 </div>
 
 
+<!--删除对话框-->
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteModalLabel">Warning</h4>
+            </div>
+            <div class="modal-body">
+                <p id="deleteTip" style="font-size:16px"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <a id="requestBtn" href="#" class="btn btn-primary">确定</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @if (TempData["info"] != null)
 {
     <script>alert('@TempData["info"]');</script>
 }
+@if (TempData["error"] != null)
+{
+    <script>alert('@TempData["error"]');</script>
+}
+
+
+<script>
+    function Delete(id, name, action) {
+        //console.log(id);
+        $("#deleteTip").html("是否删除" + name + "?");
+        $("#requestBtn").attr("href", "/OrgSettings/" + action + "/" + id);
+    }
+</script>
 

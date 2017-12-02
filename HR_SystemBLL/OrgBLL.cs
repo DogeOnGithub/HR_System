@@ -11,6 +11,57 @@ namespace HR_SystemBLL
     /// </summary>
     public class OrgBLL : IOrgBLL
     {
+        public bool DeleteFirstOrgById(int id)
+        {
+            //throw new System.NotImplementedException();
+
+            IFirstOrgDAL dAL = new FirstOrgDAL();
+
+            if (dAL.Remove(id) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public bool DeleteSecondOrgById(int id)
+        {
+            //throw new System.NotImplementedException();
+
+            ISecondOrgDAL dAL = new SecondOrgDAL();
+
+            if (dAL.Remove(id) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public bool DeleteThirdOrgById(int id)
+        {
+            //throw new System.NotImplementedException();
+
+            IThirdOrgDAL dAL = new ThirdOrgDAL();
+
+            if (dAL.Remove(id) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
         /// <summary>
         /// 实现IOrgBLL接口
         /// </summary>

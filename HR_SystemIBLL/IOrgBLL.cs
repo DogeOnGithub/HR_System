@@ -76,5 +76,26 @@ namespace HR_SystemIBLL
         /// <returns>返回所有parentId为传入1级机构id的2级机构</returns>
         List<SecondOrg> GetSecondOrgByFirstOrgId(int id);
 
+        /// <summary>
+        /// 通过id删除1级机构
+        /// </summary>
+        /// <param name="id">主键id</param>
+        /// <returns>返回是否删除成功</returns>
+        bool DeleteFirstOrgById(int id);
+
+        /// <summary>
+        /// 通过id删除2级机构
+        /// </summary>
+        /// <param name="id">主键id</param>
+        /// <returns>返回是否删除成功</returns>
+        bool DeleteSecondOrgById(int id);
+
+        /// <summary>
+        /// 通过id删除3级机构
+        /// </summary>
+        /// <param name="id">主键id</param>
+        /// <returns>返回是否删除成功</returns>
+        bool DeleteThirdOrgById(int id);
+
     }
 }

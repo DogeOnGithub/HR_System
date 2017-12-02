@@ -255,7 +255,56 @@ namespace HR_System.Controllers
 
 
 
+        public ActionResult DeleteFirstOrg(string id)
+        {
 
+            IOrgBLL bLL = new OrgBLL();
+
+            if (bLL.DeleteFirstOrgById(Convert.ToInt32(id)))
+            {
+                TempData["info"] = "已删除";
+                return Redirect("/Settings/OrgSettings");
+            }
+            else
+            {
+                TempData["error"] = "删除失败,该机构下有2级机构，无法直接删除";
+                return Redirect(Request.UrlReferrer.AbsoluteUri);
+            }
+
+        }
+
+        public ActionResult DeleteSecondOrg(string id)
+        {
+            IOrgBLL bLL = new OrgBLL();
+
+            if (bLL.DeleteSecondOrgById(Convert.ToInt32(id)))
+            {
+                TempData["info"] = "已删除";
+                return Redirect("/Settings/OrgSettings");
+            }
+            else
+            {
+                TempData["error"] = "删除失败,该机构下有3级机构，无法直接删除";
+                return Redirect(Request.UrlReferrer.AbsoluteUri);
+            }
+
+        }
+
+        public ActionResult DeleteThirdOrg(string id)
+        {
+            IOrgBLL bLL = new OrgBLL();
+
+            if (bLL.DeleteThirdOrgById(Convert.ToInt32(id)))
+            {
+                TempData["info"] = "已删除";
+                return Redirect("/Settings/OrgSettings");
+            }
+            else
+            {
+                TempData["error"] = "删除失败";
+                return Redirect(Request.UrlReferrer.AbsoluteUri);
+            }
+        }
 
 
 

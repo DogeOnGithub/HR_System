@@ -154,7 +154,7 @@ namespace HR_System.Controllers
             }
             else
             {
-                TempData["error"] = "删除失败";
+                TempData["error"] = "删除失败，该职位类型下有职位，无法直接删除";
                 return Redirect(Request.UrlReferrer.AbsoluteUri);
             }
 
