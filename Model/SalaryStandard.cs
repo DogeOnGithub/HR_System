@@ -34,5 +34,20 @@ namespace Model
         /// </summary>
         public decimal Total { get; set; }
 
+        /// <summary>
+        /// 该薪酬标准的状态
+        /// </summary>
+        public int StandardState { get; set; }
+
+        /// <summary>
+        /// 审核意见
+        /// </summary>
+        public string CheckDesc { get; set; }
+
+        /// <summary>
+        /// 审核人
+        /// </summary>
+        public string CheckBy { get; set; }
+
     }
 }

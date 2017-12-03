@@ -49,6 +49,7 @@
     <Compile Include="SalaryStandard.cs" />
     <Compile Include="SecondOrg.cs" />
     <Compile Include="Staff.cs" />
+    <Compile Include="StandardMapItem.cs" />
     <Compile Include="TechnicalTitle.cs" />
     <Compile Include="ThirdOrg.cs" />
   </ItemGroup>
