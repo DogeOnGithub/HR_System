@@ -49,6 +49,7 @@
     <Compile Include="ISalaryStandardDAL.cs" />
     <Compile Include="ISecondOrgDAL.cs" />
     <Compile Include="IStaffDAL.cs" />
+    <Compile Include="IStandardMapItemDAL.cs" />
     <Compile Include="ITechnicalTitleDAL.cs" />
     <Compile Include="IThirdOrgDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

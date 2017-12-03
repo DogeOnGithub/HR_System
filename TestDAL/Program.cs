@@ -93,6 +93,12 @@ namespace TestDAL
             //Console.ReadKey(); 
             #endregion
 
+            #region 测试StandardMapItemDAL
+            //IStandardMapItemDAL dAL = new StandardMapItemDAL();
+            //StandardMapItem standardMapItem = dAL.QueryById(1);
+            //Console.WriteLine(standardMapItem.StandardId);
+            //Console.ReadKey(); 
+            #endregion
 
         }
     }
