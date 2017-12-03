@@ -36,7 +36,6 @@ namespace TestDAL
             //Console.ReadKey(); 
             #endregion
 
-
             #region 测试ThirdOrgDAL，测试成功
             //IThirdOrgDAL dAL = new ThirdOrgDAL();
             //foreach (var to in dAL.Query())
@@ -87,6 +86,13 @@ namespace TestDAL
             //}
             //Console.ReadKey(); 
             #endregion
+
+            #region 测试SalaryStandardDAL，测试成功
+            //ISalaryStandardDAL dAL = new SalaryStandardDAL();
+            //Console.WriteLine(dAL.Add(new SalaryStandard { StandardName = "测试", StandardFileNumber = "ceshi", Registrant = "测试人", RegistTime = DateTime.Now, DesignBy = "测试人", Total = 3200 }));
+            //Console.ReadKey(); 
+            #endregion
+
 
         }
     }
