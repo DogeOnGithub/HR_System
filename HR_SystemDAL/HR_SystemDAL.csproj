@@ -51,6 +51,7 @@
     <Compile Include="SecondOrgDAL.cs" />
     <Compile Include="StaffDAL.cs" />
     <Compile Include="StandardMapItemDAL.cs" />
+    <Compile Include="StandardMapOccupationNameDAL.cs" />
     <Compile Include="TechnicalTitleDAL.cs" />
     <Compile Include="ThirdOrgDAL.cs" />
   </ItemGroup>
