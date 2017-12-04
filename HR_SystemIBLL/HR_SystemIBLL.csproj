@@ -43,6 +43,7 @@
     <Compile Include="ILoginUserBLL.cs" />
     <Compile Include="IOccupationBLL.cs" />
     <Compile Include="IOrgBLL.cs" />
+    <Compile Include="ISalaryBLL.cs" />
     <Compile Include="ISalaryItemBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

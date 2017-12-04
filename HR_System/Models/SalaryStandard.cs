@@ -1,13 +1,15 @@
 ﻿using EnumState;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace Model
+namespace HR_System.Models
 {
-    /// <summary>
-    /// 薪酬标准
-    /// </summary>
     public class SalaryStandard
     {
+
+        private Dictionary<SalaryItem, decimal> itemAmout = new Dictionary<SalaryItem, decimal>();
 
         public int Id { get; set; }
 
@@ -49,6 +51,16 @@ namespace Model
         /// 审核人
         /// </summary>
         public string CheckBy { get; set; }
+
+        //重点是薪酬标准和薪酬项目的映射关系
+        /// <summary>
+        /// 字典，键是薪酬项目对象，值是该薪酬项目在该薪酬项目中的金额
+        /// </summary>
+        public Dictionary<SalaryItem, decimal> ItemAmout
+        {
+            get => itemAmout;
+            set => itemAmout = value;
+        }
 
     }
 }
