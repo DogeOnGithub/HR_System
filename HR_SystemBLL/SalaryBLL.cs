@@ -56,6 +56,21 @@ namespace HR_SystemBLL
         }
 
         /// <summary>
+        /// 通过薪酬标准的编号获取薪酬标准的id
+        /// </summary>
+        /// <param name="fileNumber">编号</param>
+        /// <returns>薪酬标准的id</returns>
+        public int GetSalaryStandardIdByfileNumber(string fileNumber)
+        {
+            //throw new NotImplementedException();
+
+            ISalaryStandardDAL dAL = new SalaryStandardDAL();
+
+            return dAL.GetStandardIdByFileNumber(fileNumber);
+
+        }
+
+        /// <summary>
         /// 通过id获取薪酬标准
         /// </summary>
         /// <param name="id">主键id</param>
@@ -67,6 +82,103 @@ namespace HR_SystemBLL
             ISalaryStandardDAL dAL = new SalaryStandardDAL();
 
             return dAL.QueryById(id);
+
+        }
+
+        /// <summary>
+        /// 保存映射关系
+        /// </summary>
+        /// <param name="standardMapItem">需要保存的映射关系</param>
+        /// <returns>是否成功</returns>
+        public bool SaveMapItem(StandardMapItem standardMapItem)
+        {
+            //throw new NotImplementedException();
+
+            IStandardMapItemDAL dAL = new StandardMapItemDAL();
+
+            StandardMapItem tempMap = dAL.GetStandardMapItemByStandardAndItem(standardMapItem.StandardId, standardMapItem.ItemId);
+
+            if (tempMap != null)
+            {
+                standardMapItem.Id = tempMap.Id;
+                if (dAL.Update(standardMapItem) > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (dAL.Add(standardMapItem) > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// 保存薪酬标准
+        /// </summary>
+        /// <param name="salaryStandard">需要保存的薪酬标准</param>
+        /// <returns>是否成功</returns>
+        public bool SaveSalaryStandard(SalaryStandard salaryStandard)
+        {
+            //throw new NotImplementedException();
+
+            ISalaryStandardDAL dAL = new SalaryStandardDAL();
+
+            if (dAL.QueryById(salaryStandard.Id) != null)
+            {
+                if (dAL.Update(salaryStandard) > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (dAL.Add(salaryStandard) > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// 通过id删除薪酬标准
+        /// </summary>
+        /// <param name="id">主键id</param>
+        /// <returns>是否成功</returns>
+        public bool DeleteSalaryStandard(int id)
+        {
+            //throw new NotImplementedException();
+
+            ISalaryStandardDAL dAL = new SalaryStandardDAL();
+
+            if (dAL.DeleteSalaryStandard(id) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
         }
     }

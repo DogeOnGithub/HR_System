@@ -168,6 +168,7 @@
     <Compile Include="Models\TechnicalTitle.cs" />
     <Compile Include="Models\ThirdOrg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\ItemComparer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -229,6 +230,8 @@
     <Content Include="Views\StaffManage\StaffRegist.cshtml" />
     <Content Include="Views\SalaryManage\SalaryStandardManage.cshtml" />
     <Content Include="Views\StandardManage\DetailSalaryStandard.cshtml" />
+    <Content Include="Views\StandardManage\EditSalaryStandard.cshtml" />
+    <Content Include="Views\StandardManage\AddSalaryStandard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

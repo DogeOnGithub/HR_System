@@ -1,4 +1,5 @@
 ﻿using EnumState;
+using HR_System.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace HR_System.Models
     public class SalaryStandard
     {
 
-        private Dictionary<SalaryItem, decimal> itemAmout = new Dictionary<SalaryItem, decimal>();
+        private Dictionary<SalaryItem, decimal> itemAmout = new Dictionary<SalaryItem, decimal>(new ItemComparer());
 
         public int Id { get; set; }
 

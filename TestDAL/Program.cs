@@ -100,6 +100,16 @@ namespace TestDAL
             //Console.ReadKey(); 
             #endregion
 
+            #region 测试StandardMapItemDAL
+            //IStandardMapItemDAL dAL = new StandardMapItemDAL();
+            //Console.WriteLine(dAL.GetStandardMapItemByStandardAndItem(1, 2).Id);
+            //Console.ReadKey(); 
+            #endregion
+
+            ISalaryStandardDAL dAL = new SalaryStandardDAL();
+            Console.WriteLine(dAL.GetStandardIdByFileNumber("fsdjkfhkash"));
+            Console.ReadKey();
+
         }
     }
 }

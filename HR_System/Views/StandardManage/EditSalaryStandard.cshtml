@@ -1,28 +1,32 @@
 ﻿@using HR_System.Models;
+@using HR_System.Util;
 
 @{
-    ViewBag.Title = "DetailSalaryStandard";
+    ViewBag.Title = "EditSalaryStandard";
     SalaryStandard salaryStandard = ViewData["salaryStandardView"] as SalaryStandard;
+    List<SalaryItem> itemList = ViewData["itemList"] as List<SalaryItem>;
 }
 
-<h1 class="text-center">Detail Of SalaryStandard</h1>
+<h1 class="text-center">EditSalaryStandard</h1>
 <br />
 <br />
 <div class="container col-lg-8" style="float:none; display:block; margin-left:auto; margin-right:auto">
-    <form method="post" action="/" class="form-inline" style="text-align: center">
+    <form method="post" action="/StandardManage/SaveStandard" class="form-inline" style="text-align: center">
+
+        <input type="hidden" name="Id" value="@salaryStandard.Id" />
 
         <!--第1行内容-->
         <div class="form-group input-group-lg" style="width:30%">
             <label for="StandardFileNumber">薪酬标准编号</label>
-            <input readonly type="text" class="form-control" id="StandardFileNumber" placeholder="StandardFileNumber" value="@salaryStandard.StandardFileNumber">
+            <input readonly type="text" class="form-control" id="StandardFileNumber" name="StandardFileNumber" placeholder="StandardFileNumber" value="@salaryStandard.StandardFileNumber">
         </div>
         <div class="form-group input-group-lg" style="width:30%">
             <label for="StandardName">薪酬标准名称</label>
-            <input readonly type="text" class="form-control" id="StandardName" placeholder="StandardName" value="@salaryStandard.StandardName">
+            <input type="text" class="form-control" id="StandardName" name="StandardName" placeholder="StandardName" value="@salaryStandard.StandardName">
         </div>
         <div class="form-group input-group-lg" style="width:30%">
             <label for="Total">总金额</label>
-            <input readonly type="text" class="form-control" id="Total" placeholder="Total" value="￥@salaryStandard.Total">
+            <input readonly type="text" class="form-control" id="Total" name="Total" placeholder="Total" value="@salaryStandard.Total">
         </div>
 
         <br />
@@ -31,11 +35,11 @@
         <!--第2行内容-->
         <div class="form-group input-group-lg" style="width:45%">
             <label for="Registrant">登记人</label>
-            <input readonly type="text" class="form-control" id="Registrant" placeholder="Registrant" value="@salaryStandard.Registrant">
+            <input type="text" class="form-control" id="Registrant" name="Registrant" placeholder="Registrant" value="@salaryStandard.Registrant">
         </div>
         <div class="form-group input-group-lg" style="width:45%">
             <label for="RegistTime">登记时间</label>
-            <input readonly type="text" class="form-control" id="RegistTime" placeholder="RegistTime" value="@salaryStandard.RegistTime.ToString()">
+            <input readonly type="text" class="form-control" id="RegistTime" name="RegistTime" placeholder="RegistTime" value="@salaryStandard.RegistTime.ToString()">
         </div>
 
         <br />
@@ -44,15 +48,15 @@
         <!--第3行内容-->
         <div class="form-group input-group-lg" style="width:30%">
             <label for="DesignBy">制定人</label>
-            <input readonly type="text" class="form-control" id="DesignBy" placeholder="DesignBy" value="@salaryStandard.DesignBy">
+            <input type="text" class="form-control" id="DesignBy" name="DesignBy" placeholder="DesignBy" value="@salaryStandard.DesignBy">
         </div>
         <div class="form-group input-group-lg" style="width:30%">
             <label for="StandardState">审核状态</label>
-            <input readonly type="text" class="form-control" id="StandardState" placeholder="StandardState" value="@salaryStandard.StandardState">
+            <input readonly type="text" class="form-control" id="StandardState" name="StandardState" placeholder="StandardState" value="@salaryStandard.StandardState">
         </div>
         <div class="form-group input-group-lg" style="width:30%">
             <label for="CheckBy">审核人</label>
-            <input readonly type="text" class="form-control" id="CheckBy" placeholder="CheckBy" value="@salaryStandard.CheckBy">
+            <input readonly type="text" class="form-control" id="CheckBy" name="CheckBy" placeholder="CheckBy" value="@salaryStandard.CheckBy">
         </div>
 
         <br />
@@ -61,21 +65,29 @@
         <!--第4行内容-->
         <div class="form-group input-group-lg" style="width:90%">
             <label for="CheckDesc">审核备注</label>
-            <textarea readonly rows="10" id="CheckDesc" class="form-control" style="resize:none" maxlength="150">@salaryStandard.CheckDesc</textarea>
+            <textarea readonly rows="10" id="CheckDesc" name="CheckDesc" class="form-control" style="resize:none" maxlength="150">@salaryStandard.CheckDesc</textarea>
         </div>
 
         <br />
         <br />
 
-        <h4>以下是该标准下的详细项目</h4>
+        <h4>以下是所有的薪酬标准项目</h4>
 
         <!--薪酬项目内容-->
-        @foreach (var item in salaryStandard.ItemAmout)
+        @foreach (var item in itemList)
         {
 
+            if (salaryStandard.ItemAmout.Keys.Contains(item))
+            {
+                <div class="form-group input-group-lg" style="width:30%">
+                    <input type="checkbox" name="ItemCheckbox" checked value="@item.Id" /><label for="ItemValue">@item.Name</label>
+                    <input type="text" class="form-control" id="@("input" + item.Id)" name="@("value" + item.Id)" placeholder="ItemValue" value="@salaryStandard.ItemAmout[item]">
+                </div>
+                continue;
+            }
             <div class="form-group input-group-lg" style="width:30%">
-                <label for="ItemValue">@item.Key.Name</label>
-                <input readonly type="text" class="form-control" id="ItemValue" placeholder="ItemValue" value="￥@item.Value">
+                <input type="checkbox" name="ItemCheckbox" value="@item.Id" /><label for="ItemValue">@item.Name</label>
+                <input type="text" class="form-control" id="@("input" + item.Id)" name="@("value" + item.Id)" placeholder="ItemValue">
             </div>
 
         }
@@ -85,7 +97,7 @@
 
         <!--选项按钮-->
         <div class="form-group">
-            @Html.ActionLink("编辑", "EditSalaryStandard", "StandardManage", new { id = salaryStandard.Id }, new { @class = "btn btn-warning" })
+            <input type="submit" class="btn btn-primary" />
         </div>
         <div class="form-group">
             <button type="button" class="btn btn-danger" onclick="Delete(@salaryStandard.Id, '@salaryStandard.StandardName', 'DeleteSalaryStandard')" data-toggle="modal" data-target="#deleteModal">删除</button>
@@ -142,4 +154,3 @@
         $("#requestBtn").attr("href", "/StandardManage/" + action + "/" + id);
     }
 </script>
-

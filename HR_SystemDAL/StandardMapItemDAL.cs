@@ -41,5 +41,35 @@ namespace HR_SystemDAL
 
             return list;
         }
+
+        public StandardMapItem GetStandardMapItemByStandardAndItem(int standardId, int itemId)
+        {
+            //throw new System.NotImplementedException();
+
+            StandardMapItem standardMapItem = new StandardMapItem();
+
+            string sql = "select * from StandardMapItem where standardId=@standardId and itemId=@itemId";
+
+            using (SqlDataReader reader = SQLHelper.ExecuteReader(sql, new SqlParameter("@standardId", standardId), new SqlParameter("@itemId", itemId)))
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        standardMapItem.Id = reader.GetInt32(0);
+                        standardMapItem.StandardId = reader.GetInt32(1);
+                        standardMapItem.ItemId = reader.GetInt32(2);
+                        standardMapItem.Amout = reader.GetDecimal(3);
+                    }
+                }
+                else
+                {
+                    standardMapItem = null;
+                }
+            }
+
+            return standardMapItem;
+
+        }
     }
 }

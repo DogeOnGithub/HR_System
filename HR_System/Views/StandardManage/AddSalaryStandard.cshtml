@@ -1,0 +1,94 @@
+﻿@using HR_System.Models;
+@using EnumState;
+
+@{
+    ViewBag.Title = "AddSalaryStandard";
+    List<SalaryItem> itemList = ViewData["itemList"] as List<SalaryItem>;
+}
+
+<h1 class="text-center">AddSalaryStandard</h1>
+<br />
+<br />
+<div class="container col-lg-8" style="float:none; display:block; margin-left:auto; margin-right:auto">
+    <form method="post" action="/StandardManage/SaveStandard" class="form-inline" style="text-align: center">
+
+        <!--第1行内容-->
+        <div class="form-group input-group-lg" style="width:45%">
+            <label for="StandardFileNumber">薪酬标准编号</label>
+            <input readonly type="text" class="form-control" id="StandardFileNumber" name="StandardFileNumber" placeholder="StandardFileNumber" value="@Guid.NewGuid().ToString()" />
+        </div>
+        <div class="form-group input-group-lg" style="width:45%">
+            <label for="StandardName">薪酬标准名称</label>
+            <input type="text" class="form-control" id="StandardName" name="StandardName" placeholder="StandardName" />
+        </div>
+
+        <input type="hidden" name="Total" value="0" />
+
+        <br />
+        <br />
+
+        <!--第2行内容-->
+        <div class="form-group input-group-lg" style="width:45%">
+            <label for="Registrant">登记人</label>
+            <input type="text" class="form-control" id="Registrant" name="Registrant" placeholder="Registrant" />
+        </div>
+        <div class="form-group input-group-lg" style="width:45%">
+            <label for="RegistTime">登记时间</label>
+            <input readonly type="text" class="form-control" id="RegistTime" name="RegistTime" placeholder="RegistTime" value="@DateTime.Now.ToString()" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--第3行内容-->
+        <div class="form-group input-group-lg" style="width:30%">
+            <label for="DesignBy">制定人</label>
+            <input type="text" class="form-control" id="DesignBy" name="DesignBy" placeholder="DesignBy" />
+        </div>
+        <div class="form-group input-group-lg" style="width:30%">
+            <label for="StandardState">审核状态</label>
+            <input readonly type="text" class="form-control" id="StandardState" name="StandardState" placeholder="StandardState" value="@StandardStateEnum.WaitCheck" />
+        </div>
+        <div class="form-group input-group-lg" style="width:30%">
+            <label for="CheckBy">审核人</label>
+            <input readonly type="text" class="form-control" id="CheckBy" name="CheckBy" placeholder="CheckBy" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--第4行内容-->
+        @*<div class="form-group input-group-lg" style="width:90%">
+            <label for="CheckDesc">审核备注</label>
+            <textarea readonly rows="10" id="CheckDesc" name="CheckDesc" class="form-control" style="resize:none" maxlength="150"></textarea>
+        </div>
+
+        <br />
+        <br />*@
+        <input type="hidden" name="CheckDesc" value="未审核" />
+
+        <h4>以下是所有的薪酬项目</h4>
+
+        <!--薪酬项目内容-->
+        @foreach (var item in itemList)
+        {
+            <div class="form-group input-group-lg" style="width:30%">
+                <input type="checkbox" name="ItemCheckbox" value="@item.Id" /><label for="ItemValue">@item.Name</label>
+                <input type="text" class="form-control" id="@("input" + item.Id)" name="@("value" + item.Id)" placeholder="ItemValue">
+            </div>
+
+        }
+
+        <br />
+        <br />
+
+        <!--选项按钮-->
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" />
+        </div>
+        <div class="form-group">
+            @Html.ActionLink("返回", "SalaryStandardManage", "SalaryManage", new { }, new { @class = "btn btn-default" })
+        </div>
+    </form>
+</div>
+

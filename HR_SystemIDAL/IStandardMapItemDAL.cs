@@ -16,5 +16,13 @@ namespace HR_SystemIDAL
         /// <returns>返回所有该id对应的薪酬标准的id</returns>
         List<StandardMapItem> GetAllStandardMapItemByStandardId(int standardId);
 
+        /// <summary>
+        /// 通过薪酬标准id和项目id查找映射关系
+        /// </summary>
+        /// <param name="standardId">标准的id</param>
+        /// <param name="itemId">项目的id</param>
+        /// <returns>返回对应的映射关系</returns>
+        StandardMapItem GetStandardMapItemByStandardAndItem(int standardId, int itemId);
+
     }
 }

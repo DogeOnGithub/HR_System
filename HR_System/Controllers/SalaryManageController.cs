@@ -1,4 +1,5 @@
-﻿using HR_SystemBLL;
+﻿using HR_System.Filters;
+using HR_SystemBLL;
 using HR_SystemIBLL;
 using Model;
 using System;
@@ -9,6 +10,8 @@ using System.Web.Mvc;
 
 namespace HR_System.Controllers
 {
+    [LoginUserAuthorization]
+    [SystemManagerAuthorization]
     public class SalaryManageController : Controller
     {
         public ActionResult SalaryStandardManage()
