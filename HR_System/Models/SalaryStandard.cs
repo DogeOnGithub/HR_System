@@ -12,6 +12,8 @@ namespace HR_System.Models
 
         private Dictionary<SalaryItem, decimal> itemAmout = new Dictionary<SalaryItem, decimal>(new ItemComparer());
 
+        private List<OccupationName> occList = new List<OccupationName>();
+
         public int Id { get; set; }
 
         public string StandardName { get; set; }
@@ -61,6 +63,15 @@ namespace HR_System.Models
         {
             get => itemAmout;
             set => itemAmout = value;
+        }
+
+        /// <summary>
+        /// 装载所有该标准适用的所有职位信息
+        /// </summary>
+        public List<OccupationName> OccList
+        {
+            get => occList;
+            set => occList = value;
         }
 
     }

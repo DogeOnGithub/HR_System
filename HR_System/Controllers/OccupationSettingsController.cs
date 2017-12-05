@@ -260,5 +260,19 @@ namespace HR_System.Controllers
             return View();
         }
 
+
+
+        /// <summary>
+        /// 处理根据职位类型id异步请求职位
+        /// </summary>
+        /// <param name="id">职位类型的id</param>
+        /// <returns>返回json数据</returns>
+        public ActionResult DynamicOccName(string id)
+        {
+            IOccupationBLL bLL = new OccupationBLL();
+            List<OccupationName> list = bLL.GetAllOccNameByClassId(Convert.ToInt32(id));
+            return Json(list);
+        }
+
     }
 }

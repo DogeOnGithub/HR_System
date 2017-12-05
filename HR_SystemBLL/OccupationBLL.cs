@@ -73,6 +73,21 @@ namespace HR_SystemBLL
         }
 
         /// <summary>
+        /// 通过职位类型的id获取所有职位
+        /// </summary>
+        /// <param name="classId">职位类型的id</param>
+        /// <returns>List类型,所有该类型下的职位</returns>
+        public List<OccupationName> GetAllOccNameByClassId(int classId)
+        {
+            //throw new System.NotImplementedException();
+
+            IOccupationNameDAL dAL = new OccupationNameDAL();
+
+            return dAL.GetAllOccNameByClassId(classId);
+
+        }
+
+        /// <summary>
         /// 实现IOccupationBLL接口
         /// </summary>
         /// <returns>返回所有职位类别，List类型</returns>

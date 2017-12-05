@@ -26,6 +26,8 @@ namespace HR_System.Controllers
 
             ISalaryItemBLL salaryItemBLL = new SalaryItemBLL();
 
+            IOccupationBLL occupationBLL = new OccupationBLL();
+
             //通过id查找到薪酬标准
             SalaryStandard salaryStandard = salaryBLL.GetSalaryStandardById(Convert.ToInt32(id));
 
@@ -55,6 +57,21 @@ namespace HR_System.Controllers
                 salaryStandardView.ItemAmout.Add(salaryItemView, m.Amout);
             }
 
+            //通过薪酬标准的id找到所有的职位映射关系
+            List<StandardMapOccupationName> occList = salaryBLL.GetAllStandardMapOccByStandardId(salaryStandard.Id);
+
+            if (occList != null)
+            {
+                foreach (var o in occList)
+                {
+                    OccupationName tempOccName = occupationBLL.GetOccupationNameById(o.OccupationNameId);
+                    Models.OccupationName occupationNameView = new Models.OccupationName { Id = tempOccName.Id, Name = tempOccName.Name };
+                    OccupationClass tempOccClass = occupationBLL.GetOccupationClassById(tempOccName.ClassId);
+                    occupationNameView.OccupationClass = new Models.OccupationClass { Id = tempOccClass.Id, Name = tempOccClass.Name };
+                    salaryStandardView.OccList.Add(occupationNameView);
+                }
+            }
+
             ViewData["salaryStandardView"] = salaryStandardView;
 
             return View();
@@ -70,6 +87,8 @@ namespace HR_System.Controllers
             ISalaryBLL salaryBLL = new SalaryBLL();
 
             ISalaryItemBLL salaryItemBLL = new SalaryItemBLL();
+
+            IOccupationBLL occupationBLL = new OccupationBLL();
 
             //通过id查找到薪酬标准
             SalaryStandard salaryStandard = salaryBLL.GetSalaryStandardById(Convert.ToInt32(id));
@@ -98,6 +117,21 @@ namespace HR_System.Controllers
                 SalaryItem tempSalaryItem = salaryItemBLL.GetSalaryItemById(m.ItemId);
                 Models.SalaryItem salaryItemView = new Models.SalaryItem { Id = tempSalaryItem.Id, Name = tempSalaryItem.Name };
                 salaryStandardView.ItemAmout.Add(salaryItemView, m.Amout);
+            }
+
+            //通过薪酬标准的id找到所有的职位映射关系
+            List<StandardMapOccupationName> occList = salaryBLL.GetAllStandardMapOccByStandardId(salaryStandard.Id);
+
+            if (occList != null)
+            {
+                foreach (var o in occList)
+                {
+                    OccupationName tempOccName = occupationBLL.GetOccupationNameById(o.OccupationNameId);
+                    Models.OccupationName occupationNameView = new Models.OccupationName { Id = tempOccName.Id, Name = tempOccName.Name };
+                    OccupationClass tempOccClass = occupationBLL.GetOccupationClassById(tempOccName.ClassId);
+                    occupationNameView.OccupationClass = new Models.OccupationClass { Id = tempOccClass.Id, Name = tempOccClass.Name };
+                    salaryStandardView.OccList.Add(occupationNameView);
+                }
             }
 
             ViewData["salaryStandardView"] = salaryStandardView;
@@ -119,6 +153,34 @@ namespace HR_System.Controllers
             }
 
             ViewData["itemList"] = itemList;
+
+            //装载所有职位类型
+            List<OccupationClass> occClassList = occupationBLL.GetAllOccupationClass();
+            List<Models.OccupationClass> occClassListView = new List<Models.OccupationClass>();
+            if (occClassList != null)
+            {
+                foreach (var oc in occClassList)
+                {
+                    Models.OccupationClass tempClass = new Models.OccupationClass() { Id = oc.Id, Name = oc.Name };
+                    occClassListView.Add(tempClass);
+                }
+            }
+            ViewData["occClassListView"] = occClassListView;
+
+
+            //装载所有该薪酬标准的职位类型下的所有职位
+            List<Models.OccupationName> occNameList = new List<Models.OccupationName>();
+
+            for (int i = 0; i < salaryStandardView.OccList.Count; i++)
+            {
+                List<OccupationName> tempList = occupationBLL.GetAllOccNameByClassId(salaryStandardView.OccList[i].OccupationClass.Id);
+                foreach (var on in tempList)
+                {
+                    Models.OccupationName tempOccupationName = new Models.OccupationName { Id = on.Id, Name = on.Name, OccupationClass = salaryStandardView.OccList[i].OccupationClass };
+                    occNameList.Add(tempOccupationName);
+                }
+            }
+            ViewData["occNameList"] = occNameList;
 
             return View();
         }
@@ -180,6 +242,25 @@ namespace HR_System.Controllers
             //更新总金额
             salaryStandard.Total = total;
 
+            //判断该薪酬标准在映射表中有没有记录
+            if (salaryBLL.GetAllStandardMapOccByStandardId(salaryStandard.Id) != null)
+            {
+                if (!salaryBLL.DeleteAllOccMapByStandardId(salaryStandard.Id))
+                {
+                    TempData["error"] = "保存失败";
+                    return Redirect(Request.UrlReferrer.AbsoluteUri);
+                }
+            }
+            //往数据库添加未存在的映射关系
+            for (int i = Convert.ToInt32(formCollection["eCount"]); i < 3; i++)
+            {
+                if (Convert.ToInt32(formCollection["occName" + i]) != 0)
+                {
+                    StandardMapOccupationName standardMapOccupationName = new StandardMapOccupationName { StandardId = salaryStandard.Id, OccupationNameId = Convert.ToInt32(formCollection["occName" + i]) };
+                    salaryBLL.SaveMapOcc(standardMapOccupationName); 
+                }
+            }
+
             //重新保存一次薪酬标准
             if (salaryBLL.SaveSalaryStandard(salaryStandard))
             {
@@ -214,6 +295,55 @@ namespace HR_System.Controllers
             }
 
             ViewData["itemList"] = itemList;
+
+            return View();
+        }
+
+        /// <summary>
+        /// 处理在编辑或添加薪酬标准时发出的添加适用职位请求
+        /// </summary>
+        /// <param name="formCollection">提交上来的表单容器</param>
+        /// <returns>返回添加职位选项后的视图</returns>
+        public ActionResult StandardAddOccName(FormCollection formCollection)
+        {
+
+            ViewData["formCollection"] = formCollection;
+
+            ISalaryItemBLL salaryItemBLL = new SalaryItemBLL();
+
+            IOccupationBLL occupationBLL = new OccupationBLL();
+
+            //装载所有职位类型
+            List<OccupationClass> occClassList = occupationBLL.GetAllOccupationClass();
+            List<Models.OccupationClass> occClassListView = new List<Models.OccupationClass>();
+            foreach (var oc in occClassList)
+            {
+                Models.OccupationClass tempClass = new Models.OccupationClass { Id = oc.Id, Name = oc.Name };
+                occClassListView.Add(tempClass);
+            }
+            ViewData["occClassListView"] = occClassListView;
+
+            //装载所有职位
+            List<OccupationName> occNameList = occupationBLL.GetAllOccupationName();
+            List<Models.OccupationName> occNameListView = new List<Models.OccupationName>();
+            foreach (var on in occNameList)
+            {
+                Models.OccupationName tempName = new Models.OccupationName { Id = on.Id, Name = on.Name };
+                OccupationClass tempClass = occupationBLL.GetOccupationClassById(on.ClassId);
+                tempName.OccupationClass = new Models.OccupationClass { Id = tempClass.Id, Name = tempClass.Name };
+                occNameListView.Add(tempName);
+            }
+            ViewData["occNameListView"] = occNameListView;
+
+            //装载所有薪酬项目
+            List<SalaryItem> itemList = salaryItemBLL.GetAllSalaryItem();
+            List<Models.SalaryItem> itemListView = new List<Models.SalaryItem>();
+            foreach (var item in itemList)
+            {
+                Models.SalaryItem tempItem = new Models.SalaryItem { Id = item.Id, Name = item.Name };
+                itemListView.Add(tempItem);
+            }
+            ViewData["itemListView"] = itemListView;
 
             return View();
         }

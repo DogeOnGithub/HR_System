@@ -1,0 +1,317 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "EditSalaryStandard";
+    FormCollection form = ViewData["formCollection"] as FormCollection;
+    string[] itemCheckboxs = form["ItemCheckbox"].Split(',');
+    List<SalaryItem> itemList = ViewData["itemList"] as List<SalaryItem>;
+    List<OccupationName> occNameList = ViewData["occNameListView"] as List<OccupationName>;
+    List<OccupationClass> occClassListView = ViewData["occClassListView"] as List<OccupationClass>;
+}
+
+<h1 class="text-center">EditSalaryStandard</h1>
+<br />
+<br />
+<div class="container col-lg-8" style="float:none; display:block; margin-left:auto; margin-right:auto">
+    <form method="post" action="/StandardManage/SaveStandard" class="form-inline" style="text-align: center">
+
+        <input type="hidden" name="Id" value="@form["Id"]" />
+
+        <!--第1行内容-->
+        <div class="form-group input-group-lg" style="width:30%">
+            <label for="StandardFileNumber">薪酬标准编号</label>
+            <input readonly type="text" class="form-control" id="StandardFileNumber" name="StandardFileNumber" placeholder="StandardFileNumber" value="@form["StandardFileNumber"]">
+        </div>
+        <div class="form-group input-group-lg" style="width:30%">
+            <label for="StandardName">薪酬标准名称</label>
+            <input type="text" class="form-control" id="StandardName" name="StandardName" placeholder="StandardName" value="@form["StandardName"]">
+        </div>
+        <div class="form-group input-group-lg" style="width:30%">
+            <label for="Total">总金额</label>
+            <input readonly type="text" class="form-control" id="Total" name="Total" placeholder="Total" value="@form["Total"]">
+        </div>
+
+        <br />
+        <br />
+
+        <!--第2行内容-->
+        <div class="form-group input-group-lg" style="width:45%">
+            <label for="Registrant">登记人</label>
+            <input type="text" class="form-control" id="Registrant" name="Registrant" placeholder="Registrant" value="@form["Registrant"]">
+        </div>
+        <div class="form-group input-group-lg" style="width:45%">
+            <label for="RegistTime">登记时间</label>
+            <input readonly type="text" class="form-control" id="RegistTime" name="RegistTime" placeholder="RegistTime" value="@form["RegistTime"]">
+        </div>
+
+        <br />
+        <br />
+
+        <!--第3行内容-->
+        <div class="form-group input-group-lg" style="width:30%">
+            <label for="DesignBy">制定人</label>
+            <input type="text" class="form-control" id="DesignBy" name="DesignBy" placeholder="DesignBy" value="@form["DesignBy"]">
+        </div>
+        <div class="form-group input-group-lg" style="width:30%">
+            <label for="StandardState">审核状态</label>
+            <input readonly type="text" class="form-control" id="StandardState" name="StandardState" placeholder="StandardState" value="@form["StandardState"]">
+        </div>
+        <div class="form-group input-group-lg" style="width:30%">
+            <label for="CheckBy">审核人</label>
+            <input readonly type="text" class="form-control" id="CheckBy" name="CheckBy" placeholder="CheckBy" value="@form["CheckBy"]">
+        </div>
+
+        <br />
+        <br />
+
+        <!--第4行内容-->
+        <div class="form-group input-group-lg" style="width:90%">
+            <label for="CheckDesc">审核备注</label>
+            <textarea readonly rows="10" id="CheckDesc" name="CheckDesc" class="form-control" style="resize:none" maxlength="150">@form["CheckDesc"]</textarea>
+        </div>
+
+        <br />
+        <br />
+
+        <h4>以下是所有的薪酬项目</h4>
+
+        <!--薪酬项目内容-->
+        @*@foreach (var item in itemList)
+            {
+
+                if (salaryStandard.ItemAmout.Keys.Contains(item))
+                {
+                    <div class="form-group input-group-lg" style="width:30%">
+                        <input type="checkbox" name="ItemCheckbox" checked value="@item.Id" /><label for="ItemValue">@item.Name</label>
+                        <input type="text" class="form-control" id="@("input" + item.Id)" name="@("value" + item.Id)" placeholder="ItemValue" value="@salaryStandard.ItemAmout[item]">
+                    </div>
+                    continue;
+                }
+                <div class="form-group input-group-lg" style="width:30%">
+                    <input type="checkbox" name="ItemCheckbox" value="@item.Id" /><label for="ItemValue">@item.Name</label>
+                    <input type="text" class="form-control" id="@("input" + item.Id)" name="@("value" + item.Id)" placeholder="ItemValue">
+                </div>
+
+            }*@
+
+        @foreach (var item in itemList)
+        {
+            if (itemCheckboxs.Contains(item.Id.ToString()))
+            {
+                <div class="form-group input-group-lg" style="width:30%">
+                    <input type="checkbox" name="ItemCheckbox" checked value="@item.Id" /><label for="ItemValue">@item.Name</label>
+                    <input type="text" class="form-control" id="@("input" + item.Id)" name="@("value" + item.Id)" placeholder="ItemValue" value="@form["value" + item.Id]">
+                </div>
+                continue;
+            }
+            <div class="form-group input-group-lg" style="width:30%">
+                <input type="checkbox" name="ItemCheckbox" value="@item.Id" /><label for="ItemValue">@item.Name</label>
+                <input type="text" class="form-control" id="@("input" + item.Id)" name="@("value" + item.Id)" placeholder="ItemValue">
+            </div>
+        }
+
+        <br />
+        <br />
+
+
+        <h4>以下是适用该标准的职位</h4>
+
+        @*@{ int i = 0; }*@
+
+        <!--职位内容-->
+        @*@foreach (var o in salaryStandard.OccList)
+            {
+                <div class="form-group input-group-lg" style="width:45%">
+                    <label for="@o.Name">职位名称</label>
+                    @*<input readonly type="text" class="form-control" id="@o.Name" placeholder="OccName" value="@o.Name">*@
+        @*<select class="form-control" required id="@("occName" + i)">
+                @foreach (var on in occNameList)
+                {
+                    if (on.OccupationClass.Id == o.OccupationClass.Id)
+                    {
+                        if (on.Id == o.Id)
+                        {
+                            <option value="@on.Id" selected>@on.Name</option>
+                            continue;
+                        }
+                        <option value="@on.Id">@on.Name</option>
+                    }
+                }
+            </select>*@
+        @*</div>
+            <div class="form-group input-group-lg" style="width:45%">
+                <label for="@o.OccupationClass.Name">所属职位类型</label>
+                @*<input readonly type="text" class="form-control" id="@o.OccupationClass.Name" placeholder="OccClassName" value="@o.OccupationClass.Name">*@
+        @*<select class="form-control" required id="@("occClass" + i)" onchange="change('@("occClass" + i)', '@("occName" + i)')">
+                    @foreach (var oc in occClassListView)
+                    {
+                        if (oc.Id == o.OccupationClass.Id)
+                        {
+                            <option value="@oc.Id" selected>@oc.Name</option>
+                            continue;
+                        }
+                        <option value="@oc.Id">@oc.Name</option>
+                    }
+                </select>
+            </div>
+            i++;*@
+        @*}*@
+
+        @for (int i = 0; i < Convert.ToInt32(form["occNameCount"]); i++)
+        {
+            <div class="form-group input-group-lg" style="width:45%">
+                <label for="@("occName" + i)">职位名称</label>
+                <select class="form-control" required id="@("occName" + i)" name="@("occName" + i)">
+                    @foreach (var on in occNameList)
+                    {
+                        if (on.OccupationClass.Id == Convert.ToInt32(form["occClass" + i]))
+                        {
+                            if (on.Id == Convert.ToInt32(form["occName" + i]))
+                            {
+                                <option value="@on.Id" selected>@on.Name</option>
+                                continue;
+                            }
+                            <option value="@on.Id">@on.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group input-group-lg" style="width:45%">
+                <label for="@("occClass" + i)">所属职位类型</label>
+                <select class="form-control" required id="@("occClass" + i)" name="@("occClass" + i)" onchange="change('@("occClass" + i)', '@("occName" + i)')">
+                    @foreach (var oc in occClassListView)
+                    {
+                        if (oc.Id == Convert.ToInt32(form["occClass" + i]))
+                        {
+                            <option value="@oc.Id" selected>@oc.Name</option>
+                            continue;
+                        }
+                        <option value="@oc.Id">@oc.Name</option>
+                    }
+                </select>
+            </div>
+        }
+
+        <br />
+        <br />
+        <div class="form-group input-group-lg" style="width:45%">
+            <label for="@("occName" + form["occNameCount"])">职位名称</label>
+            <select class="form-control" required id="@("occName" + form["occNameCount"])" name="@("occName" + form["occNameCount"])">
+                @foreach (var on in occNameList)
+                {
+                    
+                     <option value="@on.Id">@on.Name</option>
+                    
+                }
+            </select>
+        </div>
+        <div class="form-group input-group-lg" style="width:45%">
+            <label for="@("occClass" + form["occNameCount"])">所属职位类型</label>
+            <select class="form-control" required id="@("occClass" + form["occNameCount"])" name="@("occClass" + form["occNameCount"])" onchange="change('@("occClass" + form["occNameCount"])', '@("occName" + form["occNameCount"])')">
+                @foreach (var oc in occClassListView)
+                {
+                    <option value="@oc.Id">@oc.Name</option>
+                }
+            </select>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        <!--隐藏域，用于说明当前适用的职位数量-->
+        <input type="hidden" name="occNameCount" value="@(Convert.ToInt32(form["occNameCount"]) + 1)" />
+
+        <br />
+        <br />
+
+        <!--添加适用职位的按钮-->
+        <div class="form-group input-group-lg">
+            <a href="/StandardManage/StandardAddOccName" class="btn btn-default btn-block form-control" value="添加职位" id="addOccName" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--选项按钮-->
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" />
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-danger" onclick="Delete(@form["Id"], '@form["StandardName"]', 'DeleteSalaryStandard')" data-toggle="modal" data-target="#deleteModal">删除</button>
+        </div>
+        <div class="form-group">
+            @Html.ActionLink("返回", "SalaryStandardManage", "SalaryManage", new { }, new { @class = "btn btn-default" })
+        </div>
+    </form>
+</div>
+
+
+<script>
+    function change(id, childrenId) {
+        console.log($("#" + id).val());
+        console.log($("#" + childrenId).val());
+        $.post("/OccupationSettings/DynamicOccName", { "id": $("#" + id).val() }, function (data) {
+            $("#" + childrenId).html("");
+            $.each(data, function (i, o) {
+                console.log(o['Id']);
+                console.log(o.Name);
+                $("#" + childrenId).append($("<option value='" + o.Id + "'>" + o.Name + "</option>"));
+            });
+        });
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+<!--删除对话框-->
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteModalLabel">Warning</h4>
+            </div>
+            <div class="modal-body">
+                <p id="deleteTip" style="font-size:16px"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <a id="requestBtn" href="#" class="btn btn-primary">确定</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (TempData["info"] != null)
+{
+    <script>alert('@TempData["info"]');</script>
+}
+@if (TempData["error"] != null)
+{
+    <script>alert('@TempData["error"]');</script>
+}
+
+
+<script>
+    function Delete(id, name, action) {
+        //console.log(id);
+        $("#deleteTip").html("是否删除" + name + "?");
+        $("#requestBtn").attr("href", "/StandardManage/" + action + "/" + id);
+    }
+</script>
+

@@ -44,6 +44,13 @@ namespace HR_SystemIBLL
         List<StandardMapItem> GetAllStandardMapItemByStandardId(int standardId);
 
         /// <summary>
+        /// 通过薪酬标准的id获取所有的薪酬标准和职位的映射关系
+        /// </summary>
+        /// <param name="standardId">薪酬标准的id</param>
+        /// <returns>List类型，所有的映射关系</returns>
+        List<StandardMapOccupationName> GetAllStandardMapOccByStandardId(int standardId);
+
+        /// <summary>
         /// 保存薪酬标准和薪酬项目的映射关系
         /// </summary>
         /// <param name="standardMapItem">需要保存的映射关系</param>
@@ -63,6 +70,20 @@ namespace HR_SystemIBLL
         /// <param name="id">主键id</param>
         /// <returns>是否成功</returns>
         bool DeleteSalaryStandard(int id);
+
+        /// <summary>
+        /// 保存薪酬标准和职位的映射关系
+        /// </summary>
+        /// <param name="standardMapOccupationName">需要保存的映射关系</param>
+        /// <returns>是否成功</returns>
+        bool SaveMapOcc(StandardMapOccupationName standardMapOccupationName);
+
+        /// <summary>
+        /// 通过薪酬标准的id删除所有的薪酬标准与职位的映射关系
+        /// </summary>
+        /// <param name="standardId">薪酬标准的id</param>
+        /// <returns>是否成功</returns>
+        bool DeleteAllOccMapByStandardId(int standardId);
 
     }
 }

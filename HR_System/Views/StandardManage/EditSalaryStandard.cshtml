@@ -5,6 +5,8 @@
     ViewBag.Title = "EditSalaryStandard";
     SalaryStandard salaryStandard = ViewData["salaryStandardView"] as SalaryStandard;
     List<SalaryItem> itemList = ViewData["itemList"] as List<SalaryItem>;
+    List<OccupationName> occNameList = ViewData["occNameList"] as List<OccupationName>;
+    List<OccupationClass> occClassListView = ViewData["occClassListView"] as List<OccupationClass>;
 }
 
 <h1 class="text-center">EditSalaryStandard</h1>
@@ -71,7 +73,7 @@
         <br />
         <br />
 
-        <h4>以下是所有的薪酬标准项目</h4>
+        <h4>以下是所有的薪酬项目</h4>
 
         <!--薪酬项目内容-->
         @foreach (var item in itemList)
@@ -95,6 +97,89 @@
         <br />
         <br />
 
+
+        <h4>以下是适用该标准的职位</h4>
+
+        @{ int i = 0; }
+
+        <!--职位内容-->
+        @foreach (var o in salaryStandard.OccList)
+        {
+            @*<input type="hidden" name="@("eOcc" + i)" value="@o.Id" />*@
+
+            <div class="form-group input-group-lg" style="width:45%">
+                <label for="@("occName" + i)">职位名称</label>
+                @*<input readonly type="text" class="form-control" id="@o.Name" placeholder="OccName" value="@o.Name">*@
+                <select class="form-control" required id="@("occName" + i)" name="@("occName" + i)">
+                    @foreach (var on in occNameList)
+                    {
+                        if (on.OccupationClass.Id == o.OccupationClass.Id)
+                        {
+                            if (on.Id == o.Id)
+                            {
+                                <option value="@on.Id" selected>@on.Name</option>
+                                continue;
+                            }
+                            <option value="@on.Id">@on.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group input-group-lg" style="width:45%">
+                <label for="@("occClass" + i)">所属职位类型</label>
+                @*<input readonly type="text" class="form-control" id="@o.OccupationClass.Name" placeholder="OccClassName" value="@o.OccupationClass.Name">*@
+                <select class="form-control" required id="@("occClass" + i)" onchange="change('@("occClass" + i)', '@("occName" + i)')" name="@("occClass" + i)">
+                    @foreach (var oc in occClassListView)
+                    {
+                        if (oc.Id == o.OccupationClass.Id)
+                        {
+                            <option value="@oc.Id" selected>@oc.Name</option>
+                            continue;
+                        }
+                        <option value="@oc.Id">@oc.Name</option>
+                    }
+                </select>
+            </div>
+            i++;
+        }
+
+        <!--隐藏域，用于说明已经存在数据库的映射关系的数量-->
+        @*<input type="hidden" id="eCount" name="eCount" value="@salaryStandard.OccList.Count" />*@
+
+        <br />
+        <br />
+
+        @for (int j = salaryStandard.OccList.Count; j < 3; j++)
+        {
+            <div class="form-group input-group-lg" style="width:45%">
+                <label for="@("occName" + j)">职位名称</label>
+                @*<input readonly type="text" class="form-control" id="@o.Name" placeholder="OccName" value="@o.Name">*@
+                <select class="form-control" required id="@("occName" + j)" name="@("occName" + j)">
+                    <option value="0">请选择...</option>
+                    @foreach (var on in occNameList)
+                    {
+                        
+                            <option value="@on.Id">@on.Name</option>
+                        
+                    }
+                </select>
+            </div>
+            <div class="form-group input-group-lg" style="width:45%">
+                <label for="@("occClass" + j)">所属职位类型</label>
+                <select class="form-control" required id="@("occClass" + j)" onchange="change('@("occClass" + j)', '@("occName" + j)')" name="@("occClass" + j)">
+                    <option value="0">请选择...</option>
+                    @foreach (var oc in occClassListView)
+                    {
+                        <option value="@oc.Id">@oc.Name</option>
+                    }
+                </select>
+            </div>
+        }
+
+
+        <br />
+        <br />
+
         <!--选项按钮-->
         <div class="form-group">
             <input type="submit" class="btn btn-primary" />
@@ -107,6 +192,23 @@
         </div>
     </form>
 </div>
+
+
+<script>
+    function change(id, childrenId) {
+        console.log($("#" + id).val());
+        console.log($("#" + childrenId).val());
+        $.post("/OccupationSettings/DynamicOccName", { "id": $("#" + id).val() }, function (data) {
+            $("#" + childrenId).html("");
+            $.each(data, function (i, o) {
+                console.log(o['Id']);
+                console.log(o.Name);
+                $("#" + childrenId).append($("<option value='" + o.Id + "'>" + o.Name + "</option>"));
+            });
+        });
+    }
+
+</script>
 
 
 

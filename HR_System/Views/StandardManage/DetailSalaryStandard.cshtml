@@ -83,6 +83,25 @@
         <br />
         <br />
 
+        <h4>以下是适用该标准的职位</h4>
+
+        <!--职位内容-->
+        @foreach (var o in salaryStandard.OccList)
+        {
+            <div class="form-group input-group-lg" style="width:45%">
+                <label for="@o.Name">职位名称</label>
+                <input readonly type="text" class="form-control" id="@o.Name" placeholder="OccName" value="@o.Name">
+            </div>
+            <div class="form-group input-group-lg" style="width:45%">
+                <label for="@o.OccupationClass.Name">所属职位类型</label>
+                <input readonly type="text" class="form-control" id="@o.OccupationClass.Name" placeholder="OccClassName" value="@o.OccupationClass.Name">
+            </div>
+        }
+
+
+        <br />
+        <br />
+
         <!--选项按钮-->
         <div class="form-group">
             @Html.ActionLink("编辑", "EditSalaryStandard", "StandardManage", new { id = salaryStandard.Id }, new { @class = "btn btn-warning" })

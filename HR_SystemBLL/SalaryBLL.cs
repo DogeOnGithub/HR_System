@@ -181,5 +181,81 @@ namespace HR_SystemBLL
             }
 
         }
+
+        /// <summary>
+        /// 通过薪酬标准的id获取所有的薪酬标准与职位的映射关系
+        /// </summary>
+        /// <param name="standardId">薪酬标准的id</param>
+        /// <returns>List类型，所有的薪酬标准与职位的映射关系</returns>
+        public List<StandardMapOccupationName> GetAllStandardMapOccByStandardId(int standardId)
+        {
+            //throw new NotImplementedException();
+
+            IStandardMapOccupationNameDAL dAL = new StandardMapOccupationNameDAL();
+
+            return dAL.GetAllMapByStandardId(standardId);
+
+        }
+
+        /// <summary>
+        /// 保存薪酬标准和职位的映射关系
+        /// </summary>
+        /// <param name="standardMapOccupationName">需要保存的映射关系</param>
+        /// <returns>是否成功</returns>
+        public bool SaveMapOcc(StandardMapOccupationName standardMapOccupationName)
+        {
+            //throw new NotImplementedException();
+
+            IStandardMapOccupationNameDAL dAL = new StandardMapOccupationNameDAL();
+
+            StandardMapOccupationName tempMap = dAL.QueryById(standardMapOccupationName.Id);
+
+            if (tempMap != null)
+            {
+                standardMapOccupationName.Id = tempMap.Id;
+                if (dAL.Update(standardMapOccupationName) > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (dAL.Add(standardMapOccupationName) > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// 通过薪酬id删除薪酬标准和职位的映射关系
+        /// </summary>
+        /// <param name="standardId">薪酬标准的id</param>
+        /// <returns>是否成功</returns>
+        public bool DeleteAllOccMapByStandardId(int standardId)
+        {
+            //throw new NotImplementedException();
+
+            IStandardMapOccupationNameDAL dAL = new StandardMapOccupationNameDAL();
+
+            if (dAL.DeleteAllOccMapByStandardId(standardId) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
     }
 }

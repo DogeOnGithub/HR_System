@@ -22,6 +22,13 @@ namespace HR_SystemIBLL
         List<OccupationName> GetAllOccupationName();
 
         /// <summary>
+        /// 通过职位类型的id获取所有的职位
+        /// </summary>
+        /// <param name="classId">职位类型的id</param>
+        /// <returns>List类型，所有该职位类型下的职位</returns>
+        List<OccupationName> GetAllOccNameByClassId(int classId);
+
+        /// <summary>
         /// 获取所有职称
         /// </summary>
         /// <returns>List类型，所有职称</returns>
