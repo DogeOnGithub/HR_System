@@ -1,32 +1,242 @@
-﻿
+﻿@using HR_System.Models;
+
 @{
     ViewBag.Title = "StaffRegist";
+    List<FirstOrg> firstOrgList = ViewData["firstOrgList"] as List<FirstOrg>;
+    List<OccupationClass> occClassList = ViewData["occClassList"] as List<OccupationClass>;
+    List<TechnicalTitle> tTitleList = ViewData["tTitleList"] as List<TechnicalTitle>;
 }
 
 <h1 class="text-center">StaffRegist</h1>
-<br />
-<br />
-<br />
-<br />
 <div class="container col-lg-11" style="float:none; display:block; margin-left:auto; margin-right:auto">
     <form method="post" action="/" class="form-inline" style="text-align: center">
         
         <!--第1行内容-->
-        <div class="form-group">
-            <label for="exampleInputName2">Name</label>
-            <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+        <div class="form-group" style="width: 32%">
+            <label for="FirstOrg">1级机构</label>
+            <select id="FirstOrg" class="form-control">
+                <option value="0">请选择...</option>
+                @foreach (var fo in firstOrgList)
+                {
+                    <option value="@fo.Id">@fo.OrgName</option>
+                }
+            </select>
         </div>
-        <div class="form-group">
-            <label for="exampleInputEmail2">Email</label>
-            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+        <div class="form-group" style="width: 32%">
+            <label for="SecondOrg">2级机构</label>
+            <select id="SecondOrg" class="form-control">
+                <option value="0">请选择...</option>
+            </select>
         </div>
-        <div class="form-group">
-            <label for="exampleInputEmail2">Email</label>
-            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+        <div class="form-group" style="width: 32%">
+            <label for="ThirdOrg">3级机构</label>
+            <select id="ThirdOrg" class="form-control">
+                <option value="0">请选择...</option>
+            </select>
         </div>
-        <div class="form-group">
-            <label for="exampleInputEmail2">Email</label>
-            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+
+        <br />
+        <br />
+
+        <!--第2行-->
+        <div class="form-group" style="width: 32%">
+            <label for="OccupationClass">职位分类</label>
+            <select id="OccupationClass" class="form-control">
+                <option value="0">请选择...</option>
+                @foreach (var oc in occClassList)
+                {
+                    <option value="@oc.Id">@oc.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="OccupationName">职位名称</label>
+            <select id="OccupationName" class="form-control">
+                <option value="0">请选择...</option>
+            </select>
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="TechnicalTitle">职称</label>
+            <select id="TechnicalTitle" class="form-control">
+                <option value="0">请选择...</option>
+                @foreach (var tt in tTitleList)
+                {
+                    <option value="@tt.Id">@tt.Name</option>
+                }
+            </select>
+        </div>
+
+        <br />
+        <br />
+
+        <!--第3行-->
+        <div class="form-group" style="width: 24%">
+            <label for="StaffName">姓名</label>
+            <input type="text" placeholder="StaffName" class="form-control" id="StaffName" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Sex">性别</label>
+            <select id="Sex" class="form-control">
+                <option value="0">请选择...</option>
+                <option value="1">男</option>
+                <option value="2">女</option>
+            </select>
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Email">Email</label>
+            <input type="email" placeholder="Email" class="form-control" id="Email" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Phone">Phone</label>
+            <input type="tel" placeholder="Phone" class="form-control" id="Phone" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--第4行-->
+        <div class="form-group" style="width: 24%">
+            <label for="Nationality">国籍</label>
+            <select id="Nationality" class="form-control">
+                <option value="1">中国</option>
+                <option value="2">其他</option>
+            </select>
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="CellPhone">CellPhone</label>
+            <input type="text" placeholder="CellPhone" class="form-control" id="CellPhone" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Qq">QQ</label>
+            <input type="text" placeholder="QQ" class="form-control" id="Qq" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="PostalCode">PostalCode</label>
+            <input type="text" placeholder="PostalCode" class="form-control" id="PostalCode" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--5-->
+        <div class="form-group" style="width: 48%">
+            <label for="StaffAdress">StaffAdress</label>
+            <input type="text" placeholder="StaffAdress" class="form-control" id="StaffAdress" />
+        </div>
+        <div class="form-group" style="width: 48%">
+            <label for="Birthland">Birthland</label>
+            <input type="text" placeholder="Birthland" class="form-control" id="Birthland" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--6-->
+        <div class="form-group" style="width: 48%">
+            <label for="DateOfBirth">DateOfBirth</label>
+            <input type="date" placeholder="DateOfBirth" class="form-control" id="DateOfBirth" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Nation">民族</label>
+            <select id="Nation" class="form-control">
+                <option value="1">汉族</option>
+                <option value="2">其他</option>
+            </select>
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="ReligiousBelief">宗教信仰</label>
+            <input type="text" placeholder="ReligiousBelief" class="form-control" id="ReligiousBelief" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--7-->
+        <div class="form-group" style="width: 32%">
+            <label for="Politics">Politics</label>
+            <input type="text" placeholder="Politics" class="form-control" id="Politics" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="IdNumber">IDNumber</label>
+            <input type="text" placeholder="IdNumber" class="form-control" id="IdNumber" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="SocialSecurityNumber">SocialSecurityNumber</label>
+            <input type="text" placeholder="SocialSecurityNumber" class="form-control" id="SocialSecurityNumber" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--8-->
+        <div class="form-group" style="width: 24%">
+            <label for="Age">Age</label>
+            <input type="text" placeholder="Age" class="form-control" id="Age" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Education">Education</label>
+            <select id="Education" class="form-control">
+                <option value="1">大学</option>
+                <option value="2">硕士</option>
+            </select>
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Specialty">专业</label>
+            <input type="text" placeholder="Specialty" class="form-control" id="Specialty" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Speciality">特长</label>
+            <input type="text" placeholder="Speciality" class="form-control" id="Speciality" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--9-->
+        <div class="form-group" style="width: 24%">
+            <label for="SalaryStandard">SalaryStandard</label>
+            <select id="SalaryStandard" class="form-control">
+                <option value="1">请选择...</option>
+            </select>
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Bank">Bank</label>
+            <input type="text" placeholder="Bank" class="form-control" id="Bank" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="BankNumber">BankNumber</label>
+            <input type="text" placeholder="BankNumber" class="form-control" id="BankNumber" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Hobby">Hobby</label>
+            <input type="text" placeholder="Hobby" class="form-control" id="Hobby" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--10-->
+        <div class="form-group" style="width: 96%">
+            <label for="PersonResume">PersonResume</label>
+            <input type="text" placeholder="PersonResume" class="form-control" id="PersonResume" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--11-->
+        <div class="form-group" style="width: 96%">
+            <label for="FamilyInfo">FamilyInfo</label>
+            <input type="text" placeholder="FamilyInfo" class="form-control" id="FamilyInfo" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--12-->
+        <div class="form-group" style="width: 96%">
+            <label for="PersonDesc">PersonDesc</label>
+            <input type="text" placeholder="PersonDesc" class="form-control" id="PersonDesc" />
         </div>
 
         <br />

@@ -14,13 +14,17 @@
     <form method="post" action="/StandardManage/SaveStandard" class="form-inline" style="text-align: center">
 
         <!--第1行内容-->
-        <div class="form-group input-group-lg" style="width:45%">
+        <div class="form-group input-group-lg" style="width:30%">
             <label for="StandardFileNumber">薪酬标准编号</label>
             <input readonly type="text" class="form-control" id="StandardFileNumber" name="StandardFileNumber" placeholder="StandardFileNumber" value="@Guid.NewGuid().ToString()" />
         </div>
-        <div class="form-group input-group-lg" style="width:45%">
+        <div class="form-group input-group-lg" style="width:30%">
             <label for="StandardName">薪酬标准名称</label>
             <input type="text" class="form-control" id="StandardName" name="StandardName" placeholder="StandardName" />
+        </div>
+        <div class="form-group input-group-lg" style="width:30%">
+            <label for="Total">总金额</label>
+            <input readonly type="text" class="form-control" id="Total" name="Total" placeholder="Total" >
         </div>
 
         <input type="hidden" name="Total" value="0" />
@@ -70,14 +74,18 @@
 
         <h4>以下是所有的薪酬项目</h4>
 
+        <script>
+            var arr = new Array();
+        </script>
+
         <!--薪酬项目内容-->
         @foreach (var item in itemList)
         {
             <div class="form-group input-group-lg" style="width:30%">
                 <input type="checkbox" name="ItemCheckbox" value="@item.Id" /><label for="ItemValue">@item.Name</label>
-                <input type="text" class="form-control" id="@("input" + item.Id)" name="@("value" + item.Id)" placeholder="ItemValue">
+                <input oninput="valueChange('@("#input" + item.Id)')" type="text" class="form-control" id="@("input" + item.Id)" name="@("value" + item.Id)" placeholder="ItemValue">
             </div>
-
+            <script>arr.push(@item.Id)</script>
         }
 
         <br />
@@ -132,6 +140,17 @@
                 $("#" + childrenId).append($("<option value='" + o.Id + "'>" + o.Name + "</option>"));
             });
         });
+    }
+
+    function valueChange(id) {
+        var total = 0;
+        for (var i = 0; i < arr.length; i++) {
+            var n = parseInt(arr[i]);
+            if ($("#input" + n).val() != "") {
+                total += parseFloat($("#input" + n).val());
+            }
+        }
+        $("#Total").val(total);
     }
 
 </script>
