@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "AddSalaryStandard";
     List<SalaryItem> itemList = ViewData["itemList"] as List<SalaryItem>;
+    List<OccupationClass> occClassListView = ViewData["occClassListView"] as List<OccupationClass>;
 }
 
 <h1 class="text-center">AddSalaryStandard</h1>
@@ -82,6 +83,32 @@
         <br />
         <br />
 
+        <h4>以下是适用该标准的职位</h4>
+
+        @for (int j = 0; j < 3; j++)
+        {
+            <div class="form-group input-group-lg" style="width:45%">
+                <label for="@("occName" + j)">职位名称</label>
+                @*<input readonly type="text" class="form-control" id="@o.Name" placeholder="OccName" value="@o.Name">*@
+                <select class="form-control" required id="@("occName" + j)" name="@("occName" + j)">
+                    <option value="0">请选择...</option>
+                </select>
+            </div>
+            <div class="form-group input-group-lg" style="width:45%">
+                <label for="@("occClass" + j)">所属职位类型</label>
+                <select class="form-control" required id="@("occClass" + j)" onchange="change('@("occClass" + j)', '@("occName" + j)')" name="@("occClass" + j)">
+                    <option value="0">请选择...</option>
+                    @foreach (var oc in occClassListView)
+                    {
+                        <option value="@oc.Id">@oc.Name</option>
+                    }
+                </select>
+            </div>
+        }
+
+        <br />
+        <br />
+
         <!--选项按钮-->
         <div class="form-group">
             <input type="submit" class="btn btn-primary" />
@@ -91,4 +118,21 @@
         </div>
     </form>
 </div>
+
+
+<script>
+    function change(id, childrenId) {
+        console.log($("#" + id).val());
+        console.log($("#" + childrenId).val());
+        $.post("/OccupationSettings/DynamicOccName", { "id": $("#" + id).val() }, function (data) {
+            $("#" + childrenId).html("");
+            $.each(data, function (i, o) {
+                console.log(o['Id']);
+                console.log(o.Name);
+                $("#" + childrenId).append($("<option value='" + o.Id + "'>" + o.Name + "</option>"));
+            });
+        });
+    }
+
+</script>
 

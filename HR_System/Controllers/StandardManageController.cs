@@ -280,6 +280,8 @@ namespace HR_System.Controllers
 
             ISalaryItemBLL bLL = new SalaryItemBLL();
 
+            IOccupationBLL occupationBLL = new OccupationBLL();
+
             List<SalaryItem> tempList = bLL.GetAllSalaryItem();
 
             List<Models.SalaryItem> itemList = new List<Models.SalaryItem>();
@@ -295,6 +297,22 @@ namespace HR_System.Controllers
             }
 
             ViewData["itemList"] = itemList;
+
+            //装载所有职位类型
+            List<OccupationClass> occClassList = occupationBLL.GetAllOccupationClass();
+            List<Models.OccupationClass> occClassListView = new List<Models.OccupationClass>();
+            if (occClassList != null)
+            {
+                foreach (var oc in occClassList)
+                {
+                    Models.OccupationClass tempClass = new Models.OccupationClass() { Id = oc.Id, Name = oc.Name };
+                    occClassListView.Add(tempClass);
+                }
+            }
+            ViewData["occClassListView"] = occClassListView;
+
+
+            
 
             return View();
         }
