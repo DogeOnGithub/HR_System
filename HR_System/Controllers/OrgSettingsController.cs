@@ -324,10 +324,32 @@ namespace HR_System.Controllers
 
             if (tempList != null)
             {
-                foreach (var so in bLL.GetSecondOrgByFirstOrgId(Convert.ToInt32(id)))
+                foreach (var so in tempList)
                 {
                     Models.SecondeOrg secondeOrg = new Models.SecondeOrg { Id = so.Id, OrgName = so.OrgName, OrgLevel = so.OrgLevel };
                     list.Add(secondeOrg);
+                }
+            }
+
+            return Json(list);
+
+        }
+
+        public ActionResult DynamicThirdOrg(string id)
+        {
+
+            IOrgBLL bLL = new OrgBLL();
+
+            List<Models.ThirdOrg> list = new List<Models.ThirdOrg>();
+
+            List<ThirdOrg> tempList = bLL.GetThirdOrgBySecondOrgId(Convert.ToInt32(id));
+
+            if (tempList != null)
+            {
+                foreach (var to in tempList)
+                {
+                    Models.ThirdOrg thirdOrg = new Models.ThirdOrg { Id = to.Id, OrgName = to.OrgName, OrgLevel = to.OrgLevel };
+                    list.Add(thirdOrg);
                 }
             }
 

@@ -164,6 +164,16 @@ namespace HR_SystemBLL
 
         }
 
+        public List<ThirdOrg> GetThirdOrgBySecondOrgId(int id)
+        {
+            //throw new System.NotImplementedException();
+
+            IThirdOrgDAL dAL = new ThirdOrgDAL();
+
+            return dAL.QueryByParentOrgId(id);
+
+        }
+
         /// <summary>
         /// 实现IOrgBLL接口
         /// </summary>

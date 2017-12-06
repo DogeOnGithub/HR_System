@@ -52,6 +52,34 @@ namespace HR_SystemDAL
 
         }
 
+        public List<SalaryStandard> GetAllStandardByOccId(int occId)
+        {
+            //throw new NotImplementedException();
+
+            List<SalaryStandard> list = new List<SalaryStandard>();
+
+            string sql = @"SELECT id, standardName FROM SalaryStandard WHERE id in(SELECT standardId FROM StandardMapOccupationName WHERE OccupationNameId=@OccupationNameId)";
+
+            using (SqlDataReader reader = SQLHelper.ExecuteReader(sql, new SqlParameter("@OccupationNameId", occId)))
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        SalaryStandard salaryStandard = new SalaryStandard { Id = reader.GetInt32(0), StandardName = reader.GetString(1) };
+                        list.Add(salaryStandard);
+                    }
+                }
+                else
+                {
+                    list = null;
+                }
+            }
+
+            return list;
+
+        }
+
         public StandardMapOccupationName GetMapByStandardIdAndOccNameId(int standardId, int OccNameId)
         {
             //throw new System.NotImplementedException();

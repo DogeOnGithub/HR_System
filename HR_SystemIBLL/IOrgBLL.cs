@@ -77,6 +77,13 @@ namespace HR_SystemIBLL
         List<SecondOrg> GetSecondOrgByFirstOrgId(int id);
 
         /// <summary>
+        /// 通过2级机构的id获取3级机构
+        /// </summary>
+        /// <param name="id">2级机构的id</param>
+        /// <returns>返回所有parentId为传入2级机构id的3级机构</returns>
+        List<ThirdOrg> GetThirdOrgBySecondOrgId(int id);
+
+        /// <summary>
         /// 通过id删除1级机构
         /// </summary>
         /// <param name="id">主键id</param>

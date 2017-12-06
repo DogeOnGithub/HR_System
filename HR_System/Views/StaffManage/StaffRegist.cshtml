@@ -5,16 +5,17 @@
     List<FirstOrg> firstOrgList = ViewData["firstOrgList"] as List<FirstOrg>;
     List<OccupationClass> occClassList = ViewData["occClassList"] as List<OccupationClass>;
     List<TechnicalTitle> tTitleList = ViewData["tTitleList"] as List<TechnicalTitle>;
+    LoginUser loginUser = Session["loginUser"] as LoginUser;
 }
 
 <h1 class="text-center">StaffRegist</h1>
 <div class="container col-lg-11" style="float:none; display:block; margin-left:auto; margin-right:auto">
-    <form method="post" action="/" class="form-inline" style="text-align: center">
+    <form method="post" action="/StaffManage/SaveStaff" class="form-inline" style="text-align: center" enctype="multipart/form-data">
         
         <!--第1行内容-->
         <div class="form-group" style="width: 32%">
             <label for="FirstOrg">1级机构</label>
-            <select id="FirstOrg" class="form-control">
+            <select id="FirstOrg" class="form-control" name="FirstOrg">
                 <option value="0">请选择...</option>
                 @foreach (var fo in firstOrgList)
                 {
@@ -24,13 +25,13 @@
         </div>
         <div class="form-group" style="width: 32%">
             <label for="SecondOrg">2级机构</label>
-            <select id="SecondOrg" class="form-control">
+            <select id="SecondOrg" class="form-control" name="SecondOrg">
                 <option value="0">请选择...</option>
             </select>
         </div>
         <div class="form-group" style="width: 32%">
             <label for="ThirdOrg">3级机构</label>
-            <select id="ThirdOrg" class="form-control">
+            <select id="ThirdOrg" class="form-control" name="ThirdOrgId">
                 <option value="0">请选择...</option>
             </select>
         </div>
@@ -40,7 +41,7 @@
 
         <!--第2行-->
         <div class="form-group" style="width: 32%">
-            <label for="OccupationClass">职位分类</label>
+            <label for="SecondOrg">职位分类</label>
             <select id="OccupationClass" class="form-control">
                 <option value="0">请选择...</option>
                 @foreach (var oc in occClassList)
@@ -51,13 +52,13 @@
         </div>
         <div class="form-group" style="width: 32%">
             <label for="OccupationName">职位名称</label>
-            <select id="OccupationName" class="form-control">
+            <select id="OccupationName" class="form-control" name="OccId">
                 <option value="0">请选择...</option>
             </select>
         </div>
         <div class="form-group" style="width: 32%">
             <label for="TechnicalTitle">职称</label>
-            <select id="TechnicalTitle" class="form-control">
+            <select id="TechnicalTitle" class="form-control" name="TechnicalTitleId">
                 <option value="0">请选择...</option>
                 @foreach (var tt in tTitleList)
                 {
@@ -72,23 +73,35 @@
         <!--第3行-->
         <div class="form-group" style="width: 24%">
             <label for="StaffName">姓名</label>
-            <input type="text" placeholder="StaffName" class="form-control" id="StaffName" />
+            <input type="text" placeholder="StaffName" class="form-control" id="StaffName" name="StaffName" value="ceshi" />
         </div>
         <div class="form-group" style="width: 24%">
             <label for="Sex">性别</label>
-            <select id="Sex" class="form-control">
-                <option value="0">请选择...</option>
+            <select id="Sex" class="form-control" name="Sex">
                 <option value="1">男</option>
                 <option value="2">女</option>
             </select>
         </div>
         <div class="form-group" style="width: 24%">
             <label for="Email">Email</label>
-            <input type="email" placeholder="Email" class="form-control" id="Email" />
+            <input type="email" placeholder="Email" class="form-control" id="Email" name="Email" value="ceshi@ceshi.ceshi" />
         </div>
-        <div class="form-group" style="width: 24%">
-            <label for="Phone">Phone</label>
-            <input type="tel" placeholder="Phone" class="form-control" id="Phone" />
+        <div class="form-group pull-right" id="uploadForm" style="width: 24%">
+            <div class="h4">员工头像</div>
+            <div class="fileinput fileinput-new" data-provides="fileinput" id="exampleInputUpload">
+                <div class="fileinput-new thumbnail" style="width: 200px;height: auto;max-height:150px;">
+                    <img id='picImg' style="width: 100%;height: auto;max-height: 140px;" src="/images/noimage.png" alt="" />
+                </div>
+                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                <div>
+                    <span class="btn btn-primary btn-file">
+                        <span class="fileinput-new">选择文件</span>
+                        <span class="fileinput-exists">换一张</span>
+                        <input required type="file" name="StaffImage" id="picID" accept="image/gif,image/jpeg,image/x-png" />
+                    </span>
+                    <a href="javascript:;" class="btn btn-warning fileinput-exists" data-dismiss="fileinput">移除</a>
+                </div>
+            </div>
         </div>
 
         <br />
@@ -97,22 +110,32 @@
         <!--第4行-->
         <div class="form-group" style="width: 24%">
             <label for="Nationality">国籍</label>
-            <select id="Nationality" class="form-control">
-                <option value="1">中国</option>
-                <option value="2">其他</option>
+            <select id="Nationality" class="form-control" name="Nationality" >
+                <option value="CN">中国</option>
+                <option value="Others">其他</option>
             </select>
         </div>
         <div class="form-group" style="width: 24%">
-            <label for="CellPhone">CellPhone</label>
-            <input type="text" placeholder="CellPhone" class="form-control" id="CellPhone" />
+            <label for="Phone">Phone</label>
+            <input type="tel" placeholder="Phone" class="form-control" id="Phone" name="Phone" value="ceshi" />
         </div>
         <div class="form-group" style="width: 24%">
+            <label for="CellPhone">CellPhone</label>
+            <input type="text" placeholder="CellPhone" class="form-control" id="CellPhone" name="CellPhone" value="ceshi" />
+        </div>
+        <br />
+        <br />
+        <div class="form-group" style="width: 24%">
             <label for="Qq">QQ</label>
-            <input type="text" placeholder="QQ" class="form-control" id="Qq" />
+            <input type="text" placeholder="QQ" class="form-control" id="Qq" name="Qq" value="ceshi" />
         </div>
         <div class="form-group" style="width: 24%">
             <label for="PostalCode">PostalCode</label>
-            <input type="text" placeholder="PostalCode" class="form-control" id="PostalCode" />
+            <input type="text" placeholder="PostalCode" class="form-control" id="PostalCode" name="PostalCode" value="ceshi" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Politics">Politics</label>
+            <input type="text" placeholder="Politics" class="form-control" id="Politics" name="Politics" value="ceshi" />
         </div>
 
         <br />
@@ -121,11 +144,11 @@
         <!--5-->
         <div class="form-group" style="width: 48%">
             <label for="StaffAdress">StaffAdress</label>
-            <input type="text" placeholder="StaffAdress" class="form-control" id="StaffAdress" />
+            <input type="text" placeholder="StaffAdress" class="form-control" id="StaffAdress" name="StaffAdress" value="ceshi" />
         </div>
         <div class="form-group" style="width: 48%">
             <label for="Birthland">Birthland</label>
-            <input type="text" placeholder="Birthland" class="form-control" id="Birthland" />
+            <input type="text" placeholder="Birthland" class="form-control" id="Birthland" name="Birthland" value="ceshi" />
         </div>
 
         <br />
@@ -134,35 +157,32 @@
         <!--6-->
         <div class="form-group" style="width: 48%">
             <label for="DateOfBirth">DateOfBirth</label>
-            <input type="date" placeholder="DateOfBirth" class="form-control" id="DateOfBirth" />
+            <input required type="date" placeholder="DateOfBirth" class="form-control" id="DateOfBirth" name="DateOfBirth" />
         </div>
         <div class="form-group" style="width: 24%">
             <label for="Nation">民族</label>
-            <select id="Nation" class="form-control">
-                <option value="1">汉族</option>
-                <option value="2">其他</option>
+            <select id="Nation" class="form-control" name="Nation">
+                <option value="Han">汉族</option>
+                <option value="Others">其他</option>
             </select>
         </div>
         <div class="form-group" style="width: 24%">
             <label for="ReligiousBelief">宗教信仰</label>
-            <input type="text" placeholder="ReligiousBelief" class="form-control" id="ReligiousBelief" />
+            <input type="text" placeholder="ReligiousBelief" class="form-control" id="ReligiousBelief" name="ReligiousBelief" value="ceshi" />
         </div>
 
         <br />
         <br />
 
         <!--7-->
-        <div class="form-group" style="width: 32%">
-            <label for="Politics">Politics</label>
-            <input type="text" placeholder="Politics" class="form-control" id="Politics" />
-        </div>
-        <div class="form-group" style="width: 32%">
+        
+        <div class="form-group" style="width: 48%">
             <label for="IdNumber">IDNumber</label>
-            <input type="text" placeholder="IdNumber" class="form-control" id="IdNumber" />
+            <input type="text" placeholder="IdNumber" class="form-control" id="IdNumber" name="IdNumber" value="ceshi" />
         </div>
-        <div class="form-group" style="width: 32%">
+        <div class="form-group" style="width: 48%">
             <label for="SocialSecurityNumber">SocialSecurityNumber</label>
-            <input type="text" placeholder="SocialSecurityNumber" class="form-control" id="SocialSecurityNumber" />
+            <input type="text" placeholder="SocialSecurityNumber" class="form-control" id="SocialSecurityNumber" name="SocialSecurityNumber" value="ceshi" />
         </div>
 
         <br />
@@ -171,22 +191,22 @@
         <!--8-->
         <div class="form-group" style="width: 24%">
             <label for="Age">Age</label>
-            <input type="text" placeholder="Age" class="form-control" id="Age" />
+            <input type="text" placeholder="Age" class="form-control" id="Age" name="Age" value="20" />
         </div>
         <div class="form-group" style="width: 24%">
             <label for="Education">Education</label>
-            <select id="Education" class="form-control">
-                <option value="1">大学</option>
-                <option value="2">硕士</option>
+            <select id="Education" class="form-control" name="Education">
+                <option value="大学">大学</option>
+                <option value="硕士">硕士</option>
             </select>
         </div>
         <div class="form-group" style="width: 24%">
             <label for="Specialty">专业</label>
-            <input type="text" placeholder="Specialty" class="form-control" id="Specialty" />
+            <input type="text" placeholder="Specialty" class="form-control" id="Specialty" name="Specialty" value="ceshi" />
         </div>
         <div class="form-group" style="width: 24%">
             <label for="Speciality">特长</label>
-            <input type="text" placeholder="Speciality" class="form-control" id="Speciality" />
+            <input type="text" placeholder="Speciality" class="form-control" id="Speciality" name="Speciality" value="ceshi" />
         </div>
 
         <br />
@@ -195,21 +215,21 @@
         <!--9-->
         <div class="form-group" style="width: 24%">
             <label for="SalaryStandard">SalaryStandard</label>
-            <select id="SalaryStandard" class="form-control">
+            <select id="SalaryStandard" class="form-control" name="StandardId">
                 <option value="1">请选择...</option>
             </select>
         </div>
         <div class="form-group" style="width: 24%">
             <label for="Bank">Bank</label>
-            <input type="text" placeholder="Bank" class="form-control" id="Bank" />
+            <input type="text" placeholder="Bank" class="form-control" id="Bank" name="Bank" value="ceshi" />
         </div>
         <div class="form-group" style="width: 24%">
             <label for="BankNumber">BankNumber</label>
-            <input type="text" placeholder="BankNumber" class="form-control" id="BankNumber" />
+            <input type="text" placeholder="BankNumber" class="form-control" id="BankNumber" name="BankNumber" value="ceshi" />
         </div>
         <div class="form-group" style="width: 24%">
             <label for="Hobby">Hobby</label>
-            <input type="text" placeholder="Hobby" class="form-control" id="Hobby" />
+            <input type="text" placeholder="Hobby" class="form-control" id="Hobby" name="Hobby" value="ceshi" />
         </div>
 
         <br />
@@ -218,7 +238,7 @@
         <!--10-->
         <div class="form-group" style="width: 96%">
             <label for="PersonResume">PersonResume</label>
-            <input type="text" placeholder="PersonResume" class="form-control" id="PersonResume" />
+            <input type="text" placeholder="PersonResume" class="form-control" id="PersonResume" name="PersonResume" value="ceshi" />
         </div>
 
         <br />
@@ -227,7 +247,7 @@
         <!--11-->
         <div class="form-group" style="width: 96%">
             <label for="FamilyInfo">FamilyInfo</label>
-            <input type="text" placeholder="FamilyInfo" class="form-control" id="FamilyInfo" />
+            <input type="text" placeholder="FamilyInfo" class="form-control" id="FamilyInfo" name="FamilyInfo" value="ceshi" />
         </div>
 
         <br />
@@ -236,12 +256,34 @@
         <!--12-->
         <div class="form-group" style="width: 96%">
             <label for="PersonDesc">PersonDesc</label>
-            <input type="text" placeholder="PersonDesc" class="form-control" id="PersonDesc" />
+            <input type="text" placeholder="PersonDesc" class="form-control" id="PersonDesc" name="PersonDesc" value="ceshi" />
+        </div>
+
+        <br />
+        <br />
+        
+
+        <br />
+        <br />
+
+        <!--8-->
+        <div class="form-group" style="width: 32%">
+            <label for="Registrant">Registrant</label>
+            <input type="text" placeholder="Registrant" class="form-control" id="Registrant" name="Registrant" value="@loginUser.Username" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="StaffFileNumber">StaffFileNumber</label>
+            <input readonly type="text" placeholder="StaffFileNumber" class="form-control" id="StaffFileNumber" name="StaffFileNumber" value="系统自动生成" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="RegistTime">RegistTime</label>
+            <input readonly type="datetime" placeholder="RegistTime" class="form-control" id="RegistTime" name="RegistTime" value="@DateTime.Now.ToString()" />
         </div>
 
         <br />
         <br />
 
+        <input type="hidden" name="CheckBy" value="未审核" />
 
 
         <!--提交按钮和重置按钮-->
@@ -253,4 +295,97 @@
         </div>
     </form>
 </div>
+
+
+
+
+
+<script>
+    $("#FirstOrg").change(
+        function () {
+            var id = $(this).val();
+            $.post("/OrgSettings/DynamicSecondOrg", { "id": id }, function (data) {
+                $("#SecondOrg").html($("<option value='0'>请选择...</option>"));
+                $("#ThirdOrg").html($("<option value='0'>请选择...</option>"));
+                $.each(data, function (i, s) {
+                    console.log(s['Id']);
+                    console.log(s.OrgName);
+                    $("#SecondOrg").append($("<option value='" + s.Id + "'>" + s.OrgName + "</option>"));
+                });
+            });
+        }
+    );
+
+    $("#SecondOrg").change(
+        function () {
+            var id = $(this).val();
+            $.post("/OrgSettings/DynamicThirdOrg", { "id": id }, function (data) {
+                $("#ThirdOrg").html("");
+                $.each(data, function (i, t) {
+                    console.log(t['Id']);
+                    console.log(t.OrgName);
+                    $("#ThirdOrg").append($("<option value='" + t.Id + "'>" + t.OrgName + "</option>"));
+                });
+            });
+        }
+    );
+
+    $("#OccupationClass").change(
+        function () {
+            var id = $(this).val();
+            $.post("/OccupationSettings/DynamicOccName", { "id": id }, function (data) {
+                $("#OccupationName").html($("<option value='0'>请选择...</option>"));
+                $.each(data, function (i, n) {
+                    console.log(n['Id']);
+                    console.log(n.OrgName);
+                    $("#OccupationName").append($("<option value='" + n.Id + "'>" + n.Name + "</option>"));
+                });
+            });
+        }
+    );
+
+    $("#OccupationName").change(
+        function () {
+            var id = $(this).val();
+            $.post("/StandardManage/DynamicStandardByOcc", { "id": id }, function (data) {
+                $("#SalaryStandard").html($("<option value='0'>请选择...</option>"));
+                $.each(data, function (i, n) {
+                    console.log(n['Id']);
+                    console.log(n.OrgName);
+                    $("#SalaryStandard").append($("<option value='" + n.Id + "'>" + n.StandardName + "</option>"));
+                });
+            });
+        }
+    );
+
+    $(function () {
+        //比较简洁，细节可自行完善
+        $('#uploadSubmit').click(function () {
+            var data = new FormData($('#uploadForm')[0]);
+            $.ajax({
+                url: 'xxx/xxx',
+                type: 'POST',
+                data: data,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log(data);
+                    if (data.status) {
+                        console.log('upload success');
+                    } else {
+                        console.log(data.message);
+                    }
+                },
+                error: function (data) {
+                    console.log(data.status);
+                }
+            });
+        });
+
+    })
+</script>
+
+@Scripts.Render("~/bundles/bootstrapinput")
 

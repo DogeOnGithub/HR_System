@@ -58,5 +58,47 @@ namespace HR_System.Controllers
 
             return View();
         }
+
+        public ActionResult SaveStaff(FormCollection formCollection)
+        {
+
+            IStaffBLL bLL = new StaffBLL();
+
+            Staff staff = new Staff();
+
+            Type type = typeof(Staff);
+
+            foreach (var p in type.GetProperties())
+            {
+                if (p.Name != "FileState" && p.Name != "IsDel" && p.Name != "ImagePath" && p.Name != "Id")
+                {
+                    p.SetValue(staff, Convert.ChangeType(formCollection[p.Name], p.PropertyType));
+                }
+            }
+
+            staff.FileState = EnumState.StaffFileStateEnum.WaitCheck;
+            staff.IsDel = false;
+            staff.StaffFileNumber = DateTime.Now.Year.ToString() + formCollection["FirstOrg"] + formCollection["SecondOrg"] + formCollection["ThirdOrgId"] + new Random().Next(10, 99).ToString();
+            
+
+            HttpPostedFileBase file = Request.Files["StaffImage"];
+
+            string path = @"/UploadFiles/" + Guid.NewGuid().ToString() + file.FileName;
+
+            file.SaveAs(Server.MapPath(path));
+
+            staff.ImagePath = path;
+
+            if (bLL.SaveStaff(staff))
+            {
+                TempData["info"] = "保存成功";
+                return Redirect("/Main/Index");
+            }
+            else
+            {
+                TempData["error"] = "保存失败";
+                return Redirect("/StaffManage/StaffRegist");
+            }
+        }
     }
 }

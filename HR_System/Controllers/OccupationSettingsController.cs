@@ -270,7 +270,12 @@ namespace HR_System.Controllers
         public ActionResult DynamicOccName(string id)
         {
             IOccupationBLL bLL = new OccupationBLL();
-            List<OccupationName> list = bLL.GetAllOccNameByClassId(Convert.ToInt32(id));
+            List<OccupationName> list = new List<OccupationName>();
+            List<OccupationName>  tempList = bLL.GetAllOccNameByClassId(Convert.ToInt32(id));
+            if (tempList != null)
+            {
+                list = tempList;
+            }
             return Json(list);
         }
 

@@ -29,5 +29,12 @@ namespace HR_SystemIDAL
         /// <param name="standardId">薪酬标准的id</param>
         /// <returns>返回影响行数</returns>
         int DeleteAllOccMapByStandardId(int standardId);
+
+        /// <summary>
+        /// 通过职位获取所有薪酬标准
+        /// </summary>
+        /// <param name="occId">职位的id</param>
+        /// <returns>所有该职位适用的薪酬标准</returns>
+        List<SalaryStandard> GetAllStandardByOccId(int occId);
     }
 }

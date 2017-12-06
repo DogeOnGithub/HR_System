@@ -51,6 +51,13 @@ namespace HR_SystemIBLL
         List<StandardMapOccupationName> GetAllStandardMapOccByStandardId(int standardId);
 
         /// <summary>
+        /// 通过职位的id获取该职位适用的所有薪酬标准
+        /// </summary>
+        /// <param name="occId">职位的id</param>
+        /// <returns>List类型，所有薪酬标准</returns>
+        List<SalaryStandard> GetAllStandardByOccId(int occId);
+
+        /// <summary>
         /// 保存薪酬标准和薪酬项目的映射关系
         /// </summary>
         /// <param name="standardMapItem">需要保存的映射关系</param>

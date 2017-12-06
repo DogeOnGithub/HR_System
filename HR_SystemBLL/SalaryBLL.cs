@@ -257,5 +257,20 @@ namespace HR_SystemBLL
             }
 
         }
+
+        /// <summary>
+        /// 通过职位获取所有薪酬标准
+        /// </summary>
+        /// <param name="occId">职位id</param>
+        /// <returns>所有该职位适用的薪酬标准</returns>
+        public List<SalaryStandard> GetAllStandardByOccId(int occId)
+        {
+            //throw new NotImplementedException();
+
+            IStandardMapOccupationNameDAL dAL = new StandardMapOccupationNameDAL();
+
+            return dAL.GetAllStandardByOccId(occId);
+
+        }
     }
 }

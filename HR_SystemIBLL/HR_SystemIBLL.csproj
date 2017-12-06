@@ -45,6 +45,7 @@
     <Compile Include="IOrgBLL.cs" />
     <Compile Include="ISalaryBLL.cs" />
     <Compile Include="ISalaryItemBLL.cs" />
+    <Compile Include="IStaffBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

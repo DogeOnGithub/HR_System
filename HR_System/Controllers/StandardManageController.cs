@@ -383,5 +383,21 @@ namespace HR_System.Controllers
             }
 
         }
+
+        public ActionResult DynamicStandardByOcc(string id)
+        {
+            ISalaryBLL bLL = new SalaryBLL();
+
+            List<SalaryStandard> list = new List<SalaryStandard>();
+
+            List<SalaryStandard> tempList = bLL.GetAllStandardByOccId(Convert.ToInt32(id));
+
+            if (tempList != null)
+            {
+                list = tempList;
+            }
+
+            return Json(list);
+        }
     }
 }
