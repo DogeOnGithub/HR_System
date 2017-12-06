@@ -22,6 +22,16 @@ namespace HR_SystemBLL
 
         }
 
+        public Staff GetStaffById(int id)
+        {
+            //throw new NotImplementedException();
+
+            IStaffDAL dAL = new StaffDAL();
+
+            return dAL.QueryById(id);
+
+        }
+
         /// <summary>
         /// 保存员工档案
         /// </summary>

@@ -1,0 +1,269 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "DetailStaff";
+    Staff staffView = ViewData["staffView"] as Staff;
+}
+
+<h1 class="text-center">Detail Of Staff</h1>
+<div class="container col-lg-11" style="float:none; display:block; margin-left:auto; margin-right:auto">
+    <form method="post" action="/StaffManage/SaveStaff" class="form-inline" style="text-align: center" enctype="multipart/form-data">
+
+        <!--第1行内容-->
+        <div class="form-group" style="width: 32%">
+            <label for="FirstOrg">1级机构</label>
+            <input readonly type="text" placeholder="FirstOrg" class="form-control" id="FirstOrg" value="@staffView.FirstOrg.OrgName" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="SecondOrg">2级机构</label>
+            <input readonly type="text" placeholder="SecondOrg" class="form-control" id="SecondOrg" value="@staffView.SecondeOrg.OrgName" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="ThirdOrg">3级机构</label>
+            <input readonly type="text" placeholder="ThirdOrg" class="form-control" id="ThirdOrg" value="@staffView.ThirdOrg.OrgName" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--第2行-->
+        <div class="form-group" style="width: 32%">
+            <label for="OccupationClass">职位分类</label>
+            <input readonly type="text" placeholder="OccupationClass" class="form-control" id="OccupationClass" value="@staffView.OccupationClass.Name" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="OccupationName">职位名称</label>
+            <input readonly type="text" placeholder="OccupationName" class="form-control" id="OccupationName" value="@staffView.OccupationName.Name" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="TechnicalTitle">职称</label>
+            <input readonly type="text" placeholder="TechnicalTitle" class="form-control" id="TechnicalTitle" value="@staffView.TechnicalTitle.Name" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--第3行-->
+        <div class="form-group" style="width: 24%">
+            <label for="StaffName">姓名</label>
+            <input readonly type="text" placeholder="StaffName" class="form-control" id="StaffName" name="StaffName" value="@staffView.StaffName" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Sex">性别</label>
+            <input readonly type="text" placeholder="Sex" class="form-control" id="Sex" name="Sex" value="@staffView.Sex" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Email">Email</label>
+            <input readonly type="text" placeholder="Email" class="form-control" id="Email" name="Email" value="@staffView.Email" />
+        </div>
+        <div class="form-group pull-right" id="uploadForm" style="width: 24%">
+            <div class="h4">员工头像</div>
+            <div class="fileinput fileinput-new" data-provides="fileinput" id="exampleInputUpload">
+                <div class="fileinput-new thumbnail" style="width: 200px;height: auto;max-height:200px;">
+                    <img id='picImg' style="width: 100%;height: auto;max-height: 180px;" src="@staffView.ImagePath" alt="" />
+                </div>
+                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                @*<div>
+                        <span class="btn btn-primary btn-file">
+                            <span class="fileinput-new">选择文件</span>
+                            <span class="fileinput-exists">换一张</span>
+                            <input readonly required type="file" name="StaffImage" id="picID" accept="image/gif,image/jpeg,image/x-png" />
+                        </span>
+                        <a href="javascript:;" class="btn btn-warning fileinput-exists" data-dismiss="fileinput">移除</a>
+                    </div>*@
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <!--第4行-->
+        <div class="form-group" style="width: 24%">
+            <label for="Nationality">国籍</label>
+            <input readonly type="text" placeholder="Nationality" class="form-control" id="Nationality" name="Nationality" value="@staffView.Nationality" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Phone">Phone</label>
+            <input readonly type="text" placeholder="Phone" class="form-control" id="Phone" name="Phone" value="@staffView.Phone" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="CellPhone">CellPhone</label>
+            <input readonly type="text" placeholder="CellPhone" class="form-control" id="CellPhone" name="CellPhone" value="@staffView.CellPhone" />
+        </div>
+        <br />
+        <br />
+        <div class="form-group" style="width: 32%">
+            <label for="Qq">QQ</label>
+            <input readonly type="text" placeholder="QQ" class="form-control" id="Qq" name="Qq" value="@staffView.Qq" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="PostalCode">PostalCode</label>
+            <input readonly type="text" placeholder="PostalCode" class="form-control" id="PostalCode" name="PostalCode" value="@staffView.PostalCode" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="Politics">Politics</label>
+            <input readonly type="text" placeholder="Politics" class="form-control" id="Politics" name="Politics" value="@staffView.Politics" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--5-->
+        <div class="form-group" style="width: 48%">
+            <label for="StaffAddress">StaffAddress</label>
+            <input readonly type="text" placeholder="StaffAddress" class="form-control" id="StaffAddress" name="StaffAddress" value="@staffView.StaffAddress" />
+        </div>
+        <div class="form-group" style="width: 48%">
+            <label for="Birthland">Birthland</label>
+            <input readonly type="text" placeholder="Birthland" class="form-control" id="Birthland" name="Birthland" value="@staffView.Birthland" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--6-->
+        <div class="form-group" style="width: 48%">
+            <label for="DateOfBirth">DateOfBirth</label>
+            <input readonly type="text" placeholder="DateOfBirth" class="form-control" id="DateOfBirth" name="DateOfBirth" value="@staffView.DateOfBirth.ToShortDateString()" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Nation">民族</label>
+            <input readonly type="text" placeholder="Nation" class="form-control" id="Nation" name="Nation" value="@staffView.Nation" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="ReligiousBelief">宗教信仰</label>
+            <input readonly type="text" placeholder="ReligiousBelief" class="form-control" id="ReligiousBelief" name="ReligiousBelief" value="@staffView.ReligiousBelief" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--7-->
+
+        <div class="form-group" style="width: 48%">
+            <label for="IdNumber">IDNumber</label>
+            <input readonly type="text" placeholder="IdNumber" class="form-control" id="IdNumber" name="IdNumber" value="@staffView.IdNumber" />
+        </div>
+        <div class="form-group" style="width: 48%">
+            <label for="SocialSecurityNumber">SocialSecurityNumber</label>
+            <input readonly type="text" placeholder="SocialSecurityNumber" class="form-control" id="SocialSecurityNumber" name="SocialSecurityNumber" value="@staffView.SocialSecurityNumber" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--8-->
+        <div class="form-group" style="width: 24%">
+            <label for="Age">Age</label>
+            <input readonly type="text" placeholder="Age" class="form-control" id="Age" name="Age" value="@staffView.Age" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Education">Education</label>
+            <input readonly type="text" placeholder="Education" class="form-control" id="Education" name="Education" value="@staffView.Education" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Specialty">专业</label>
+            <input readonly type="text" placeholder="Specialty" class="form-control" id="Specialty" name="Specialty" value="@staffView.Specialty" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Speciality">特长</label>
+            <input readonly type="text" placeholder="Speciality" class="form-control" id="Speciality" name="Speciality" value="@staffView.Speciality" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--9-->
+        <div class="form-group" style="width: 24%">
+            <label for="SalaryStandard">SalaryStandard</label>
+            <input readonly type="text" placeholder="SalaryStandard" class="form-control" id="SalaryStandard" name="SalaryStandard" value="@staffView.SalaryStandard.StandardName   总金额￥@staffView.SalaryStandard.Total" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Bank">Bank</label>
+            <input readonly type="text" placeholder="Bank" class="form-control" id="Bank" name="Bank" value="@staffView.Bank" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="BankNumber">BankNumber</label>
+            <input readonly type="text" placeholder="BankNumber" class="form-control" id="BankNumber" name="BankNumber" value="@staffView.BankNumber" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Hobby">Hobby</label>
+            <input readonly type="text" placeholder="Hobby" class="form-control" id="Hobby" name="Hobby" value="@staffView.Hobby" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--10-->
+        <div class="form-group" style="width: 96%">
+            <label for="PersonResume">PersonResume</label>
+            <input readonly type="text" placeholder="PersonResume" class="form-control" id="PersonResume" name="PersonResume" value="@staffView.PersonResume" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--11-->
+        <div class="form-group" style="width: 96%">
+            <label for="FamilyInfo">FamilyInfo</label>
+            <input readonly type="text" placeholder="FamilyInfo" class="form-control" id="FamilyInfo" name="FamilyInfo" value="@staffView.FamilyInfo" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--12-->
+        <div class="form-group" style="width: 96%">
+            <label for="PersonDesc">PersonDesc</label>
+            <input readonly type="text" placeholder="PersonDesc" class="form-control" id="PersonDesc" name="PersonDesc" value="@staffView.PersonDesc" />
+        </div>
+
+        <br />
+        <br />
+
+
+        <br />
+        <br />
+
+        <!--8-->
+        <div class="form-group" style="width: 32%">
+            <label for="Registrant">Registrant</label>
+            <input readonly type="text" placeholder="Registrant" class="form-control" id="Registrant" name="Registrant" value="@staffView.Registrant" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="StaffFileNumber">StaffFileNumber</label>
+            <input readonly type="text" placeholder="StaffFileNumber" class="form-control" id="StaffFileNumber" name="StaffFileNumber" value="@staffView.StaffFileNumber" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="RegistTime">RegistTime</label>
+            <input readonly type="text" placeholder="RegistTime" class="form-control" id="RegistTime" name="RegistTime" value="@staffView.RegistTime" />
+        </div>
+
+        <br />
+        <br />
+
+        @if (staffView.Editer != "未更改")
+        {
+            <div class="form-group" style="width: 32%">
+                <label for="Editer">上次变更人</label>
+                <input readonly type="text" placeholder="Editer" class="form-control" id="Editer" name="Editer" value="@staffView.Editer" />
+            </div>
+            <div class="form-group" style="width: 32%">
+                <label for="EditTime">上次修改时间</label>
+                <input readonly type="text" placeholder="EditTime" class="form-control" id="EditTime" name="EditTime" value="@staffView.EditTime" />
+            </div>
+
+            <br />
+            <br />
+        }
+
+        <!--按钮-->
+        <div class="form-group input-group-lg">
+            <a href="/StaffManage/EditStaff/@staffView.Id" class="btn btn-warning form-control btn-lg text-center">编辑</a>
+        </div>
+        <div class="form-group input-group-lg">
+            <a href="/StaffManage/StaffView" class="btn btn-default form-control btn-lg text-center">返回</a>
+        </div>
+    </form>
+</div>
+

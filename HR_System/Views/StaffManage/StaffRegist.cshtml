@@ -271,14 +271,19 @@
             <label for="Registrant">Registrant</label>
             <input type="text" placeholder="Registrant" class="form-control" id="Registrant" name="Registrant" value="@loginUser.Username" />
         </div>
+
+        <input type="hidden" name="Editer" value="未更改" />
+
         <div class="form-group" style="width: 32%">
             <label for="StaffFileNumber">StaffFileNumber</label>
-            <input readonly type="text" placeholder="StaffFileNumber" class="form-control" id="StaffFileNumber" name="StaffFileNumber" value="系统自动生成" />
+            <input disabled type="text" placeholder="StaffFileNumber" class="form-control" id="StaffFileNumber" name="StaffFileNumber" value="系统自动生成" />
         </div>
         <div class="form-group" style="width: 32%">
             <label for="RegistTime">RegistTime</label>
             <input readonly type="datetime" placeholder="RegistTime" class="form-control" id="RegistTime" name="RegistTime" value="@DateTime.Now.ToString()" />
         </div>
+
+        <input type="hidden" name="EditTime" value="@DateTime.Now.ToString()" />
 
         <br />
         <br />
@@ -287,14 +292,14 @@
 
 
         <!--提交按钮和重置按钮-->
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary form-control">Submit</button>
+        <div class="form-group input-group-lg">
+            <button type="submit" class="btn btn-primary form-control btn-lg text-center">Submit</button>
         </div> 
-        <div class="form-group">
-            <button type="reset" class="btn btn-default form-control">Reset</button>
+        <div class="form-group input-group-lg">
+            <button type="reset" class="btn btn-default form-control btn-lg text-center">Reset</button>
         </div>
-        <div class="form-group">
-            <a href="/StaffManage/StaffView" class="btn btn-default form-control">Return</a>
+        <div class="form-group input-group-lg">
+            <a href="/StaffManage/StaffView" class="btn btn-default form-control btn-lg text-center">Return</a>
         </div>
     </form>
 </div>

@@ -239,6 +239,8 @@
     <Content Include="Views\StandardManage\AddSalaryStandard.cshtml" />
     <Content Include="Views\StandardManage\StandardAddOccName.cshtml" />
     <Content Include="Views\StaffManage\StaffView.cshtml" />
+    <Content Include="Views\StaffManage\DetailStaff.cshtml" />
+    <Content Include="Views\StaffManage\EditStaff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

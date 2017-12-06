@@ -17,6 +17,13 @@ namespace HR_SystemIBLL
         List<Staff> GetAllStaff();
 
         /// <summary>
+        /// 通过id获取员工档案
+        /// </summary>
+        /// <param name="id">主键id</param>
+        /// <returns>返回id对应的员工档案</returns>
+        Staff GetStaffById(int id);
+
+        /// <summary>
         /// 保存员工档案
         /// </summary>
         /// <param name="staff">需要保存的员工档案</param>

@@ -1,0 +1,330 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "EditStaff";
+    Staff staffView = ViewData["staffView"] as Staff;
+    List<TechnicalTitle> tTitleList = ViewData["tTitleList"] as List<TechnicalTitle>;
+    LoginUser loginUser = Session["loginUser"] as LoginUser;
+    List<SalaryStandard> standardListView = ViewData["standardListView"] as List<SalaryStandard>;
+}
+
+<h1 class="text-center">EditStaff</h1>
+<div class="container col-lg-11" style="float:none; display:block; margin-left:auto; margin-right:auto">
+    <form method="post" action="/StaffManage/SaveStaff" class="form-inline" style="text-align: center" enctype="multipart/form-data">
+
+        <input type="hidden" name="Id" value="@staffView.Id" />
+
+        <!--第1行内容-->
+        <div class="form-group" style="width: 32%">
+            <label for="FirstOrg">1级机构</label>
+            <input readonly type="text" placeholder="FirstOrg" class="form-control" id="FirstOrg" value="@staffView.FirstOrg.OrgName" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="SecondOrg">2级机构</label>
+            <input readonly type="text" placeholder="SecondOrg" class="form-control" id="SecondOrg" value="@staffView.SecondeOrg.OrgName" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="ThirdOrg">3级机构</label>
+            <input disabled type="text" placeholder="ThirdOrg" class="form-control" id="ThirdOrg" value="@staffView.ThirdOrg.OrgName" />
+            <input type="hidden" name="ThirdOrgId" value="@staffView.ThirdOrg.Id" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--第2行-->
+        <div class="form-group" style="width: 32%">
+            <label for="OccupationClass">职位分类</label>
+            <input readonly type="text" placeholder="OccupationClass" class="form-control" id="OccupationClass" value="@staffView.OccupationClass.Name" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="OccupationName">职位名称</label>
+            <input readonly type="text" placeholder="OccupationName" class="form-control" id="OccupationName" value="@staffView.OccupationName.Name" />
+            <input type="hidden" name="OccId" value="@staffView.OccupationName.Id" />
+        </div>
+        <div class="form-group" style="width: 32%">
+            <label for="TechnicalTitle">职称</label>
+            <select id="TechnicalTitle" class="form-control" name="TechnicalTitleId">
+                <option value="0">请选择...</option>
+                @foreach (var tt in tTitleList)
+                {
+                    if (tt.Id == staffView.TechnicalTitle.Id)
+                    {
+                        <option value="@tt.Id" selected>@tt.Name</option>
+                        continue;
+                    }
+                    <option value="@tt.Id">@tt.Name</option>
+                }
+            </select>
+        </div>
+
+        <br />
+        <br />
+
+        <!--第3行-->
+        <div class="form-group" style="width: 24%">
+            <label for="StaffName">姓名</label>
+            <input type="text" placeholder="StaffName" class="form-control" id="StaffName" name="StaffName" value="@staffView.StaffName" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Sex">性别</label>
+            <select id="Sex" class="form-control" name="Sex">
+                <option value="1">男</option>
+                <option value="2">女</option>
+            </select>
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Email">Email</label>
+            <input type="text" placeholder="Email" class="form-control" id="Email" name="Email" value="@staffView.Email" />
+        </div>
+        <div class="form-group pull-right" id="uploadForm" style="width: 24%">
+            <div class="h4">员工头像</div>
+            <div class="fileinput fileinput-new" data-provides="fileinput" id="exampleInputUpload">
+                <div class="fileinput-new thumbnail" style="width: 200px;height: auto;max-height:200px;">
+                    <img id='picImg' style="width: 100%;height: auto;max-height: 180px;" src="@staffView.ImagePath" alt="" />
+                </div>
+                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                <div>
+                        <span class="btn btn-primary btn-file">
+                            <span class="fileinput-new">选择文件</span>
+                            <span class="fileinput-exists">换一张</span>
+                            <input readonly required type="file" name="StaffImage" id="picID" accept="image/gif,image/jpeg,image/x-png" />
+                        </span>
+                        <a href="javascript:;" class="btn btn-warning fileinput-exists" data-dismiss="fileinput">移除</a>
+                    </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="ImagePath" value="@staffView.ImagePath" />
+
+        <br />
+        <br />
+
+        <!--第4行-->
+        <div class="form-group" style="width: 24%">
+            <label for="Nationality">国籍</label>
+            <input type="text" placeholder="Nationality" class="form-control" id="Nationality" name="Nationality" value="@staffView.Nationality" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Phone">Phone</label>
+            <input type="text" placeholder="Phone" class="form-control" id="Phone" name="Phone" value="@staffView.Phone" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="CellPhone">CellPhone</label>
+            <input type="text" placeholder="CellPhone" class="form-control" id="CellPhone" name="CellPhone" value="@staffView.CellPhone" />
+        </div>
+        <br />
+        <br />
+        <div class="form-group" style="width: 24%">
+            <label for="Qq">QQ</label>
+            <input type="text" placeholder="QQ" class="form-control" id="Qq" name="Qq" value="@staffView.Qq" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="PostalCode">PostalCode</label>
+            <input type="text" placeholder="PostalCode" class="form-control" id="PostalCode" name="PostalCode" value="@staffView.PostalCode" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Politics">Politics</label>
+            <input type="text" placeholder="Politics" class="form-control" id="Politics" name="Politics" value="@staffView.Politics" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--5-->
+        <div class="form-group" style="width: 48%">
+            <label for="StaffAddress">StaffAddress</label>
+            <input type="text" placeholder="StaffAddress" class="form-control" id="StaffAddress" name="StaffAddress" value="@staffView.StaffAddress" />
+        </div>
+        <div class="form-group" style="width: 48%">
+            <label for="Birthland">Birthland</label>
+            <input type="text" placeholder="Birthland" class="form-control" id="Birthland" name="Birthland" value="@staffView.Birthland" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--6-->
+        <div class="form-group" style="width: 48%">
+            <label for="DateOfBirth">DateOfBirth</label>
+            <input type="text" placeholder="DateOfBirth" class="form-control" id="DateOfBirth" name="DateOfBirth" value="@staffView.DateOfBirth.ToShortDateString()" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Nation">民族</label>
+            <input type="text" placeholder="Nation" class="form-control" id="Nation" name="Nation" value="@staffView.Nation" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="ReligiousBelief">宗教信仰</label>
+            <input type="text" placeholder="ReligiousBelief" class="form-control" id="ReligiousBelief" name="ReligiousBelief" value="@staffView.ReligiousBelief" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--7-->
+
+        <div class="form-group" style="width: 48%">
+            <label for="IdNumber">IDNumber</label>
+            <input type="text" placeholder="IdNumber" class="form-control" id="IdNumber" name="IdNumber" value="@staffView.IdNumber" />
+        </div>
+        <div class="form-group" style="width: 48%">
+            <label for="SocialSecurityNumber">SocialSecurityNumber</label>
+            <input type="text" placeholder="SocialSecurityNumber" class="form-control" id="SocialSecurityNumber" name="SocialSecurityNumber" value="@staffView.SocialSecurityNumber" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--8-->
+        <div class="form-group" style="width: 24%">
+            <label for="Age">Age</label>
+            <input type="text" placeholder="Age" class="form-control" id="Age" name="Age" value="@staffView.Age" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Education">Education</label>
+            <input type="text" placeholder="Education" class="form-control" id="Education" name="Education" value="@staffView.Education" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Specialty">专业</label>
+            <input type="text" placeholder="Specialty" class="form-control" id="Specialty" name="Specialty" value="@staffView.Specialty" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Speciality">特长</label>
+            <input type="text" placeholder="Speciality" class="form-control" id="Speciality" name="Speciality" value="@staffView.Speciality" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--9-->
+        <div class="form-group" style="width: 24%">
+            <label for="SalaryStandard">SalaryStandard</label>
+            <select id="SalaryStandard" class="form-control" name="StandardId">
+                @foreach (var s in standardListView)
+                {
+                    if (s.Id == staffView.SalaryStandard.Id)
+                    {
+                        <option selected value="@s.Id">@s.StandardName</option>
+                        continue;
+                    }
+                    <option value="@s.Id">@s.StandardName</option>
+                }
+            </select>
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Bank">Bank</label>
+            <input type="text" placeholder="Bank" class="form-control" id="Bank" name="Bank" value="@staffView.Bank" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="BankNumber">BankNumber</label>
+            <input type="text" placeholder="BankNumber" class="form-control" id="BankNumber" name="BankNumber" value="@staffView.BankNumber" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="Hobby">Hobby</label>
+            <input type="text" placeholder="Hobby" class="form-control" id="Hobby" name="Hobby" value="@staffView.Hobby" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--10-->
+        <div class="form-group" style="width: 96%">
+            <label for="PersonResume">PersonResume</label>
+            <input type="text" placeholder="PersonResume" class="form-control" id="PersonResume" name="PersonResume" value="@staffView.PersonResume" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--11-->
+        <div class="form-group" style="width: 96%">
+            <label for="FamilyInfo">FamilyInfo</label>
+            <input type="text" placeholder="FamilyInfo" class="form-control" id="FamilyInfo" name="FamilyInfo" value="@staffView.FamilyInfo" />
+        </div>
+
+        <br />
+        <br />
+
+        <!--12-->
+        <div class="form-group" style="width: 96%">
+            <label for="PersonDesc">PersonDesc</label>
+            <input type="text" placeholder="PersonDesc" class="form-control" id="PersonDesc" name="PersonDesc" value="@staffView.PersonDesc" />
+        </div>
+
+        <br />
+        <br />
+
+
+        <br />
+        <br />
+
+        <!--8-->
+        <div class="form-group" style="width: 24%">
+            <label for="Editer">Editer</label>
+            <input required type="text" placeholder="Editer" class="form-control" id="Editer" name="Editer" value="@loginUser.Username" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="StaffFileNumber">StaffFileNumber</label>
+            <input readonly type="text" placeholder="StaffFileNumber" class="form-control" id="StaffFileNumber" name="StaffFileNumber" value="@staffView.StaffFileNumber" />
+        </div>
+        <div class="form-group" style="width: 24%">
+            <label for="EditTime">EditTime</label>
+            <input readonly type="text" placeholder="EditTime" class="form-control" id="EditTime" name="EditTime" value="@DateTime.Now.ToString()" />
+        </div>
+
+        <input type="hidden" name="RegistTime" value="@staffView.RegistTime.ToString()" />
+
+        <div class="form-group" style="width: 24%">
+            <label for="Registrant">Registrant</label>
+            <input readonly type="text" placeholder="Registrant" class="form-control" id="Registrant" name="Registrant" value="@staffView.Registrant" />
+        </div>
+
+        <input type="hidden" name="CheckBy" value="未审核" />
+
+        <br />
+        <br />
+
+
+        <!--按钮-->
+        <div class="form-group input-group-lg">
+            <button type="submit" class="btn btn-primary form-control btn-lg text-center">Submit</button>
+        </div> 
+        <div class="form-group input-group-lg">
+            <a href="/StaffManage/StaffView" class="btn btn-default form-control btn-lg text-center">Return</a>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    $(function () {
+        //比较简洁，细节可自行完善
+        $('#uploadSubmit').click(function () {
+            var data = new FormData($('#uploadForm')[0]);
+            $.ajax({
+                url: 'xxx/xxx',
+                type: 'POST',
+                data: data,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log(data);
+                    if (data.status) {
+                        console.log('upload success');
+                    } else {
+                        console.log(data.message);
+                    }
+                },
+                error: function (data) {
+                    console.log(data.status);
+                }
+            });
+        });
+
+    })
+</script>
+
+@Scripts.Render("~/bundles/bootstrapinput")
+

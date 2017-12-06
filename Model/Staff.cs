@@ -93,5 +93,15 @@ namespace Model
         /// </summary>
         public string CheckBy { get; set; }
 
+        /// <summary>
+        /// 上一次修改的人
+        /// </summary>
+        public string Editer { get; set; }
+
+        /// <summary>
+        /// 上一次变更的时间
+        /// </summary>
+        public DateTime EditTime { get; set; }
+
     }
 }

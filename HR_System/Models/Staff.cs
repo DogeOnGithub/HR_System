@@ -31,6 +31,8 @@ namespace HR_System.Models
         /// </summary>
         public OccupationName OccupationName { get; set; }
 
+        public OccupationClass OccupationClass { get; set; }
+
         /// <summary>
         /// 外键,薪酬标准id
         /// </summary>
@@ -102,6 +104,16 @@ namespace HR_System.Models
         /// 审核人
         /// </summary>
         public string CheckBy { get; set; }
+
+        /// <summary>
+        /// 上一次修改的人
+        /// </summary>
+        public string Editer { get; set; }
+
+        /// <summary>
+        /// 上一次变更的时间
+        /// </summary>
+        public DateTime EditTime { get; set; }
 
     }
 }
