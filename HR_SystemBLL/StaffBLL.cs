@@ -22,6 +22,16 @@ namespace HR_SystemBLL
 
         }
 
+        public List<Staff> GetAllStaffWaitCheck()
+        {
+            //throw new NotImplementedException();
+
+            IStaffDAL dAL = new StaffDAL();
+
+            return dAL.GetAllStaffWaitCheck();
+
+        }
+
         public Staff GetStaffById(int id)
         {
             //throw new NotImplementedException();

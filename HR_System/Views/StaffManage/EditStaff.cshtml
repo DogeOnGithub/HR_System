@@ -1,14 +1,13 @@
 ﻿@using HR_System.Models;
 
 @{
-    ViewBag.Title = "EditStaff";
     Staff staffView = ViewData["staffView"] as Staff;
     List<TechnicalTitle> tTitleList = ViewData["tTitleList"] as List<TechnicalTitle>;
     LoginUser loginUser = Session["loginUser"] as LoginUser;
     List<SalaryStandard> standardListView = ViewData["standardListView"] as List<SalaryStandard>;
 }
 
-<h1 class="text-center">EditStaff</h1>
+<h1 class="text-center">@ViewBag.Title</h1>
 <div class="container col-lg-11" style="float:none; display:block; margin-left:auto; margin-right:auto">
     <form method="post" action="/StaffManage/SaveStaff" class="form-inline" style="text-align: center" enctype="multipart/form-data">
 
@@ -279,15 +278,29 @@
             <input readonly type="text" placeholder="Registrant" class="form-control" id="Registrant" name="Registrant" value="@staffView.Registrant" />
         </div>
 
-        <input type="hidden" name="CheckBy" value="未审核" />
+        
 
         <br />
         <br />
 
+        @if (ViewBag.Function == "CheckedStaffFile")
+        {
+            <input type="hidden" name="StaffFile" value="Checked" />
+            <div class="form-group" style="width: 48%">
+                <label for="CheckBy">CheckBy</label>
+                <input type="text" placeholder="CheckBy" class="form-control" id="CheckBy" name="CheckBy" value="@loginUser.Username" />
+            </div>
+            <br />
+            <br />
+        }
+        else
+        {
+            <input type="hidden" name="CheckBy" value="未审核" />
+        }
 
         <!--按钮-->
         <div class="form-group input-group-lg">
-            <button type="submit" class="btn btn-primary form-control btn-lg text-center">Submit</button>
+            <button type="submit" class="btn btn-primary form-control btn-lg text-center">@ViewBag.Button</button>
         </div> 
         <div class="form-group input-group-lg">
             <a href="/StaffManage/StaffView" class="btn btn-default form-control btn-lg text-center">Return</a>

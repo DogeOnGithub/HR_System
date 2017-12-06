@@ -17,6 +17,12 @@ namespace HR_SystemIBLL
         List<Staff> GetAllStaff();
 
         /// <summary>
+        /// 获取所有待复核的员工档案
+        /// </summary>
+        /// <returns>List类型，所有待复核的员工档案</returns>
+        List<Staff> GetAllStaffWaitCheck();
+
+        /// <summary>
         /// 通过id获取员工档案
         /// </summary>
         /// <param name="id">主键id</param>

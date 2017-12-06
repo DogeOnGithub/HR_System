@@ -86,7 +86,15 @@ namespace HR_System.Controllers
                 staff.Id = Convert.ToInt32(formCollection["Id"]);
             }
 
-            staff.FileState = EnumState.StaffFileStateEnum.WaitCheck;
+            if (formCollection["StaffFile"] == "Checked")
+            {
+                staff.FileState = EnumState.StaffFileStateEnum.Checked;
+            }
+            else
+            {
+                staff.FileState = EnumState.StaffFileStateEnum.WaitCheck;
+            }
+
             staff.IsDel = false;
 
             if (formCollection["StaffFileNumber"] != null)
@@ -117,8 +125,16 @@ namespace HR_System.Controllers
 
             if (bLL.SaveStaff(staff))
             {
-                TempData["info"] = "保存成功";
-                return Redirect("/StaffManage/StaffView");
+                if (formCollection["StaffFile"] == "Checked")
+                {
+                    TempData["info"] = "复核通过";
+                    return Redirect("/StaffManage/StaffCheck");
+                }
+                else
+                {
+                    TempData["info"] = "保存成功";
+                    return Redirect("/StaffManage/StaffView");
+                }
             }
             else
             {
@@ -182,49 +198,7 @@ namespace HR_System.Controllers
         public ActionResult DetailStaff(string id)
         {
 
-            IStaffBLL staffBLL = new StaffBLL();
-
-            IOrgBLL orgBLL = new OrgBLL();
-
-            IOccupationBLL occupationBLL = new OccupationBLL();
-
-            ISalaryBLL salaryBLL = new SalaryBLL();
-
-            Staff staff = staffBLL.GetStaffById(Convert.ToInt32(id));
-
-            Models.Staff staffView = new Models.Staff();
-
-            Type type = typeof(Models.Staff);
-
-            Type modelType = typeof(Staff);
-
-            var props = type.GetProperties();
-
-            foreach (var p in props)
-            {
-                if (modelType.GetProperty(p.Name) != null)
-                {
-                    p.SetValue(staffView, modelType.GetProperty(p.Name).GetValue(staff));
-                }
-            }
-
-            ThirdOrg thirdOrg = orgBLL.GetThirdOrgById(staff.ThirdOrgId);
-            SecondOrg secondOrg = orgBLL.GetSecondOrgById(thirdOrg.ParentOrgId);
-            FirstOrg firstOrg = orgBLL.GetFirstOrgById(secondOrg.ParentOrgId);
-            OccupationName occupationName = occupationBLL.GetOccupationNameById(staff.OccId);
-            OccupationClass occupationClass = occupationBLL.GetOccupationClassById(occupationName.ClassId);
-            SalaryStandard salaryStandard = salaryBLL.GetSalaryStandardById(staff.StandardId);
-            TechnicalTitle technicalTitle = occupationBLL.GetTechnicalTitleById(staff.TechnicalTitleId);
-
-            staffView.FirstOrg = new Models.FirstOrg { Id = firstOrg.Id, OrgLevel = firstOrg.OrgLevel, OrgName = firstOrg.OrgName };
-            staffView.SecondeOrg = new Models.SecondeOrg { Id = secondOrg.Id, OrgName = secondOrg.OrgName, OrgLevel = secondOrg.OrgLevel, ParentOrg = staffView.FirstOrg };
-            staffView.ThirdOrg = new Models.ThirdOrg { Id = thirdOrg.Id, ParentOrg = staffView.SecondeOrg, OrgLevel = thirdOrg.OrgLevel, OrgName = thirdOrg.OrgName };
-            staffView.OccupationClass = new Models.OccupationClass { Id = occupationClass.Id, Name = occupationClass.Name };
-            staffView.OccupationName = new Models.OccupationName { Id = occupationName.Id, Name = occupationName.Name, OccupationClass = staffView.OccupationClass };
-            staffView.SalaryStandard = new Models.SalaryStandard { Id = salaryStandard.Id, StandardName = salaryStandard.StandardName, Total = salaryStandard.Total };
-            staffView.TechnicalTitle = new Models.TechnicalTitle { Id = technicalTitle.Id, Name = technicalTitle.Name };
-
-            ViewData["staffView"] = staffView;
+            GetStaffById(id);
 
             return View();
 
@@ -237,7 +211,87 @@ namespace HR_System.Controllers
         /// <returns>返回编辑视图</returns>
         public ActionResult EditStaff(string id)
         {
+            GetStaffById(id);
 
+            ViewBag.Title = "EditStaff";
+
+            ViewBag.Button = "Submit";
+
+            return View();
+
+        }
+
+        /// <summary>
+        /// 查看需要复核的档案
+        /// </summary>
+        /// <returns>返回复核档案列表视图</returns>
+        public ActionResult StaffCheck()
+        {
+
+            IStaffBLL bLL = new StaffBLL();
+
+            IOrgBLL orgBLL = new OrgBLL();
+
+            IOccupationBLL occupationBLL = new OccupationBLL();
+
+            List<Staff> staffList = bLL.GetAllStaffWaitCheck();
+
+            List<Models.Staff> staffListView = new List<Models.Staff>();
+
+            foreach (var staff in staffList)
+            {
+                Models.Staff tempStaff = new Models.Staff
+                {
+                    Id = staff.Id,
+                    StaffFileNumber = staff.StaffFileNumber,
+                    StaffName = staff.StaffName,
+                    FileState = staff.FileState,
+                    IsDel = staff.IsDel
+                };
+                ThirdOrg thirdOrg = orgBLL.GetThirdOrgById(staff.ThirdOrgId);
+                SecondOrg secondOrg = orgBLL.GetSecondOrgById(thirdOrg.ParentOrgId);
+                FirstOrg firstOrg = orgBLL.GetFirstOrgById(secondOrg.ParentOrgId);
+
+                tempStaff.FirstOrg = new Models.FirstOrg { Id = firstOrg.Id, OrgLevel = firstOrg.OrgLevel, OrgName = firstOrg.OrgName };
+                tempStaff.SecondeOrg = new Models.SecondeOrg { Id = secondOrg.Id, OrgName = secondOrg.OrgName, OrgLevel = secondOrg.OrgLevel, ParentOrg = tempStaff.FirstOrg };
+                tempStaff.ThirdOrg = new Models.ThirdOrg { Id = thirdOrg.Id, ParentOrg = tempStaff.SecondeOrg, OrgLevel = thirdOrg.OrgLevel, OrgName = thirdOrg.OrgName };
+
+                OccupationName occupationName = occupationBLL.GetOccupationNameById(staff.OccId);
+
+                tempStaff.OccupationName = new Models.OccupationName { Id = occupationName.Id, Name = occupationName.Name };
+
+                staffListView.Add(tempStaff);
+            }
+
+            ViewData["staffListView"] = staffListView;
+
+            return View();
+
+        }
+
+        public ActionResult StaffCheckedDetail(string id)
+        {
+
+            GetStaffById(id);
+
+            ViewBag.Title = "StaffCheckDetail";
+
+            ViewBag.Button = "Checked";
+
+            ViewBag.Function = "CheckedStaffFile";
+
+            return View("EditStaff");
+
+        }
+
+
+
+        /// <summary>
+        /// 控制器内部方法
+        /// </summary>
+        /// <param name="id">通过id装载视图模型Staff</param>
+        private void GetStaffById(string id)
+        {
             IStaffBLL staffBLL = new StaffBLL();
 
             IOrgBLL orgBLL = new OrgBLL();
@@ -316,10 +370,6 @@ namespace HR_System.Controllers
             }
 
             ViewData["standardListView"] = standardListView;
-
-
-            return View();
-
         }
     }
 }
