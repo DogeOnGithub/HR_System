@@ -92,13 +92,56 @@ namespace HR_System.Controllers
             if (bLL.SaveStaff(staff))
             {
                 TempData["info"] = "保存成功";
-                return Redirect("/Main/Index");
+                return Redirect("/StaffManage/StaffView");
             }
             else
             {
                 TempData["error"] = "保存失败";
-                return Redirect("/StaffManage/StaffRegist");
+                return Redirect(Request.UrlReferrer.AbsoluteUri);
             }
+        }
+
+        public ActionResult StaffView()
+        {
+
+            IStaffBLL bLL = new StaffBLL();
+
+            IOrgBLL orgBLL = new OrgBLL();
+
+            IOccupationBLL occupationBLL = new OccupationBLL();
+
+            List<Staff> staffList = bLL.GetAllStaff();
+
+            List<Models.Staff> staffListView = new List<Models.Staff>();
+
+            foreach (var staff in staffList)
+            {
+                Models.Staff tempStaff = new Models.Staff
+                {
+                    Id = staff.Id,
+                    StaffFileNumber = staff.StaffFileNumber,
+                    StaffName = staff.StaffName,
+                    FileState = staff.FileState,
+                    IsDel = staff.IsDel
+                };
+                ThirdOrg thirdOrg = orgBLL.GetThirdOrgById(staff.ThirdOrgId);
+                SecondOrg secondOrg = orgBLL.GetSecondOrgById(thirdOrg.ParentOrgId);
+                FirstOrg firstOrg = orgBLL.GetFirstOrgById(secondOrg.ParentOrgId);
+
+                tempStaff.FirstOrg = new Models.FirstOrg { Id = firstOrg.Id, OrgLevel = firstOrg.OrgLevel, OrgName = firstOrg.OrgName };
+                tempStaff.SecondeOrg = new Models.SecondeOrg { Id = secondOrg.Id, OrgName = secondOrg.OrgName, OrgLevel = secondOrg.OrgLevel, ParentOrg = tempStaff.FirstOrg };
+                tempStaff.ThirdOrg = new Models.ThirdOrg { Id = thirdOrg.Id, ParentOrg = tempStaff.SecondeOrg, OrgLevel = thirdOrg.OrgLevel, OrgName = thirdOrg.OrgName };
+
+                OccupationName occupationName = occupationBLL.GetOccupationNameById(staff.OccId);
+
+                tempStaff.OccupationName = new Models.OccupationName { Id = occupationName.Id, Name = occupationName.Name };
+
+                staffListView.Add(tempStaff);
+            }
+
+            ViewData["staffListView"] = staffListView;
+
+            return View();
         }
     }
 }

@@ -12,6 +12,15 @@ namespace HR_SystemBLL
 {
     public class StaffBLL : IStaffBLL
     {
+        public List<Staff> GetAllStaff()
+        {
+            //throw new NotImplementedException();
+
+            IStaffDAL dAL = new StaffDAL();
+
+            return dAL.Query();
+
+        }
 
         /// <summary>
         /// 保存员工档案

@@ -1,8 +1,14 @@
 ﻿using EnumState;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace Model
+namespace HR_System.Models
 {
+    /// <summary>
+    /// 视图模型Staff
+    /// </summary>
     public class Staff
     {
 
@@ -11,25 +17,29 @@ namespace Model
         /// </summary>
         public int Id { get; set; }
 
+        public FirstOrg FirstOrg { get; set; }
+
+        public SecondeOrg SecondeOrg { get; set; }
+
         /// <summary>
         /// 外键,3级机构id
         /// </summary>
-        public int ThirdOrgId { get; set; }
+        public ThirdOrg ThirdOrg { get; set; }
 
         /// <summary>
         /// 外键,职位名称id,即OccupationName.id
         /// </summary>
-        public int OccId { get; set; }
+        public OccupationName OccupationName { get; set; }
 
         /// <summary>
         /// 外键,薪酬标准id
         /// </summary>
-        public int StandardId { get; set; }
+        public SalaryStandard SalaryStandard { get; set; }
 
         /// <summary>
         /// 外键,职称id
         /// </summary>
-        public int TechnicalTitleId { get; set; }
+        public TechnicalTitle TechnicalTitle { get; set; }
 
         public string StaffName { get; set; }           //姓名
         public int Sex { get; set; }                    //性别
@@ -57,7 +67,7 @@ namespace Model
         public string PersonResume { get; set; }        //个人履历
         public string FamilyInfo { get; set; }          //家庭信息
         public string PersonDesc { get; set; }          //备注
-                 
+
         /// <summary>
         /// 头像路径
         /// </summary>

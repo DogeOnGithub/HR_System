@@ -165,6 +165,7 @@
     <Compile Include="Models\SalaryItem.cs" />
     <Compile Include="Models\SalaryStandard.cs" />
     <Compile Include="Models\SecondeOrg.cs" />
+    <Compile Include="Models\Staff.cs" />
     <Compile Include="Models\TechnicalTitle.cs" />
     <Compile Include="Models\ThirdOrg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -237,6 +238,7 @@
     <Content Include="Views\StandardManage\EditSalaryStandard.cshtml" />
     <Content Include="Views\StandardManage\AddSalaryStandard.cshtml" />
     <Content Include="Views\StandardManage\StandardAddOccName.cshtml" />
+    <Content Include="Views\StaffManage\StaffView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

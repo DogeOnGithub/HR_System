@@ -11,6 +11,12 @@ namespace HR_SystemIBLL
     {
 
         /// <summary>
+        /// 获取所有员工档案
+        /// </summary>
+        /// <returns>List类型，所有员工档案</returns>
+        List<Staff> GetAllStaff();
+
+        /// <summary>
         /// 保存员工档案
         /// </summary>
         /// <param name="staff">需要保存的员工档案</param>
