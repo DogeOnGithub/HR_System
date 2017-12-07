@@ -22,6 +22,16 @@ namespace HR_SystemBLL
 
         }
 
+        public List<Staff> GetAllStaffNormal()
+        {
+            //throw new NotImplementedException();
+
+            IStaffDAL dAL = new StaffDAL();
+
+            return dAL.GetAllStaffNormal();
+
+        }
+
         public List<Staff> GetAllStaffWaitCheck()
         {
             //throw new NotImplementedException();
@@ -32,6 +42,15 @@ namespace HR_SystemBLL
 
         }
 
+        public List<Staff> GetAllStaffWaitCheckNormal()
+        {
+
+            IStaffDAL dAL = new StaffDAL();
+
+            return dAL.GetAllStaffWaitCheckNormal();
+
+        }
+
         public Staff GetStaffById(int id)
         {
             //throw new NotImplementedException();
@@ -39,6 +58,28 @@ namespace HR_SystemBLL
             IStaffDAL dAL = new StaffDAL();
 
             return dAL.QueryById(id);
+
+        }
+
+        /// <summary>
+        /// 逻辑删除员工档案
+        /// </summary>
+        /// <param name="id">主键id</param>
+        /// <returns>是否成功</returns>
+        public bool LoginDeleteStaff(int id)
+        {
+            //throw new NotImplementedException();
+
+            IStaffDAL dAL = new StaffDAL();
+
+            if (dAL.LoginDeleteStaff(id) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
         }
 

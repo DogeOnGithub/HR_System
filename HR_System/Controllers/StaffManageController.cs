@@ -156,7 +156,7 @@ namespace HR_System.Controllers
 
             IOccupationBLL occupationBLL = new OccupationBLL();
 
-            List<Staff> staffList = bLL.GetAllStaff();
+            List<Staff> staffList = bLL.GetAllStaffNormal();
 
             List<Models.Staff> staffListView = new List<Models.Staff>();
 
@@ -234,7 +234,7 @@ namespace HR_System.Controllers
 
             IOccupationBLL occupationBLL = new OccupationBLL();
 
-            List<Staff> staffList = bLL.GetAllStaffWaitCheck();
+            List<Staff> staffList = bLL.GetAllStaffWaitCheckNormal();
 
             List<Models.Staff> staffListView = new List<Models.Staff>();
 
@@ -269,6 +269,11 @@ namespace HR_System.Controllers
 
         }
 
+        /// <summary>
+        /// 查看复核详细信息
+        /// </summary>
+        /// <param name="id">档案主键id</param>
+        /// <returns>返回复核视图</returns>
         public ActionResult StaffCheckedDetail(string id)
         {
 
@@ -281,6 +286,29 @@ namespace HR_System.Controllers
             ViewBag.Function = "CheckedStaffFile";
 
             return View("EditStaff");
+
+        }
+
+        /// <summary>
+        /// 逻辑删除员工档案
+        /// </summary>
+        /// <param name="id">主键id</param>
+        /// <returns>设置提示信息并重定向</returns>
+        public ActionResult DeleteStaff(string id)
+        {
+
+            IStaffBLL staffBLL = new StaffBLL();
+
+            if (staffBLL.LoginDeleteStaff(Convert.ToInt32(id)))
+            {
+                TempData["info"] = "删除成功";
+                return Redirect("/StaffManage/StaffView");
+            }
+            else
+            {
+                TempData["error"] = "删除失败";
+                return Redirect("/StaffManage/StaffView");
+            }
 
         }
 

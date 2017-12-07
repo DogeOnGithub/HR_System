@@ -17,10 +17,22 @@ namespace HR_SystemIBLL
         List<Staff> GetAllStaff();
 
         /// <summary>
+        /// 获取所有未标记为删除的员工档案
+        /// </summary>
+        /// <returns>List类型，获取所有未标记为删除的员工档案</returns>
+        List<Staff> GetAllStaffNormal();
+
+        /// <summary>
         /// 获取所有待复核的员工档案
         /// </summary>
         /// <returns>List类型，所有待复核的员工档案</returns>
         List<Staff> GetAllStaffWaitCheck();
+
+        /// <summary>
+        /// 获取所有待复核的未标记为删除的员工档案
+        /// </summary>
+        /// <returns>List类型，所有待复核的未标记为删除的员工档案</returns>
+        List<Staff> GetAllStaffWaitCheckNormal();
 
         /// <summary>
         /// 通过id获取员工档案
@@ -35,6 +47,13 @@ namespace HR_SystemIBLL
         /// <param name="staff">需要保存的员工档案</param>
         /// <returns>是否成功</returns>
         bool SaveStaff(Staff staff);
+
+        /// <summary>
+        /// 逻辑删除员工档案，即把IsDel设为1
+        /// </summary>
+        /// <param name="id">员工档案的id</param>
+        /// <returns>是否成功</returns>
+        bool LoginDeleteStaff(int id);
 
     }
 }

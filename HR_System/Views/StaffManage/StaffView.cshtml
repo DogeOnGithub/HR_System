@@ -33,7 +33,7 @@
                 <td>@s.ThirdOrg.OrgName</td>
                 <td>@s.OccupationName.Name</td>
                 <td>@s.FileState</td>
-                <td>@Html.ActionLink("详情", "DetailStaff", "StaffManage", new { id = s.Id }, new { @class = "btn btn-primary" })&nbsp;&nbsp;@Html.ActionLink("编辑", "EditStaff", "StaffManage", new { id = s.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="Delete(@s.Id, '@s.StaffFileNumber', 'DeleteSalaryItem')" data-toggle="modal" data-target="#deleteModal">删除</button></td>
+                <td>@Html.ActionLink("详情", "DetailStaff", "StaffManage", new { id = s.Id }, new { @class = "btn btn-primary" })&nbsp;&nbsp;@Html.ActionLink("编辑", "EditStaff", "StaffManage", new { id = s.Id }, new { @class = "btn btn-warning" })&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="Delete(@s.Id, '@s.StaffFileNumber', 'DeleteStaff')" data-toggle="modal" data-target="#deleteModal">删除</button></td>
             </tr>
         }
     </table>
@@ -78,7 +78,7 @@
     function Delete(id, name, action) {
         //console.log(id);
         $("#deleteTip").html("是否删除" + name + "?");
-        $("#requestBtn").attr("href", "/SalaryItemSettings/" + action + "/" + id);
+        $("#requestBtn").attr("href", "/StaffManage/" + action + "/" + id);
     }
 </script>
 
