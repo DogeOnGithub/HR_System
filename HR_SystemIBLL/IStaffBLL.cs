@@ -23,6 +23,12 @@ namespace HR_SystemIBLL
         List<Staff> GetAllStaffNormal();
 
         /// <summary>
+        /// 获取所有已标记为删除的员工档案
+        /// </summary>
+        /// <returns>List类型，获取所有标记为删除的员工档案</returns>
+        List<Staff> GetAllStaffDeleted();
+
+        /// <summary>
         /// 获取所有待复核的员工档案
         /// </summary>
         /// <returns>List类型，所有待复核的员工档案</returns>
@@ -54,6 +60,13 @@ namespace HR_SystemIBLL
         /// <param name="id">员工档案的id</param>
         /// <returns>是否成功</returns>
         bool LoginDeleteStaff(int id);
+
+        /// <summary>
+        /// 根据id恢复员工档案，即把isDel设为0
+        /// </summary>
+        /// <param name="id">主键id</param>
+        /// <returns>是否成功</returns>
+        bool ReturnStaff(int id);
 
     }
 }

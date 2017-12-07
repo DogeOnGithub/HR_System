@@ -34,5 +34,18 @@ namespace HR_SystemIDAL
         /// <returns>List类型，获取所有未标记为删除的员工档案</returns>
         List<Staff> GetAllStaffNormal();
 
+        /// <summary>
+        /// 获取所有已标记为删除的员工档案
+        /// </summary>
+        /// <returns>List类型，获取所有标记为删除的员工档案</returns>
+        List<Staff> GetAllStaffDeleted();
+
+        /// <summary>
+        /// 根据id恢复员工档案，即把isDel设为0
+        /// </summary>
+        /// <param name="id">主键id</param>
+        /// <returns>返回影响行数</returns>
+        int ReturnStaff(int id);
+
     }
 }

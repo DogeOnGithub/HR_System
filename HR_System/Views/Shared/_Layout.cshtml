@@ -37,12 +37,13 @@
                             <li>@Html.ActionLink("档案查看", "StaffView", "StaffManage")</li>
                             <li>@Html.ActionLink("档案登记", "StaffRegist", "StaffManage")</li>
                             <li>@Html.ActionLink("档案复核", "StaffCheck", "StaffManage")</li>
+                            <li>@Html.ActionLink("已删档案", "StaffViewDeleted", "StaffManage")</li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">薪酬管理<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("薪酬标准管理", "SalaryStandardManage", "SalaryManage")</li>
+                            <li>@Html.ActionLink("薪酬标准", "SalaryStandardManage", "SalaryManage")</li>
                         </ul>
                     </li>
                     @if (Session["loginUser"] != null && (int)(Session["loginUser"] as LoginUser).RoleLevel > 2)
@@ -53,7 +54,7 @@
                                 <li>@Html.ActionLink("机构设置", "OrgSettings", "Settings")</li>
                                 <li>@Html.ActionLink("职位设置", "OccupationSettings", "Settings")</li>
                                 <li>@Html.ActionLink("职称设置", "TitleSettings", "Settings")</li>
-                                <li>@Html.ActionLink("薪酬项目设置", "SalaryItemSettings", "Settings")</li>
+                                <li>@Html.ActionLink("薪酬项目", "SalaryItemSettings", "Settings")</li>
                             </ul>
                         </li>
                     }

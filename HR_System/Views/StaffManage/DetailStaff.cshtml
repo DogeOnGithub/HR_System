@@ -262,11 +262,22 @@
         }
 
         <!--按钮-->
+
+        @if (ViewBag.Function != "Return")
+        {
+            <div class="form-group input-group-lg">
+                <a href="/StaffManage/EditStaff/@staffView.Id" class="btn btn-warning form-control btn-lg text-center">编辑</a>
+            </div>
+        }
+        else
+        {
+            <div class="form-group input-group-lg">
+                <a href="/StaffManage/StaffReturn/@staffView.Id" class="btn btn-warning form-control btn-lg text-center">还原</a>
+            </div>
+        }
+
         <div class="form-group input-group-lg">
-            <a href="/StaffManage/EditStaff/@staffView.Id" class="btn btn-warning form-control btn-lg text-center">编辑</a>
-        </div>
-        <div class="form-group input-group-lg">
-            <a href="/StaffManage/StaffView" class="btn btn-default form-control btn-lg text-center">返回</a>
+            <a href="@Request.UrlReferrer.AbsoluteUri" class="btn btn-default form-control btn-lg text-center">返回</a>
         </div>
     </form>
 </div>

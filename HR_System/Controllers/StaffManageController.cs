@@ -200,6 +200,11 @@ namespace HR_System.Controllers
 
             GetStaffById(id);
 
+            if (Request["Function"] == "Return")
+            {
+                ViewBag.Function = "Return";
+            }
+
             return View();
 
         }
@@ -308,6 +313,79 @@ namespace HR_System.Controllers
             {
                 TempData["error"] = "删除失败";
                 return Redirect("/StaffManage/StaffView");
+            }
+
+        }
+
+        /// <summary>
+        /// 查看已删除的员工档案
+        /// </summary>
+        /// <returns>返回列表视图</returns>
+        public ActionResult StaffViewDeleted()
+        {
+
+            IStaffBLL bLL = new StaffBLL();
+
+            IOrgBLL orgBLL = new OrgBLL();
+
+            IOccupationBLL occupationBLL = new OccupationBLL();
+
+            List<Staff> staffList = bLL.GetAllStaffDeleted();
+
+            List<Models.Staff> staffListView = new List<Models.Staff>();
+
+            if (staffList != null)
+            {
+                foreach (var staff in staffList)
+                {
+                    Models.Staff tempStaff = new Models.Staff
+                    {
+                        Id = staff.Id,
+                        StaffFileNumber = staff.StaffFileNumber,
+                        StaffName = staff.StaffName,
+                        FileState = staff.FileState,
+                        IsDel = staff.IsDel
+                    };
+                    ThirdOrg thirdOrg = orgBLL.GetThirdOrgById(staff.ThirdOrgId);
+                    SecondOrg secondOrg = orgBLL.GetSecondOrgById(thirdOrg.ParentOrgId);
+                    FirstOrg firstOrg = orgBLL.GetFirstOrgById(secondOrg.ParentOrgId);
+
+                    tempStaff.FirstOrg = new Models.FirstOrg { Id = firstOrg.Id, OrgLevel = firstOrg.OrgLevel, OrgName = firstOrg.OrgName };
+                    tempStaff.SecondeOrg = new Models.SecondeOrg { Id = secondOrg.Id, OrgName = secondOrg.OrgName, OrgLevel = secondOrg.OrgLevel, ParentOrg = tempStaff.FirstOrg };
+                    tempStaff.ThirdOrg = new Models.ThirdOrg { Id = thirdOrg.Id, ParentOrg = tempStaff.SecondeOrg, OrgLevel = thirdOrg.OrgLevel, OrgName = thirdOrg.OrgName };
+
+                    OccupationName occupationName = occupationBLL.GetOccupationNameById(staff.OccId);
+
+                    tempStaff.OccupationName = new Models.OccupationName { Id = occupationName.Id, Name = occupationName.Name };
+
+                    staffListView.Add(tempStaff);
+                } 
+            }
+
+            ViewData["staffListView"] = staffListView;
+
+            return View();
+        }
+
+        /// <summary>
+        /// 逻辑恢复员工档案
+        /// </summary>
+        /// <param name="id">档案主键id</param>
+        /// <returns>设置提示信息并重定向</returns>
+        public ActionResult StaffReturn(string id)
+        {
+
+            IStaffBLL bLL = new StaffBLL();
+
+            if (bLL.ReturnStaff(Convert.ToInt32(id)))
+            {
+                TempData["info"] = "还原成功";
+                return Redirect("/StaffManage/StaffViewDeleted");
+            }
+            else
+            {
+                TempData["error"] = "还原失败";
+                return Redirect("/StaffManage/StaffViewDeleted");
             }
 
         }

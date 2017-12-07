@@ -22,6 +22,16 @@ namespace HR_SystemBLL
 
         }
 
+        public List<Staff> GetAllStaffDeleted()
+        {
+            //throw new NotImplementedException();
+
+            IStaffDAL dAL = new StaffDAL();
+
+            return dAL.GetAllStaffDeleted();
+
+        }
+
         public List<Staff> GetAllStaffNormal()
         {
             //throw new NotImplementedException();
@@ -73,6 +83,23 @@ namespace HR_SystemBLL
             IStaffDAL dAL = new StaffDAL();
 
             if (dAL.LoginDeleteStaff(id) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public bool ReturnStaff(int id)
+        {
+            //throw new NotImplementedException();
+
+            IStaffDAL dAL = new StaffDAL();
+
+            if (dAL.ReturnStaff(id) > 0)
             {
                 return true;
             }

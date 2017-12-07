@@ -1,0 +1,88 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "StaffViewDeleted";
+    List<Staff> staffListView = ViewData["staffListView"] as List<Staff>;
+}
+
+<!--所有员工档案-->
+<h1 class="text-center">StaffView</h1>
+<h2>已删除的员工档案</h2>
+
+<div class="container-fluid">
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <th>档案编号</th>
+            <th>员工姓名</th>
+            <th>I级机构</th>
+            <th>II级机构</th>
+            <th>III级机构</th>
+            <th>职位</th>
+            <th>档案状态</th>
+            <th>选项</th>
+        </tr>
+        @foreach (var s in staffListView)
+        {
+            <tr>
+                <td>@s.StaffFileNumber</td>
+                <td>@s.StaffName</td>
+                <td>@s.FirstOrg.OrgName</td>
+                <td>@s.SecondeOrg.OrgName</td>
+                <td>@s.ThirdOrg.OrgName</td>
+                <td>@s.OccupationName.Name</td>
+                <td>@s.FileState</td>
+                <td>@Html.ActionLink("详情", "DetailStaff", "StaffManage", new { id = s.Id, Function = "Return" }, new { @class = "btn btn-primary" })&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="Delete(@s.Id, '@s.StaffFileNumber', 'StaffReturn')" data-toggle="modal" data-target="#deleteModal">还原</button></td>
+            </tr>
+        }
+    </table>
+
+    @if (staffListView.Count < 1)
+    {
+        <h3 class="text-center">没有已删除的员工档案</h3>
+    }
+
+</div>
+
+
+
+
+
+<!--删除对话框-->
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteModalLabel">Warning</h4>
+            </div>
+            <div class="modal-body">
+                <p id="deleteTip" style="font-size:16px"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <a id="requestBtn" href="#" class="btn btn-primary">确定</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (TempData["info"] != null)
+{
+    <script>alert('@TempData["info"]');</script>
+}
+@if (TempData["error"] != null)
+{
+    <script>alert('@TempData["error"]');</script>
+}
+
+
+<script>
+    function Delete(id, name, action) {
+        //console.log(id);
+        $("#deleteTip").html("是否还原" + name + "?");
+        $("#requestBtn").attr("href", "/StaffManage/" + action + "/" + id);
+    }
+</script>
+

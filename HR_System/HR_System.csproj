@@ -242,6 +242,7 @@
     <Content Include="Views\StaffManage\DetailStaff.cshtml" />
     <Content Include="Views\StaffManage\EditStaff.cshtml" />
     <Content Include="Views\StaffManage\StaffCheck.cshtml" />
+    <Content Include="Views\StaffManage\StaffViewDeleted.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
