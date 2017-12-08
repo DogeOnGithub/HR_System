@@ -45,6 +45,7 @@
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("薪酬标准", "SalaryStandardManage", "SalaryManage")</li>
                             <li>@Html.ActionLink("标准复核", "StandardCheck", "SalaryManage")</li>
+                            <li>@Html.ActionLink("薪酬发放", "SalaryGrant", "SalaryManage")</li>
                         </ul>
                     </li>
                     @if (Session["loginUser"] != null && (int)(Session["loginUser"] as LoginUser).RoleLevel > 2)

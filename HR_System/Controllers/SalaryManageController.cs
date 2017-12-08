@@ -126,5 +126,14 @@ namespace HR_System.Controllers
             return View();
 
         }
+
+        /// <summary>
+        /// 处理发放薪酬请求
+        /// </summary>
+        /// <returns>返回发放薪酬视图</returns>
+        public ActionResult SalaryGrant()
+        {
+            return View();
+        }
     }
 }
