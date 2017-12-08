@@ -7,6 +7,7 @@
     List<SalaryItem> itemList = ViewData["itemList"] as List<SalaryItem>;
     List<OccupationName> occNameList = ViewData["occNameList"] as List<OccupationName>;
     List<OccupationClass> occClassListView = ViewData["occClassListView"] as List<OccupationClass>;
+    LoginUser loginUser = Session["loginUser"] as LoginUser;
 }
 
 <h1 class="text-center">EditSalaryStandard</h1>
@@ -56,19 +57,39 @@
             <label for="StandardState">审核状态</label>
             <input readonly type="text" class="form-control" id="StandardState" name="StandardState" placeholder="StandardState" value="@salaryStandard.StandardState">
         </div>
-        <div class="form-group input-group-lg" style="width:30%">
-            <label for="CheckBy">审核人</label>
-            <input readonly type="text" class="form-control" id="CheckBy" name="CheckBy" placeholder="CheckBy" value="@salaryStandard.CheckBy">
-        </div>
+        @if (ViewBag.Function != "CheckedStandard")
+        {
+            <div class="form-group input-group-lg" style="width:30%">
+                <label for="CheckBy">审核人</label>
+                <input readonly type="text" class="form-control" id="CheckBy" name="CheckBy" placeholder="CheckBy" value="@salaryStandard.CheckBy">
+            </div>
+        }
+        else
+        {
+            <div class="form-group input-group-lg" style="width:30%">
+                <label for="CheckBy">审核人</label>
+                <input type="text" class="form-control" id="CheckBy" name="CheckBy" placeholder="CheckBy" value="@loginUser.Username">
+            </div>
+        }
 
         <br />
         <br />
 
         <!--第4行内容-->
-        <div class="form-group input-group-lg" style="width:90%">
-            <label for="CheckDesc">审核备注</label>
-            <textarea readonly rows="10" id="CheckDesc" name="CheckDesc" class="form-control" style="resize:none" maxlength="150">@salaryStandard.CheckDesc</textarea>
-        </div>
+        @if (ViewBag.Function != "CheckedStandard")
+        {
+            <div class="form-group input-group-lg" style="width:90%">
+                <label for="CheckDesc">审核备注</label>
+                <textarea readonly rows="10" id="CheckDesc" name="CheckDesc" class="form-control" style="resize:none" maxlength="150">@salaryStandard.CheckDesc</textarea>
+            </div>
+        }
+        else
+        {
+            <div class="form-group input-group-lg" style="width:90%">
+                <label for="CheckDesc">审核备注</label>
+                <textarea rows="10" id="CheckDesc" name="CheckDesc" class="form-control" style="resize:none" maxlength="150"></textarea>
+            </div>
+        }
 
         <br />
         <br />
@@ -156,14 +177,14 @@
                     }
                 </select>
             </div>
+
+            <br />
+            <br />
             i++;
         }
 
         <!--隐藏域，用于说明已经存在数据库的映射关系的数量-->
         @*<input type="hidden" id="eCount" name="eCount" value="@salaryStandard.OccList.Count" />*@
-
-        <br />
-        <br />
 
         @for (int j = salaryStandard.OccList.Count; j < 3; j++)
         {
@@ -190,6 +211,8 @@
                     }
                 </select>
             </div>
+            <br />
+            <br />
         }
 
 
@@ -197,14 +220,28 @@
         <br />
 
         <!--选项按钮-->
+        @if (ViewBag.Function != "CheckedStandard")
+        {
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" />
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-danger" onclick="Delete(@salaryStandard.Id, '@salaryStandard.StandardName', 'DeleteSalaryStandard')" data-toggle="modal" data-target="#deleteModal">删除</button>
+            </div>
+        }
+        else
+        {
+
+            <input type="hidden" name="StandardChecked" value="Checked" />
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="复核" />
+            </div>
+        }
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" />
-        </div>
-        <div class="form-group">
-            <button type="button" class="btn btn-danger" onclick="Delete(@salaryStandard.Id, '@salaryStandard.StandardName', 'DeleteSalaryStandard')" data-toggle="modal" data-target="#deleteModal">删除</button>
-        </div>
-        <div class="form-group">
-            @Html.ActionLink("返回", "SalaryStandardManage", "SalaryManage", new { }, new { @class = "btn btn-default" })
+            <div class="form-group">
+                <a class="btn btn-default" href="@Request.UrlReferrer.AbsoluteUri">返回</a>
+            </div>
         </div>
     </form>
 </div>

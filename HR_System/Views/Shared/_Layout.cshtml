@@ -44,6 +44,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">薪酬管理<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("薪酬标准", "SalaryStandardManage", "SalaryManage")</li>
+                            <li>@Html.ActionLink("标准复核", "StandardCheck", "SalaryManage")</li>
                         </ul>
                     </li>
                     @if (Session["loginUser"] != null && (int)(Session["loginUser"] as LoginUser).RoleLevel > 2)

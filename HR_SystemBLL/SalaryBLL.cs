@@ -272,5 +272,19 @@ namespace HR_SystemBLL
             return dAL.GetAllStandardByOccId(occId);
 
         }
+
+        /// <summary>
+        /// 获取所有待复核的薪酬标准
+        /// </summary>
+        /// <returns>List类型，所有的待复核的薪酬标准</returns>
+        public List<SalaryStandard> GetAllSalaryStandardWaitCheck()
+        {
+            //throw new NotImplementedException();
+
+            ISalaryStandardDAL dAL = new SalaryStandardDAL();
+
+            return dAL.GetAllSalaryStandardWaitCheck();
+
+        }
     }
 }

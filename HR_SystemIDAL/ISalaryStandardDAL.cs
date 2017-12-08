@@ -1,4 +1,5 @@
 ﻿using Model;
+using System.Collections.Generic;
 
 namespace HR_SystemIDAL
 {
@@ -20,5 +21,11 @@ namespace HR_SystemIDAL
         /// <param name="id">主键id</param>
         /// <returns>返回影响行数</returns>
         int DeleteSalaryStandard(int id);
+
+        /// <summary>
+        /// 获取所有待复核的薪酬标准
+        /// </summary>
+        /// <returns>List类型，所有的待复核的薪酬标准</returns>
+        List<SalaryStandard> GetAllSalaryStandardWaitCheck();
     }
 }

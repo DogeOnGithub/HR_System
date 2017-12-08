@@ -303,7 +303,7 @@
             <button type="submit" class="btn btn-primary form-control btn-lg text-center">@ViewBag.Button</button>
         </div> 
         <div class="form-group input-group-lg">
-            <a href="/StaffManage/StaffView" class="btn btn-default form-control btn-lg text-center">Return</a>
+            <a href="@Request.UrlReferrer.AbsoluteUri" class="btn btn-default form-control btn-lg text-center">Return</a>
         </div>
     </form>
 </div>

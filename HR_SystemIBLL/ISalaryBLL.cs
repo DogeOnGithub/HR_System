@@ -17,6 +17,12 @@ namespace HR_SystemIBLL
         List<SalaryStandard> GetAllSalaryStandard();
 
         /// <summary>
+        /// 获取所有待复核的薪酬标准
+        /// </summary>
+        /// <returns>List类型，所有的待复核的薪酬标准</returns>
+        List<SalaryStandard> GetAllSalaryStandardWaitCheck();
+
+        /// <summary>
         /// 获取所有薪酬标准和薪酬项目的映射关系
         /// </summary>
         /// <returns>List类型，所有薪酬标准和薪酬项目的映射关系</returns>

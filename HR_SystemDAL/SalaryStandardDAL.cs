@@ -53,6 +53,46 @@ namespace HR_SystemDAL
 
         }
 
+        public List<SalaryStandard> GetAllSalaryStandardWaitCheck()
+        {
+            //throw new NotImplementedException();
+
+            List<SalaryStandard> list = new List<SalaryStandard>();
+
+            string sql = "select * from SalaryStandard where standardState=0";
+
+            using (SqlDataReader reader = SQLHelper.ExecuteReader(sql))
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        SalaryStandard salaryStandard = new SalaryStandard
+                        {
+                            Id = reader.GetInt32(0),
+                            StandardName = reader.GetString(1),
+                            StandardFileNumber = reader.GetString(2),
+                            Registrant = reader.GetString(3),
+                            RegistTime = reader.GetDateTime(4),
+                            DesignBy = reader.GetString(5),
+                            Total = reader.GetDecimal(6),
+                            StandardState = (EnumState.StandardStateEnum)reader.GetInt32(7),
+                            CheckDesc = reader.GetString(8),
+                            CheckBy = reader.GetString(9)
+                        };
+                        list.Add(salaryStandard);
+                    }
+                }
+                else
+                {
+                    list = null;
+                }
+            }
+
+            return list;
+
+        }
+
         public int GetStandardIdByFileNumber(string fileNumber)
         {
             //throw new System.NotImplementedException();
