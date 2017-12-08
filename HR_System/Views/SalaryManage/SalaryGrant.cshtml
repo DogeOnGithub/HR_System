@@ -34,13 +34,13 @@
                 <td>@Html.ActionLink("登记", "SalaryGrantRegist", "SalaryGrantManage", new { id = sp.Id }, new { @class = "btn btn-primary" })</td>
             </tr>
         }
-
-        @if (list.Count < 1)
-        {
-            <h3 class="text-center">没有可以发放的薪酬</h3>
-        }
-
     </table>
+
+    @if (list.Count < 1)
+    {
+        <h3 class="text-center">没有可以发放的薪酬</h3>
+    }
+
 </div>
 
 
