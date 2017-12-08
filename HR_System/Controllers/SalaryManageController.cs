@@ -133,6 +133,41 @@ namespace HR_System.Controllers
         /// <returns>返回发放薪酬视图</returns>
         public ActionResult SalaryGrant()
         {
+
+            ISalaryGrantBLL bLL = new SalaryGrantBLL();
+
+            IOrgBLL orgBLL = new OrgBLL();
+
+            List<SalaryPayment> list = bLL.GetAllSalaryPayment();
+
+            List<Models.SalaryPayment> salaryPaymentList = new List<Models.SalaryPayment>();
+
+            foreach (var sp in list)
+            {
+                Models.SalaryPayment salaryPayment = new Models.SalaryPayment
+                {
+                    Id = sp.Id,
+                    FileNumber = sp.FileNumber,
+                    TotalPerson = sp.TotalPerson,
+                    TotalAmout = sp.TotalAmout,
+                    RegistTime = sp.RegistTime,
+                    FileState = sp.FileState
+                };
+                ThirdOrg thirdOrg = orgBLL.GetThirdOrgById(sp.TOrgId);
+                SecondOrg secondOrg = orgBLL.GetSecondOrgById(thirdOrg.ParentOrgId);
+                FirstOrg firstOrg = orgBLL.GetFirstOrgById(secondOrg.ParentOrgId);
+
+                Models.FirstOrg firstOrgView = new Models.FirstOrg { Id = firstOrg.Id, OrgLevel = firstOrg.OrgLevel, OrgName = firstOrg.OrgName };
+                Models.SecondeOrg secondeOrgView = new Models.SecondeOrg { Id = secondOrg.Id, OrgName = secondOrg.OrgName, OrgLevel = secondOrg.OrgLevel, ParentOrg = firstOrgView };
+                Models.ThirdOrg thirdOrgView = new Models.ThirdOrg { Id = thirdOrg.Id, ParentOrg = secondeOrgView, OrgLevel = thirdOrg.OrgLevel, OrgName = thirdOrg.OrgName };
+
+                salaryPayment.ThirdOrg = thirdOrgView;
+
+                salaryPaymentList.Add(salaryPayment);
+            }
+
+            ViewData["salaryPaymentList"] = salaryPaymentList;
+
             return View();
         }
     }

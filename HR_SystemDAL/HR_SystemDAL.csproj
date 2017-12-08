@@ -46,6 +46,7 @@
     <Compile Include="OccupationClassDAL.cs" />
     <Compile Include="OccupationNameDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SalaryGrantDAL.cs" />
     <Compile Include="SalaryItemDAL.cs" />
     <Compile Include="SalaryPaymentDAL.cs" />
     <Compile Include="SalaryStandardDAL.cs" />

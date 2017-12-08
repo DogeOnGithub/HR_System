@@ -163,6 +163,7 @@
     <Compile Include="Models\OccupationClass.cs" />
     <Compile Include="Models\OccupationName.cs" />
     <Compile Include="Models\SalaryItem.cs" />
+    <Compile Include="Models\SalaryPayment.cs" />
     <Compile Include="Models\SalaryStandard.cs" />
     <Compile Include="Models\SecondeOrg.cs" />
     <Compile Include="Models\Staff.cs" />
@@ -244,6 +245,7 @@
     <Content Include="Views\StaffManage\StaffCheck.cshtml" />
     <Content Include="Views\StaffManage\StaffViewDeleted.cshtml" />
     <Content Include="Views\SalaryManage\StandardCheck.cshtml" />
+    <Content Include="Views\SalaryManage\SalaryGrant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

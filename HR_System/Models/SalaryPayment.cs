@@ -1,7 +1,10 @@
 ﻿using EnumState;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace Model
+namespace HR_System.Models
 {
     public class SalaryPayment
     {
@@ -18,7 +21,7 @@ namespace Model
 
         public SalaryPaymentStateEnum FileState { get; set; }
 
-        public int TOrgId { get; set; }
+        public ThirdOrg ThirdOrg { get; set; }
 
     }
 }
