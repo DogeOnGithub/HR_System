@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HR_System.Filters;
-using HR_SystemIDAL;
 using HR_SystemIBLL;
 using HR_SystemBLL;
 using Model;
@@ -127,8 +125,22 @@ namespace HR_System.Controllers
             {
                 if (formCollection["StaffFile"] == "Checked")
                 {
-                    TempData["info"] = "复核通过";
-                    return Redirect("/StaffManage/StaffCheck");
+                    //复核之后，员工档案应该生效，因此需要往StaffSalary中插入记录，薪酬统计时是使用StaffSalary表的
+
+                    ISalaryGrantBLL salaryGrantBLL = new SalaryGrantBLL();
+
+                    if (salaryGrantBLL.SaveStaffSalary(new StaffSalary { StaffFileNumber = staff.StaffFileNumber, StaffId = staff.Id, StandardId = staff.StandardId, TOrgId = staff.ThirdOrgId }))
+                    {
+                        TempData["info"] = "复核通过";
+                        return Redirect("/StaffManage/StaffCheck");
+                    }
+                    else
+                    {
+                        TempData["error"] = "复核失败";
+                        return Redirect("/StaffManage/StaffCheck");
+                    }
+
+                    
                 }
                 else
                 {

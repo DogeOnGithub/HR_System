@@ -121,6 +121,37 @@ namespace HR_SystemBLL
 
         }
 
+        public bool SaveStaffSalary(StaffSalary staffSalary)
+        {
+            //throw new NotImplementedException();
+
+            IStaffSalaryDAL dAL = new StaffSalaryDAL();
+
+            if (dAL.QueryById(staffSalary.Id) != null)
+            {
+                if (dAL.Update(staffSalary) > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (dAL.Add(staffSalary) > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+        }
+
         /// <summary>
         /// 通过id更新StaffPayment的Odd以及Minus
         /// </summary>

@@ -71,5 +71,12 @@ namespace HR_SystemIBLL
         /// <returns>是否成功</returns>
         bool SaveSalaryPayment(SalaryPayment salaryPayment);
 
+        /// <summary>
+        /// 保存StaffSalary，表示员工档案生效
+        /// </summary>
+        /// <param name="staffSalary">需要保存的员工薪酬</param>
+        /// <returns>是否成功</returns>
+        bool SaveStaffSalary(StaffSalary staffSalary);
+
     }
 }
