@@ -291,7 +291,12 @@ namespace HR_System.Controllers
                     TotalPerson = salaryPayment.TotalPerson,
                     TotalAmout = salaryPayment.TotalAmout,
                     FileState = salaryPayment.FileState,
-                    FileNumber = salaryPayment.FileNumber
+                    FileNumber = salaryPayment.FileNumber,
+                    Registrant = salaryPayment.Registrant,
+                    RegistTime = salaryPayment.RegistTime,
+                    TotalReal = salaryPayment.TotalReal,
+                    CheckBy = salaryPayment.CheckBy,
+                    CheckTime = salaryPayment.CheckTime
                 };
 
 

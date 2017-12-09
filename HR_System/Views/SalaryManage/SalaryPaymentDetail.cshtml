@@ -12,6 +12,16 @@
 <h5>基本金额：￥@list[0].SalaryPayment.TotalAmout</h5>
 <h5>实发金额：￥<span>@list[0].SalaryPayment.TotalReal</span></h5>
 <h5>薪酬单状态：@list[0].SalaryPayment.FileState</h5>
+@if (list[0].SalaryPayment.FileState >= EnumState.SalaryPaymentStateEnum.WaitCheck)
+{
+    <h5>登记人：@list[0].SalaryPayment.Registrant</h5>
+    <h5>登记时间：@list[0].SalaryPayment.RegistTime</h5>
+}
+@if (list[0].SalaryPayment.FileState == EnumState.SalaryPaymentStateEnum.Checked)
+{
+    <h5>审核人：@list[0].SalaryPayment.CheckBy</h5>
+    <h5>审核时间：@list[0].SalaryPayment.CheckTime</h5>
+}
 
 <br />
 @Html.ActionLink("返回", "SalaryPaymentView", "SalaryManage", new { }, new { @class = "btn btn-primary btn-lg" })
@@ -20,6 +30,9 @@
 <br />
 
 <div class="container-fluid">
+
+    <h3>详细信息如下</h3>
+    <br />
 
     @foreach (var sp in list)
             {

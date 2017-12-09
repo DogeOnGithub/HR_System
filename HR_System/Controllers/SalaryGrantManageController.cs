@@ -91,7 +91,10 @@ namespace HR_System.Controllers
                     TotalPerson = salaryPayment.TotalPerson,
                     TotalAmout = salaryPayment.TotalAmout,
                     FileState = salaryPayment.FileState,
-                    FileNumber = salaryPayment.FileNumber
+                    FileNumber = salaryPayment.FileNumber,
+                    Registrant = salaryPayment.Registrant,
+                    CheckBy = salaryPayment.CheckBy,
+                    CheckTime = salaryPayment.CheckTime
                 };
 
 
@@ -126,11 +129,14 @@ namespace HR_System.Controllers
             if (formCollection["SalaryPaymentCheck"] == "Checked")
             {
                 salaryPayment.FileState = EnumState.SalaryPaymentStateEnum.Checked;
+                salaryPayment.CheckBy = formCollection["CheckBy"];
+                salaryPayment.CheckTime = DateTime.Now;
                 action = "SalaryPaymentWaitCheck";
             }
             else
             {
                 salaryPayment.FileState = EnumState.SalaryPaymentStateEnum.WaitCheck;
+                salaryPayment.Registrant = formCollection["Registrant"];
                 action = "SalaryPaymentWaitReg";
             }
 
@@ -154,7 +160,9 @@ namespace HR_System.Controllers
             }
 
             salaryPayment.TotalReal = totalReal;
-
+            salaryPayment.RegistTime = DateTime.Now;
+            
+            
             
 
             if (!salaryGrantBLL.SaveSalaryPayment(salaryPayment))
@@ -331,7 +339,11 @@ namespace HR_System.Controllers
                     TotalAmout = salaryPayment.TotalAmout,
                     FileState = salaryPayment.FileState,
                     FileNumber = salaryPayment.FileNumber,
-                    TotalReal = salaryPayment.TotalReal
+                    TotalReal = salaryPayment.TotalReal,
+                    Registrant = salaryPayment.Registrant,
+                    CheckBy = salaryPayment.CheckBy,
+                    RegistTime = salaryPayment.RegistTime,
+                    CheckTime = salaryPayment.CheckTime
                 };
 
 

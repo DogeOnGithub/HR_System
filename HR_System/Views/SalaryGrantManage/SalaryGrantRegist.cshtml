@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "SalaryGrantRegist";
     List<StaffPayment> list = ViewData["staffPaymentListView"] as List<StaffPayment>;
+    LoginUser loginUser = Session["loginUser"] as LoginUser;
 }
 
 <h1 class="text-center">SalaryGrantRegist</h1>
@@ -19,6 +20,11 @@
         </div>
         <br />
         <br />
+        <div class="form-group" style="width:48%">
+            <label for="Registrant">Registrant</label>
+            <input type="text" class="form-control" id="Registrant" placeholder="Registrant" name="Registrant" required value="@loginUser.Username">
+        </div>
+        <br />
         <br />
 
         <input type="hidden" name="SalaryPaymentId" value="@list[0].SalaryPayment.Id" />
@@ -26,6 +32,10 @@
         @{ 
             int i = 0;
         }
+
+        <h3>详细信息如下</h3>
+        <br />
+
 
         @foreach (var sp in list)
             {

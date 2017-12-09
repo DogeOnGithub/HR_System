@@ -25,5 +25,11 @@ namespace HR_System.Models
 
         public decimal TotalReal { get; set; }
 
+        public string Registrant { get; set; }
+
+        public string CheckBy { get; set; }
+
+        public DateTime CheckTime { get; set; }
+
     }
 }

@@ -42,6 +42,9 @@ namespace HR_SystemDAL
                         salaryPayment.FileState = EnumState.SalaryPaymentStateEnum.WaitRegist;
                         salaryPayment.RegistTime = DateTime.Now;
                         salaryPayment.TotalReal = 0;
+                        salaryPayment.Registrant = "未登记";
+                        salaryPayment.CheckBy = "未审核";
+                        salaryPayment.CheckTime = DateTime.Now;
                         list.Add(salaryPayment);
                     }
                 }
