@@ -41,6 +41,7 @@ namespace HR_SystemDAL
                         salaryPayment.FileNumber = Guid.NewGuid().ToString();
                         salaryPayment.FileState = EnumState.SalaryPaymentStateEnum.WaitRegist;
                         salaryPayment.RegistTime = DateTime.Now;
+                        salaryPayment.TotalReal = 0;
                         list.Add(salaryPayment);
                     }
                 }

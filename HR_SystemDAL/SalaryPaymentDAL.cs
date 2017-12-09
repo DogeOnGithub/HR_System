@@ -13,6 +13,82 @@ namespace HR_SystemDAL
 {
     public class SalaryPaymentDAL : BaseHRSystemDAL<SalaryPayment>, ISalaryPaymentDAL
     {
+        public List<SalaryPayment> GetAllSalaryPaymentWaitCheck()
+        {
+            //throw new NotImplementedException();
+
+            List<SalaryPayment> list = new List<SalaryPayment>();
+
+            string sql = "select * from SalaryPayment where fileState=1";
+
+            using (SqlDataReader reader = SQLHelper.ExecuteReader(sql))
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        SalaryPayment salaryPayment = new SalaryPayment
+                        {
+                            Id = reader.GetInt32(0),
+                            FileNumber = reader.GetString(1),
+                            TotalPerson = reader.GetInt32(2),
+                            TotalAmout = reader.GetDecimal(3),
+                            RegistTime = reader.GetDateTime(4),
+                            FileState = (SalaryPaymentStateEnum)reader.GetInt32(5),
+                            TOrgId = reader.GetInt32(6),
+                            TotalReal = reader.GetDecimal(7)
+                        };
+                        list.Add(salaryPayment);
+                    }
+                }
+                else
+                {
+                    list = null;
+                }
+            }
+
+            return list;
+
+        }
+
+        public List<SalaryPayment> GetAllSalaryPaymentWaitReg()
+        {
+            //throw new NotImplementedException();
+
+            List<SalaryPayment> list = new List<SalaryPayment>();
+
+            string sql = "select * from SalaryPayment where fileState=0";
+
+            using (SqlDataReader reader = SQLHelper.ExecuteReader(sql))
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        SalaryPayment salaryPayment = new SalaryPayment
+                        {
+                            Id = reader.GetInt32(0),
+                            FileNumber = reader.GetString(1),
+                            TotalPerson = reader.GetInt32(2),
+                            TotalAmout = reader.GetDecimal(3),
+                            RegistTime = reader.GetDateTime(4),
+                            FileState = (SalaryPaymentStateEnum)reader.GetInt32(5),
+                            TOrgId = reader.GetInt32(6),
+                            TotalReal = reader.GetDecimal(7)
+                        };
+                        list.Add(salaryPayment);
+                    }
+                }
+                else
+                {
+                    list = null;
+                }
+            }
+
+            return list;
+
+        }
+
         public SalaryPayment GetSalaryPaymentByFileNumber(string fileNumber)
         {
             //throw new NotImplementedException();

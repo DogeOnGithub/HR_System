@@ -147,6 +147,7 @@
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\OccupationSettingsController.cs" />
     <Compile Include="Controllers\OrgSettingsController.cs" />
+    <Compile Include="Controllers\SalaryGrantManageController.cs" />
     <Compile Include="Controllers\SalaryItemSettingsController.cs" />
     <Compile Include="Controllers\SalaryManageController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
@@ -167,6 +168,8 @@
     <Compile Include="Models\SalaryStandard.cs" />
     <Compile Include="Models\SecondeOrg.cs" />
     <Compile Include="Models\Staff.cs" />
+    <Compile Include="Models\StaffPayment.cs" />
+    <Compile Include="Models\StaffSalary.cs" />
     <Compile Include="Models\TechnicalTitle.cs" />
     <Compile Include="Models\ThirdOrg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -246,6 +249,12 @@
     <Content Include="Views\StaffManage\StaffViewDeleted.cshtml" />
     <Content Include="Views\SalaryManage\StandardCheck.cshtml" />
     <Content Include="Views\SalaryManage\SalaryGrant.cshtml" />
+    <Content Include="Views\SalaryGrantManage\SalaryGrantRegist.cshtml" />
+    <Content Include="Views\SalaryGrantManage\SalaryPaymentWaitReg.cshtml" />
+    <Content Include="Views\SalaryGrantManage\SalaryPaymentWaitCheck.cshtml" />
+    <Content Include="Views\SalaryGrantManage\SalaryGrantCheck.cshtml" />
+    <Content Include="Views\SalaryManage\SalaryPaymentView.cshtml" />
+    <Content Include="Views\SalaryManage\SalaryPaymentDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

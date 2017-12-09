@@ -1,0 +1,55 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "SalaryPaymentView";
+    List<SalaryPayment> list = ViewData["salaryPaymentList"] as List<SalaryPayment>;
+}
+
+<h1 class="text-center">SalaryPaymentView</h1>
+<h2>所有薪酬</h2>
+
+
+<div class="container-fluid">
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <th>薪酬发放单编号</th>
+            <th>I级机构</th>
+            <th>II级机构</th>
+            <th>III级机构</th>
+            <th>人数</th>
+            <th>基本薪酬总额</th>
+            <th>状态</th>
+            <th>选项</th>
+        </tr>
+        @foreach (var sp in list)
+        {
+            <tr>
+                <td>@sp.FileNumber</td>
+                <td>@sp.ThirdOrg.ParentOrg.ParentOrg.OrgName</td>
+                <td>@sp.ThirdOrg.ParentOrg.OrgName</td>
+                <td>@sp.ThirdOrg.OrgName</td>
+                <td>@sp.TotalPerson</td>
+                <td>@sp.TotalAmout</td>
+                <td>@sp.FileState</td>
+                <td>@Html.ActionLink("详情", "SalaryPaymentDetail", "SalaryManage", new { id = sp.Id }, new { @class = "btn btn-primary" })</td>
+            </tr>
+        }
+    </table>
+
+    @if (list.Count < 1)
+    {
+        <h3 class="text-center">没有薪酬单</h3>
+    }
+
+</div>
+
+
+@if (TempData["info"] != null)
+{
+    <script>alert('@TempData["info"]');</script>
+}
+@if (TempData["error"] != null)
+{
+    <script>alert('@TempData["error"]');</script>
+}
+

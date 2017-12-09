@@ -23,5 +23,7 @@ namespace HR_System.Models
 
         public ThirdOrg ThirdOrg { get; set; }
 
+        public decimal TotalReal { get; set; }
+
     }
 }

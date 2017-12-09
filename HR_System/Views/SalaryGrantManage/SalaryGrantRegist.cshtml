@@ -1,0 +1,80 @@
+﻿@using HR_System.Models;
+
+@{
+    ViewBag.Title = "SalaryGrantRegist";
+    List<StaffPayment> list = ViewData["staffPaymentListView"] as List<StaffPayment>;
+}
+
+<h1 class="text-center">SalaryGrantRegist</h1>
+<h5>当前单号：@list[0].SalaryPayment.FileNumber</h5>
+<h5>当前机构：@list[0].StaffSalary.ThirdOrg.ParentOrg.ParentOrg.OrgName -> @list[0].StaffSalary.ThirdOrg.ParentOrg.OrgName -> @list[0].StaffSalary.ThirdOrg.OrgName</h5>
+<h5>总人数：@list[0].SalaryPayment.TotalPerson</h5>
+<h5>基本金额：￥@list[0].SalaryPayment.TotalAmout</h5>
+<h5>实发金额：￥<span>@list[0].SalaryPayment.TotalAmout</span></h5>
+
+<div class="container-fluid">
+    <form method="post" action="/SalaryGrantManage/SalaryGrantSubmitReg" class="form-inline">
+        <div class="form-group">
+            <button type="submit" class="btn btn-success input-group-lg">Submit</button>
+        </div>
+        <br />
+        <br />
+        <br />
+
+        <input type="hidden" name="SalaryPaymentId" value="@list[0].SalaryPayment.Id" />
+
+        @{ 
+            int i = 0;
+        }
+
+        @foreach (var sp in list)
+            {
+
+            <input type="hidden" name="@("StaffPaymentId" + i)" value="@sp.Id" />
+
+            <table class="table table-striped table-bordered table-hover">
+                <tr>
+                    <th>档案编号</th>
+                    <th>姓名</th>
+                    @{
+                        Dictionary<SalaryItem, decimal> itemAmout = sp.StaffSalary.SalaryStandard.ItemAmout;
+                    }
+                    @foreach (var k in itemAmout.Keys)
+                    {
+                        <th>@k.Name</th>
+                    }
+                </tr>
+                <tr>
+                    <td>@sp.StaffSalary.StaffFileNumber</td>
+                    <td>@sp.StaffSalary.Staff.StaffName</td>
+                    @foreach (var v in itemAmout.Values)
+                    {
+                        <td>￥@v</td>
+                    }
+                </tr>
+            </table>
+
+
+                <div class="form-group" style="width:48%">
+                    <label for="Odd">奖励</label>
+                    <input type="text" class="form-control" id="Odd" placeholder="@sp.StaffSalary.Staff.StaffName 奖励金额" name="@("OddAmout" + sp.Id)" required value="@sp.OddAmout">
+                </div>
+                <div class="form-group" style="width:48%">
+                    <label for="Minus">扣除</label>
+                    <input type="text" class="form-control" id="Minus" placeholder="@sp.StaffSalary.Staff.StaffName 应扣金额" name="@("MinusAmout" + sp.Id)" required value="@sp.MinusAmout">
+                </div>
+
+
+                <br />
+                <br />
+                <br />
+                <br />
+
+                            i++;
+
+                        }
+
+        <input type="hidden" name="Count" value="@i" />
+    </form>
+</div>
+

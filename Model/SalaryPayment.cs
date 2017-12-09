@@ -20,5 +20,7 @@ namespace Model
 
         public int TOrgId { get; set; }
 
+        public decimal TotalReal { get; set; }
+
     }
 }
