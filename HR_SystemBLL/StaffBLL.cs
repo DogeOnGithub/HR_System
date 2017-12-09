@@ -22,6 +22,36 @@ namespace HR_SystemBLL
 
         }
 
+        public List<Staff> GetAllStaffByFOrgId(int fOrgId)
+        {
+            //throw new NotImplementedException();
+
+            IStaffDAL dAL = new StaffDAL();
+
+            return dAL.GetAllStaffByFOrgId(fOrgId);
+
+        }
+
+        public List<Staff> GetAllStaffBySOrgId(int sOrgId)
+        {
+            //throw new NotImplementedException();
+
+            IStaffDAL dAL = new StaffDAL();
+
+            return dAL.GetAllStaffBySOrgId(sOrgId);
+
+        }
+
+        public List<Staff> GetAllStaffByTOrgId(int tOrgId)
+        {
+            //throw new NotImplementedException();
+
+            IStaffDAL dAL = new StaffDAL();
+
+            return dAL.GetAllStaffByTOrgId(tOrgId);
+
+        }
+
         public List<Staff> GetAllStaffDeleted()
         {
             //throw new NotImplementedException();

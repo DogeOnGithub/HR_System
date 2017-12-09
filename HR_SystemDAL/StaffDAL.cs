@@ -9,6 +9,120 @@ namespace HR_SystemDAL
 {
     public class StaffDAL : BaseHRSystemDAL<Staff>, IStaffDAL
     {
+        public List<Staff> GetAllStaffByFOrgId(int fOrgId)
+        {
+            //throw new NotImplementedException();
+
+            List<Staff> list = new List<Staff>();
+
+            string sql = "select * from Staff where thirdOrgId in (select id from ThirdOrg where parentOrgId in (select id from SecondOrg where parentOrgId=@fOrgId)) and isDel=0";
+
+            Type type = typeof(Staff);
+
+            var props = type.GetProperties();
+
+            using (SqlDataReader reader = SQLHelper.ExecuteReader(sql, new SqlParameter("@fOrgId", fOrgId)))
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Staff staff = new Staff();
+
+                        foreach (var p in props)
+                        {
+                            p.SetValue(staff, reader[p.Name]);
+                        }
+
+                        list.Add(staff);
+                    }
+                }
+                else
+                {
+                    list = null;
+                }
+            }
+
+            return list;
+
+        }
+
+        public List<Staff> GetAllStaffBySOrgId(int sOrgId)
+        {
+            //throw new NotImplementedException();
+
+            List<Staff> list = new List<Staff>();
+
+            string sql = "select * from Staff where thirdOrgId in (select id from ThirdOrg where parentOrgId=@sOrgId) and isDel=0";
+
+            Type type = typeof(Staff);
+
+            var props = type.GetProperties();
+
+            using (SqlDataReader reader = SQLHelper.ExecuteReader(sql, new SqlParameter("@sOrgId", sOrgId)))
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Staff staff = new Staff();
+
+                        foreach (var p in props)
+                        {
+                            p.SetValue(staff, reader[p.Name]);
+                        }
+
+                        list.Add(staff);
+                    }
+                }
+                else
+                {
+                    list = null;
+                }
+            }
+
+            return list;
+
+        }
+
+        public List<Staff> GetAllStaffByTOrgId(int tOrgId)
+        {
+            //throw new NotImplementedException();
+
+            List<Staff> list = new List<Staff>();
+
+            string sql = "select * from Staff where thirdOrgId=@thirdOrgId and isDel=0";
+
+            Type type = typeof(Staff);
+
+            var props = type.GetProperties();
+
+            using (SqlDataReader reader = SQLHelper.ExecuteReader(sql, new SqlParameter("@thirdOrgId", tOrgId)))
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Staff staff = new Staff();
+
+                        foreach (var p in props)
+                        {
+                            p.SetValue(staff, reader[p.Name]);
+                        }
+
+                        list.Add(staff);
+                    }
+                }
+                else
+                {
+                    list = null;
+                }
+            }
+
+            return list;
+
+        }
+
         public List<Staff> GetAllStaffDeleted()
         {
             //throw new NotImplementedException();

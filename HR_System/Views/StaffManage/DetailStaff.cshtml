@@ -277,8 +277,14 @@
         }
 
         <div class="form-group input-group-lg">
-            <a href="@Request.UrlReferrer.AbsoluteUri" class="btn btn-default form-control btn-lg text-center">返回</a>
+            <button type="button" id="return" class="btn btn-default form-control btn-lg text-center">返回</button>
         </div>
     </form>
 </div>
+
+<script>
+    $("#return").click(function () {
+        history.back();
+    });
+</script>
 

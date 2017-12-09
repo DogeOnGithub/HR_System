@@ -3,6 +3,11 @@
 @{
     ViewBag.Title = "StaffView";
     List<Staff> staffListView = ViewData["staffListView"] as List<Staff>;
+    List<FirstOrg> firstOrgList = ViewData["firstOrgList"] as List<FirstOrg>;
+    List<SecondeOrg> secondOrgList = ViewData["secondOrgList"] as List<SecondeOrg>;
+    List<ThirdOrg> thirdOrgList = ViewData["thirdOrgList"] as List<ThirdOrg>;
+    List<OccupationClass> occClassList = ViewData["occClassList"] as List<OccupationClass>;
+    List<OccupationName> occNamelist = ViewData["occNameList"] as List<OccupationName>;
 }
 
 <!--所有员工档案-->
@@ -12,6 +17,114 @@
 <p><a href="/StaffManage/StaffRegist" class="btn btn-success btn-lg">档案登记</a></p>
 
 <div class="container-fluid">
+
+    <br />
+
+    <form method="post" action="/StaffManage/StaffSearch" class="form-inline" style="text-align: center">
+
+        <div class="form-group" style="width: 10%">
+            <label for="FirstOrg">1级机构</label>
+            <select id="FirstOrg" class="form-control" name="FirstOrgId">
+                <option value="0">请选择...</option>
+                @foreach (var fo in firstOrgList)
+                {
+                    if (fo.Id == Convert.ToInt32(Request["FirstOrgId"]))
+                    {
+                        <option value="@fo.Id" selected>@fo.OrgName</option>
+                        continue;
+                    }
+                    <option value="@fo.Id">@fo.OrgName</option>
+                }
+            </select>
+        </div>
+        <div class="form-group" style="width: 10%">
+            <label for="SecondOrg">2级机构</label>
+            <select id="SecondOrg" class="form-control" name="SecondOrgId">
+                <option value="0">请选择...</option>
+                @if (secondOrgList != null)
+                {
+                    foreach (var so in secondOrgList)
+                    {
+                        if (so.Id == Convert.ToInt32(Request["SecondOrgId"]))
+                        {
+                            <option value="@so.Id" selected>@so.OrgName</option>
+                            continue;
+                        }
+                        <option value="@so.Id">@so.OrgName</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group" style="width: 10%">
+            <label for="ThirdOrg">3级机构</label>
+            <select id="ThirdOrg" class="form-control" name="ThirdOrgId">
+                <option value="0">请选择...</option>
+                @if (thirdOrgList != null)
+                {
+                    foreach (var to in thirdOrgList)
+                    {
+                        if (to.Id == Convert.ToInt32(Request["ThirdOrgId"]))
+                        {
+                            <option value="@to.Id" selected>@to.OrgName</option>
+                            continue;
+                        }
+                        <option value="@to.Id">@to.OrgName</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group" style="width: 10%">
+            <label for="OccupationClass">职位分类</label>
+            <select id="OccupationClass" class="form-control" name="OccClassId">
+                <option value="0">请选择...</option>
+                @foreach (var oc in occClassList)
+                {
+                    if (oc.Id == Convert.ToInt32(Request["OccClassId"]))
+                    {
+                        <option value="@oc.Id" selected>@oc.Name</option>
+                        continue;
+                    }
+                    <option value="@oc.Id">@oc.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group" style="width: 10%">
+            <label for="OccupationName">职位名称</label>
+            <select id="OccupationName" class="form-control" name="OccNameId">
+                <option value="0">请选择...</option>
+                @if (occNamelist != null)
+                {
+                    foreach (var on in occNamelist)
+                    {
+                        if (on.Id == Convert.ToInt32(Request["OccNameId"]))
+                        {
+                            <option value="@on.Id" selected>@on.Name</option>
+                            continue;
+                        }
+                        <option value="@on.Id">@on.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group" style="width: 20%">
+            <label for="begin">建档起始日期</label>
+            <input type="date" placeholder="begin" class="form-control" id="begin" value="@Request["BeginDate"]" name="BeginDate" />
+        </div>
+        <div class="form-group" style="width: 20%">
+            <label for="end">建档截至日期</label>
+            <input type="date" placeholder="end" class="form-control" id="end" value="@Request["EndDate"]" name="EndDate" />
+        </div>
+        <div class="form-group" style="width: 6%">
+            <label></label>
+            <input type="submit" class="form-control btn btn-success" value="搜索" />
+        </div>
+    </form>
+
+    <br />
+    <br />
+
+
+
     <table class="table table-striped table-bordered table-hover">
         <tr>
             <th>档案编号</th>
@@ -24,7 +137,7 @@
             <th>选项</th>
         </tr>
         @foreach (var s in staffListView)
-        {
+            {
             <tr>
                 <td>@s.StaffFileNumber</td>
                 <td>@s.StaffName</td>
@@ -37,6 +150,11 @@
             </tr>
         }
     </table>
+
+    @if (staffListView.Count < 1)
+    {
+        <h3>没有符合条件的记录</h3>
+    }
 </div>
 
 
@@ -80,5 +198,51 @@
         $("#deleteTip").html("是否删除" + name + "?");
         $("#requestBtn").attr("href", "/StaffManage/" + action + "/" + id);
     }
+
+
+
+    $("#FirstOrg").change(
+        function () {
+            var id = $(this).val();
+            $.post("/OrgSettings/DynamicSecondOrg", { "id": id }, function (data) {
+                $("#SecondOrg").html($("<option value='0'>请选择...</option>"));
+                $("#ThirdOrg").html($("<option value='0'>请选择...</option>"));
+                $.each(data, function (i, s) {
+                    console.log(s['Id']);
+                    console.log(s.OrgName);
+                    $("#SecondOrg").append($("<option value='" + s.Id + "'>" + s.OrgName + "</option>"));
+                });
+            });
+        }
+    );
+
+    $("#SecondOrg").change(
+        function () {
+            var id = $(this).val();
+            $.post("/OrgSettings/DynamicThirdOrg", { "id": id }, function (data) {
+                $("#ThirdOrg").html($("<option value='0'>请选择...</option>"));
+                $.each(data, function (i, t) {
+                    console.log(t['Id']);
+                    console.log(t.OrgName);
+                    $("#ThirdOrg").append($("<option value='" + t.Id + "'>" + t.OrgName + "</option>"));
+                });
+            });
+        }
+    );
+
+    $("#OccupationClass").change(
+        function () {
+            var id = $(this).val();
+            $.post("/OccupationSettings/DynamicOccName", { "id": id }, function (data) {
+                $("#OccupationName").html($("<option value='0'>请选择...</option>"));
+                $.each(data, function (i, n) {
+                    console.log(n['Id']);
+                    console.log(n.OrgName);
+                    $("#OccupationName").append($("<option value='" + n.Id + "'>" + n.Name + "</option>"));
+                });
+            });
+        }
+    );
+
 </script>
 

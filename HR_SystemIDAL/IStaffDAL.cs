@@ -41,6 +41,27 @@ namespace HR_SystemIDAL
         List<Staff> GetAllStaffDeleted();
 
         /// <summary>
+        /// 通过3级机构的id查找员工档案
+        /// </summary>
+        /// <param name="tOrgId">3级机构的id</param>
+        /// <returns>所有符合条件的员工档案</returns>
+        List<Staff> GetAllStaffByTOrgId(int tOrgId);
+
+        /// <summary>
+        /// 通过2级机构的id查找员工
+        /// </summary>
+        /// <param name="sOrgId">2级机构的id</param>
+        /// <returns>所有符合条件的员工档案</returns>
+        List<Staff> GetAllStaffBySOrgId(int sOrgId);
+
+        /// <summary>
+        /// 通过1级机构的id查找员工
+        /// </summary>
+        /// <param name="fOrgId">1级机构的id</param>
+        /// <returns>所有符合条件的员工档案</returns>
+        List<Staff> GetAllStaffByFOrgId(int fOrgId);
+
+        /// <summary>
         /// 根据id恢复员工档案，即把isDel设为0
         /// </summary>
         /// <param name="id">主键id</param>

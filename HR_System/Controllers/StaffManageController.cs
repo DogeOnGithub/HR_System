@@ -6,6 +6,7 @@ using HR_System.Filters;
 using HR_SystemIBLL;
 using HR_SystemBLL;
 using Model;
+using System.Linq;
 
 namespace HR_System.Controllers
 {
@@ -198,6 +199,27 @@ namespace HR_System.Controllers
             }
 
             ViewData["staffListView"] = staffListView;
+
+            //装载1级机构
+            List<FirstOrg> fList = orgBLL.GetAllFirstOrg();
+            List<Models.FirstOrg> firstOrgList = new List<Models.FirstOrg>();
+            foreach (var fo in fList)
+            {
+                Models.FirstOrg tempFo = new Models.FirstOrg { Id = fo.Id, OrgName = fo.OrgName, OrgLevel = fo.OrgLevel };
+                firstOrgList.Add(tempFo);
+            }
+            ViewData["firstOrgList"] = firstOrgList;
+
+            //装载职位类型
+            List<OccupationClass> ocList = occupationBLL.GetAllOccupationClass();
+            List<Models.OccupationClass> occClassList = new List<Models.OccupationClass>();
+            foreach (var oc in ocList)
+            {
+                Models.OccupationClass tempClass = new Models.OccupationClass { Id = oc.Id, Name = oc.Name };
+                occClassList.Add(tempClass);
+            }
+            ViewData["occClassList"] = occClassList;
+
 
             return View();
         }
@@ -400,6 +422,299 @@ namespace HR_System.Controllers
                 return Redirect("/StaffManage/StaffViewDeleted");
             }
 
+        }
+
+        /// <summary>
+        /// 根据条件查询档案
+        /// </summary>
+        /// <param name="formCollection">查询条件</param>
+        /// <returns>返回符合条件的员工档案列表视图</returns>
+        public ActionResult StaffSearch(FormCollection formCollection)
+        {
+
+            IStaffBLL staffBLL = new StaffBLL();
+
+            IOrgBLL orgBLL = new OrgBLL();
+
+            IOccupationBLL occupationBLL = new OccupationBLL();
+
+            List<Staff> list = new List<Staff>();
+
+            List<Staff> tempList = new List<Staff>();
+
+            if (formCollection["ThirdOrgId"] != "0")
+            {
+                list = staffBLL.GetAllStaffByTOrgId(Convert.ToInt32(formCollection["ThirdOrgId"]));
+
+                tempList = list;
+
+                if (formCollection["BeginDate"] != "")
+                {
+                    var l = from s in list
+                            where s.RegistTime > Convert.ToDateTime(formCollection["BeginDate"])
+                            select s;
+                    tempList = l.ToList();
+                    if (formCollection["EndDate"] != "")
+                    {
+                        var l2 = from s in tempList
+                                 where s.RegistTime < Convert.ToDateTime(formCollection["EndDate"])
+                                 select s;
+                        tempList = l2.ToList();
+                    }
+                }
+                else
+                {
+                    if (formCollection["EndDate"] != "")
+                    {
+                        var l2 = from s in list
+                                 where s.RegistTime < Convert.ToDateTime(formCollection["EndDate"])
+                                 select s;
+                        tempList = l2.ToList();
+                    }
+                }
+
+                list = tempList;
+            }
+            else
+            {
+                if (formCollection["SecondOrgId"] != "0")
+                {
+                    list = staffBLL.GetAllStaffBySOrgId(Convert.ToInt32(formCollection["SecondOrgId"]));
+
+                    tempList = list;
+
+                    if (formCollection["BeginDate"] != "")
+                    {
+                        var l = from s in list
+                                where s.RegistTime > Convert.ToDateTime(formCollection["BeginDate"])
+                                select s;
+                        tempList = l.ToList();
+                        if (formCollection["EndDate"] != "")
+                        {
+                            var l2 = from s in tempList
+                                     where s.RegistTime < Convert.ToDateTime(formCollection["EndDate"])
+                                     select s;
+                            tempList = l2.ToList();
+                        }
+                    }
+                    else
+                    {
+                        if (formCollection["EndDate"] != "")
+                        {
+                            var l2 = from s in list
+                                     where s.RegistTime < Convert.ToDateTime(formCollection["EndDate"])
+                                     select s;
+                            tempList = l2.ToList();
+                        }
+                    }
+
+                    list = tempList;
+                }
+                else
+                {
+                    if (formCollection["FirstOrgId"] != "0")
+                    {
+                        list = staffBLL.GetAllStaffByFOrgId(Convert.ToInt32(formCollection["FirstOrgId"]));
+
+                        tempList = list;
+
+                        if (formCollection["BeginDate"] != "")
+                        {
+                            var l = from s in list
+                                    where s.RegistTime > Convert.ToDateTime(formCollection["BeginDate"])
+                                    select s;
+                            tempList = l.ToList();
+                            if (formCollection["EndDate"] != "")
+                            {
+                                var l2 = from s in tempList
+                                         where s.RegistTime < Convert.ToDateTime(formCollection["EndDate"])
+                                         select s;
+                                tempList = l2.ToList();
+                            }
+                        }
+                        else
+                        {
+                            if (formCollection["EndDate"] != "")
+                            {
+                                var l2 = from s in list
+                                         where s.RegistTime < Convert.ToDateTime(formCollection["EndDate"])
+                                         select s;
+                                tempList = l2.ToList();
+                            }
+                        }
+
+                        list = tempList;
+                    }
+                    else
+                    {
+                        list = staffBLL.GetAllStaffNormal();
+
+                        tempList = list;
+
+                        if (formCollection["BeginDate"] != "")
+                        {
+                            var l = from s in list
+                                    where s.RegistTime > Convert.ToDateTime(formCollection["BeginDate"])
+                                    select s;
+                            tempList = l.ToList();
+                            if (formCollection["EndDate"] != "")
+                            {
+                                var l2 = from s in tempList
+                                         where s.RegistTime < Convert.ToDateTime(formCollection["EndDate"])
+                                         select s;
+                                tempList = l2.ToList();
+                            }
+                        }
+                        else
+                        {
+                            if (formCollection["EndDate"] != "")
+                            {
+                                var l2 = from s in list
+                                         where s.RegistTime < Convert.ToDateTime(formCollection["EndDate"])
+                                         select s;
+                                tempList = l2.ToList();
+                            }
+                        }
+
+                        list = tempList;
+                    }
+                }
+            }
+
+            if (formCollection["OccNameId"] != "0")
+            {
+                int occNameId = Convert.ToInt32(formCollection["OccNameId"]);
+
+                var l = from s in list
+                        where s.OccId == occNameId
+                        select s;
+
+                list = l.ToList();
+            }
+            else
+            {
+                if (formCollection["OccClassId"] != "0")
+                {
+                    int occClassId = Convert.ToInt32(formCollection["OccClassId"]);
+
+                    List<OccupationName> occNameList = occupationBLL.GetAllOccNameByClassId(occClassId);
+
+                    List<int> ints = new List<int>();
+
+                    foreach (var oc in occNameList)
+                    {
+                        ints.Add(oc.Id);
+                    }
+
+                    var l = from s in list
+                            where ints.Contains(s.OccId)
+                            select s;
+
+                    list = l.ToList();
+
+                }
+            }
+
+                    
+
+
+
+            List<Models.Staff> staffListView = new List<Models.Staff>();
+
+            if (list != null)
+            {
+                foreach (var staff in list)
+                {
+                    Models.Staff tempStaff = new Models.Staff
+                    {
+                        Id = staff.Id,
+                        StaffFileNumber = staff.StaffFileNumber,
+                        StaffName = staff.StaffName,
+                        FileState = staff.FileState,
+                        IsDel = staff.IsDel
+                    };
+                    ThirdOrg thirdOrg = orgBLL.GetThirdOrgById(staff.ThirdOrgId);
+                    SecondOrg secondOrg = orgBLL.GetSecondOrgById(thirdOrg.ParentOrgId);
+                    FirstOrg firstOrg = orgBLL.GetFirstOrgById(secondOrg.ParentOrgId);
+
+                    tempStaff.FirstOrg = new Models.FirstOrg { Id = firstOrg.Id, OrgLevel = firstOrg.OrgLevel, OrgName = firstOrg.OrgName };
+                    tempStaff.SecondeOrg = new Models.SecondeOrg { Id = secondOrg.Id, OrgName = secondOrg.OrgName, OrgLevel = secondOrg.OrgLevel, ParentOrg = tempStaff.FirstOrg };
+                    tempStaff.ThirdOrg = new Models.ThirdOrg { Id = thirdOrg.Id, ParentOrg = tempStaff.SecondeOrg, OrgLevel = thirdOrg.OrgLevel, OrgName = thirdOrg.OrgName };
+
+                    OccupationName occupationName = occupationBLL.GetOccupationNameById(staff.OccId);
+
+                    tempStaff.OccupationName = new Models.OccupationName { Id = occupationName.Id, Name = occupationName.Name };
+
+                    staffListView.Add(tempStaff);
+                } 
+            }
+
+            ViewData["staffListView"] = staffListView;
+
+
+            //装载1级机构
+            List<FirstOrg> fList = orgBLL.GetAllFirstOrg();
+            List<Models.FirstOrg> firstOrgList = new List<Models.FirstOrg>();
+            foreach (var fo in fList)
+            {
+                Models.FirstOrg tempFo = new Models.FirstOrg { Id = fo.Id, OrgName = fo.OrgName, OrgLevel = fo.OrgLevel };
+                firstOrgList.Add(tempFo);
+            }
+            ViewData["firstOrgList"] = firstOrgList;
+
+            if (formCollection["FirstOrgId"] != "0")
+            {
+                //装载2级机构
+                List<SecondOrg> sList = orgBLL.GetSecondOrgByFirstOrgId(Convert.ToInt32(formCollection["FirstOrgId"]));
+                List<Models.SecondeOrg> secondOrgList = new List<Models.SecondeOrg>();
+                foreach (var so in sList)
+                {
+                    Models.SecondeOrg tempSo = new Models.SecondeOrg { Id = so.Id, OrgName = so.OrgName };
+                    secondOrgList.Add(tempSo);
+                }
+                ViewData["secondOrgList"] = secondOrgList; 
+            }
+
+            if (formCollection["SecondOrgId"] != "0")
+            {
+                //装载3级机构
+                List<ThirdOrg> tList = orgBLL.GetThirdOrgBySecondOrgId(Convert.ToInt32(formCollection["SecondOrgId"]));
+                List<Models.ThirdOrg> thirdOrgList = new List<Models.ThirdOrg>();
+                foreach (var to in tList)
+                {
+                    Models.ThirdOrg tempTo = new Models.ThirdOrg { Id = to.Id, OrgName = to.OrgName };
+                    thirdOrgList.Add(tempTo);
+                }
+                ViewData["thirdOrgList"] = thirdOrgList; 
+            }
+
+            //装载职位类型
+            List<OccupationClass> ocList = occupationBLL.GetAllOccupationClass();
+            List<Models.OccupationClass> occClassList = new List<Models.OccupationClass>();
+            foreach (var oc in ocList)
+            {
+                Models.OccupationClass tempClass = new Models.OccupationClass { Id = oc.Id, Name = oc.Name };
+                occClassList.Add(tempClass);
+            }
+            ViewData["occClassList"] = occClassList;
+
+            if (formCollection["OccClassId"] != "0")
+            {
+                //装载职位
+                List<OccupationName> onList = occupationBLL.GetAllOccNameByClassId(Convert.ToInt32(formCollection["OccClassId"]));
+                List<Models.OccupationName> occNameList2 = new List<Models.OccupationName>();
+                foreach (var on in onList)
+                {
+                    Models.OccupationName tempName = new Models.OccupationName { Id = on.Id, Name = on.Name };
+                    occNameList2.Add(tempName);
+                }
+                ViewData["occNameList"] = occNameList2; 
+            }
+
+
+
+
+            return View("StaffView");
         }
 
 
