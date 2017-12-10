@@ -413,5 +413,88 @@ namespace HR_System.Controllers
 
             return View();
         }
+
+        public ActionResult PaymentSearch(FormCollection formCollection)
+        {
+
+            ISalaryGrantBLL salaryGrantBLL = new SalaryGrantBLL();
+
+            IOrgBLL orgBLL = new OrgBLL();
+
+            List<SalaryPayment> list = salaryGrantBLL.GetAllSalaryPaymentFromDB();
+
+            if (formCollection["State"] != "10")
+            {
+                var l = from p in list
+                        where p.FileState == (EnumState.SalaryPaymentStateEnum)Convert.ToInt32(formCollection["State"])
+                        select p;
+
+                list = l.ToList();
+            }
+
+            if (formCollection["BeginDate"] != "")
+            {
+
+                var l = from p in list
+                        where p.CheckTime.Date >= Convert.ToDateTime(formCollection["BeginDate"])
+                        select p;
+
+                list = l.ToList();
+
+                if (formCollection["EndDate"] != "")
+                {
+                    var l2 = from p in list
+                             where p.CheckTime.Date <= Convert.ToDateTime(formCollection["EndDate"])
+                             select p;
+
+                    list = l2.ToList();
+                }
+            }
+            else
+            {
+                if (formCollection["EndDate"] != "")
+                {
+                    var l = from p in list
+                            where p.CheckTime.Date <= Convert.ToDateTime(formCollection["EndDate"])
+                            select p;
+
+                    list = l.ToList();
+                }
+            }
+
+            List<Models.SalaryPayment> salaryPaymentList = new List<Models.SalaryPayment>();
+
+            if (list != null)
+            {
+                foreach (var sp in list)
+                {
+                    Models.SalaryPayment salaryPayment = new Models.SalaryPayment
+                    {
+                        Id = sp.Id,
+                        FileNumber = sp.FileNumber,
+                        TotalPerson = sp.TotalPerson,
+                        TotalAmout = sp.TotalAmout,
+                        RegistTime = sp.RegistTime,
+                        FileState = sp.FileState
+                    };
+                    ThirdOrg thirdOrg = orgBLL.GetThirdOrgById(sp.TOrgId);
+                    SecondOrg secondOrg = orgBLL.GetSecondOrgById(thirdOrg.ParentOrgId);
+                    FirstOrg firstOrg = orgBLL.GetFirstOrgById(secondOrg.ParentOrgId);
+
+                    Models.FirstOrg firstOrgView = new Models.FirstOrg { Id = firstOrg.Id, OrgLevel = firstOrg.OrgLevel, OrgName = firstOrg.OrgName };
+                    Models.SecondeOrg secondeOrgView = new Models.SecondeOrg { Id = secondOrg.Id, OrgName = secondOrg.OrgName, OrgLevel = secondOrg.OrgLevel, ParentOrg = firstOrgView };
+                    Models.ThirdOrg thirdOrgView = new Models.ThirdOrg { Id = thirdOrg.Id, ParentOrg = secondeOrgView, OrgLevel = thirdOrg.OrgLevel, OrgName = thirdOrg.OrgName };
+
+                    salaryPayment.ThirdOrg = thirdOrgView;
+
+                    salaryPaymentList.Add(salaryPayment);
+                }
+            }
+
+            ViewData["salaryPaymentList"] = salaryPaymentList;
+
+            return View("SalaryPaymentView");
+
+        }
     }
 }

@@ -10,6 +10,40 @@
 
 
 <div class="container-fluid">
+
+
+    <br />
+    <form method="post" action="/SalaryManage/PaymentSearch" class="form-inline" style="text-align: center">
+        <div class="form-group" style="width: 12%">
+            <label for="state">薪酬单状态</label>
+            <select class="form-control" name="State" id="state">
+                <option value="10">请选择状态...</option>
+                <option value="0">WaitReg</option>
+                <option value="1">WaitCheck</option>
+                <option value="2">Checked</option>
+            </select>
+        </div>
+        <div class="form-group" style="width: 36%">
+            <label for="begin">发放起始日期</label>
+            <input type="date" placeholder="begin" class="form-control" id="begin" value="@Request["BeginDate"]" name="BeginDate" />
+        </div>
+        <div class="form-group" style="width: 36%">
+            <label for="end">发放截至日期</label>
+            <input type="date" placeholder="end" class="form-control" id="end" value="@Request["EndDate"]" name="EndDate" />
+        </div>
+        <div class="form-group" style="width: 6%">
+            <label></label>
+            <input type="submit" class="form-control btn btn-success" value="搜索" />
+        </div>
+    </form>
+
+
+    <br />
+    <br />
+
+
+
+
     <table class="table table-striped table-bordered table-hover">
         <tr>
             <th>薪酬发放单编号</th>
