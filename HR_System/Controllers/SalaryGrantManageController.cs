@@ -1,4 +1,5 @@
-﻿using HR_SystemBLL;
+﻿using HR_System.Filters;
+using HR_SystemBLL;
 using HR_SystemIBLL;
 using Model;
 using System;
@@ -10,6 +11,8 @@ using System.Web.Mvc;
 
 namespace HR_System.Controllers
 {
+    [LoginUserAuthorization]
+    [SalaryNormalAuthorization]
     public class SalaryGrantManageController : Controller
     {
         public ActionResult SalaryGrantRegist(string id)
@@ -218,6 +221,7 @@ namespace HR_System.Controllers
             return View();
         }
 
+        [SalaryManagerAuthorization]
         public ActionResult SalaryPaymentWaitCheck()
         {
             ISalaryGrantBLL bLL = new SalaryGrantBLL();
@@ -260,6 +264,7 @@ namespace HR_System.Controllers
             return View();
         }
 
+        [SalaryManagerAuthorization]
         public ActionResult SalaryGrantCheck(string id)
         {
             ISalaryGrantBLL salaryGrantBLL = new SalaryGrantBLL();

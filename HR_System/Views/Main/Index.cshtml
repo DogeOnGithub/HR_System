@@ -1,7 +1,108 @@
-﻿
+﻿@using HR_System.Models;
+
 @{
     ViewBag.Title = "Index";
+    LoginUser loginUser = Session["loginUser"] as LoginUser;
 }
 
-<h2>Index</h2>
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+        <h1>Hello，@loginUser.Username</h1>
+        <p>你的权限是：@loginUser.RoleLevel</p>
+        <p>你可能需要使用下列功能</p>
+    </div>
+</div>
 
+<div class="container-fluid">
+    <!-- Example row of columns -->
+    @if (loginUser.RoleLevel == EnumState.RoleLevelEnum.StaffNormal || loginUser.RoleLevel == EnumState.RoleLevelEnum.StaffManager)
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <h2>档案登记</h2>
+                <p>新员工入职，登记新的档案</p>
+                <p><a class="btn btn-success" href="/StaffManage/StaffRegist" role="button">档案登记 &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>档案查询</h2>
+                <p>查询你想要看到的员工档案</p>
+                <p><a class="btn btn-success" href="/StaffManage/StaffView" role="button">档案查询 &raquo;</a></p>
+            </div>
+            @if (loginUser.RoleLevel == EnumState.RoleLevelEnum.StaffNormal)
+            {
+                <div class="col-md-4">
+                    <h2>恢复档案</h2>
+                    <p>恢复被删除掉的员工档案</p>
+                    <p><a class="btn btn-success" href="/StaffManage/StaffViewDeleted" role="button">档案恢复 &raquo;</a></p>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-4">
+                    <h2>档案复核</h2>
+                    <p>复核已经登记了的员工档案</p>
+                    <p><a class="btn btn-success" href="/StaffManage/StaffCheck" role="button">档案复核 &raquo;</a></p>
+                </div>
+            }
+        </div>
+    }
+
+
+    @if (loginUser.RoleLevel == EnumState.RoleLevelEnum.SalaryNormal || loginUser.RoleLevel == EnumState.RoleLevelEnum.SalaryManager)
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <h2>发放薪酬</h2>
+                <p>到了每个月的发薪日，给员工发放一波福利</p>
+                <p><a class="btn btn-success" href="/SalaryManage/SalaryGrant" role="button">发放薪酬 &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>薪酬登记</h2>
+                <p>登记薪酬单，给每个员工登记奖金和扣除罚金</p>
+                <p><a class="btn btn-success" href="/SalaryGrantManage/SalaryPaymentWaitReg" role="button">薪酬登记 &raquo;</a></p>
+            </div>
+            @if (loginUser.RoleLevel == EnumState.RoleLevelEnum.SalaryNormal)
+            {
+                <div class="col-md-4">
+                    <h2>查看薪酬标准</h2>
+                    <p>查看目前的所有薪酬标准</p>
+                    <p><a class="btn btn-success" href="/SalaryManage/SalaryStandardManage" role="button">查看薪酬标准 &raquo;</a></p>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-4">
+                    <h2>薪酬复核</h2>
+                    <p>给已经登记的薪酬单进行复核并发放</p>
+                    <p><a class="btn btn-success" href="/SalaryGrantManage/SalaryPaymentWaitCheck" role="button">薪酬复核 &raquo;</a></p>
+                </div>
+            }
+        </div>
+    }
+
+    @if (loginUser.RoleLevel == EnumState.RoleLevelEnum.SystemManager)
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <h2>机构设置</h2>
+                <p>设置每个级别的机构，以及机构之间的关系</p>
+                <p><a class="btn btn-success" href="/Settings/OrgSettings" role="button">机构设置 &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>职位设置</h2>
+                <p>设置新的职位，或者设置新的职位分类</p>
+                <p><a class="btn btn-success" href="/Settings/OccupationSettings" role="button">设置职位 &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>增加薪酬项目</h2>
+                <p>给员工增加新的福利</p>
+                <p><a class="btn btn-success" href="/Settings/SalaryItemSettings" role="button">增加薪酬项目 &raquo;</a></p>
+            </div>
+            
+        </div>
+    }
+
+    <hr>
+
+</div> <!-- /container -->

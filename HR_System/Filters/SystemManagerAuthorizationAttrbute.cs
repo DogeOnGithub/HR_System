@@ -12,7 +12,7 @@ namespace HR_System.Filters
         {
             //base.OnAuthorization(filterContext);
 
-            if ((filterContext.HttpContext.Session["LoginUser"] as LoginUser).RoleLevel < EnumState.RoleLevelEnum.SystemManager)
+            if ((filterContext.HttpContext.Session["LoginUser"] as LoginUser).RoleLevel != EnumState.RoleLevelEnum.SystemManager)
             {
                 filterContext.Result = new HttpNotFoundResult();
             }

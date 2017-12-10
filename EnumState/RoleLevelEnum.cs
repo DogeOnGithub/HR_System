@@ -2,8 +2,12 @@
 {
     public enum RoleLevelEnum
     {
-        Normal = 1,
-        Manager = 2,
-        SystemManager = 3
+        StaffNormal = 1,
+        StaffManager = 2,
+        
+        SalaryNormal = 5,
+        SalaryManager = 6,
+
+        SystemManager = 10
     }
 }

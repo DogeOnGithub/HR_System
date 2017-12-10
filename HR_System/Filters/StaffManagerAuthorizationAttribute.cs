@@ -4,15 +4,17 @@ using System.Web.Mvc;
 namespace HR_System.Filters
 {
     /// <summary>
-    /// 验证管理员权限的过滤器
+    /// 验证人事经理权限的过滤器
     /// </summary>
-    public class ManagerAuthorizationAttribute : AuthorizeAttribute
+    public class StaffManagerAuthorizationAttribute : AuthorizeAttribute
     {
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             //base.OnAuthorization(filterContext);
 
-            if ((filterContext.HttpContext.Session["LoginUser"] as LoginUser).RoleLevel < EnumState.RoleLevelEnum.Manager)
+            LoginUser loginUser = filterContext.HttpContext.Session["LoginUser"] as LoginUser;
+
+            if (loginUser.RoleLevel != EnumState.RoleLevelEnum.StaffManager && loginUser.RoleLevel != EnumState.RoleLevelEnum.SystemManager)
             {
                 filterContext.Result = new HttpNotFoundResult();
             }

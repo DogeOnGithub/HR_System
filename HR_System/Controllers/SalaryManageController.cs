@@ -11,7 +11,7 @@ using System.Web.Mvc;
 namespace HR_System.Controllers
 {
     [LoginUserAuthorization]
-    [SystemManagerAuthorization]
+    [SalaryNormalAuthorization]
     public class SalaryManageController : Controller
     {
         /// <summary>
@@ -179,6 +179,7 @@ namespace HR_System.Controllers
         /// 处理复核薪酬标准的请求
         /// </summary>
         /// <returns>返回所有待复核的薪酬标准的列表视图</returns>
+        [SalaryManagerAuthorization]
         public ActionResult StandardCheck()
         {
 

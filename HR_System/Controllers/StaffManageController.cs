@@ -11,6 +11,7 @@ using System.Linq;
 namespace HR_System.Controllers
 {
     [LoginUserAuthorization]
+    [StaffNormalAuthorization]
     public class StaffManageController : Controller
     {
         /// <summary>
@@ -264,6 +265,7 @@ namespace HR_System.Controllers
         /// 查看需要复核的档案
         /// </summary>
         /// <returns>返回复核档案列表视图</returns>
+        [StaffManagerAuthorization]
         public ActionResult StaffCheck()
         {
 
@@ -313,6 +315,7 @@ namespace HR_System.Controllers
         /// </summary>
         /// <param name="id">档案主键id</param>
         /// <returns>返回复核视图</returns>
+        [StaffManagerAuthorization]
         public ActionResult StaffCheckedDetail(string id)
         {
 

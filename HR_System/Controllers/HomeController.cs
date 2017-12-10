@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace HR_System.Controllers
 {
-    [LoginUserAuthorization]
+    [SystemManagerAuthorization]
     public class HomeController : Controller
     {
         public ActionResult Index()

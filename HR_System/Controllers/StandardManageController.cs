@@ -11,7 +11,7 @@ using System.Web.Mvc;
 namespace HR_System.Controllers
 {
     [LoginUserAuthorization]
-    [SystemManagerAuthorization]
+    [SalaryNormalAuthorization]
     public class StandardManageController : Controller
     {
         /// <summary>
@@ -311,6 +311,7 @@ namespace HR_System.Controllers
             return Json(list);
         }
 
+        [SalaryManagerAuthorization]
         public ActionResult StandardCheckedDetail(string id)
         {
 

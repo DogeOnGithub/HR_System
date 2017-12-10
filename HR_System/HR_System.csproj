@@ -154,7 +154,10 @@
     <Compile Include="Controllers\StaffManageController.cs" />
     <Compile Include="Controllers\StandardManageController.cs" />
     <Compile Include="Filters\LoginUserAuthorizationAttribute.cs" />
-    <Compile Include="Filters\ManagerAuthorizationAttribute.cs" />
+    <Compile Include="Filters\SalaryManagerAuthorizationAttribute.cs" />
+    <Compile Include="Filters\SalaryNormalAuthorizationAttribute.cs" />
+    <Compile Include="Filters\StaffManagerAuthorizationAttribute.cs" />
+    <Compile Include="Filters\StaffNormalAuthorizationAttribute.cs" />
     <Compile Include="Filters\SystemManagerAuthorizationAttrbute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
