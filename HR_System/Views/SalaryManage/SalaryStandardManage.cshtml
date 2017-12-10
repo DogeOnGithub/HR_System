@@ -11,6 +11,32 @@
 <p><a href="/StandardManage/AddSalaryStandard" class="btn btn-success btn-lg">添加薪酬标准</a></p>
 
 <div class="container-fluid">
+
+    <br />
+    <form method="post" action="/SalaryManage/StandardSearch" class="form-inline" style="text-align: center">
+        <div class="form-group" style="width: 30%">
+            <label for="Keyword">关键字</label>
+            <input type="text" placeholder="Keyword" class="form-control" id="Keyword" name="Keyword" value="@Request["Keyword"]" />
+        </div>
+        <div class="form-group" style="width: 30%">
+            <label for="begin">登记起始日期</label>
+            <input type="date" placeholder="begin" class="form-control" id="begin" value="@Request["BeginDate"]" name="BeginDate" />
+        </div>
+        <div class="form-group" style="width: 30%">
+            <label for="end">登记截至日期</label>
+            <input type="date" placeholder="end" class="form-control" id="end" value="@Request["EndDate"]" name="EndDate" />
+        </div>
+        <div class="form-group" style="width: 6%">
+            <label></label>
+            <input type="submit" class="form-control btn btn-success" value="搜索" />
+        </div>
+    </form>
+
+
+    <br />
+    <br />
+
+
     <table class="table table-striped table-bordered table-hover">
         <tr>
             <th>薪酬标准编号</th>
@@ -30,6 +56,13 @@
             </tr>
         }
     </table>
+
+
+    @if (list.Count < 1)
+    {
+        <h3>没有符合条件的记录</h3>
+    }
+
 </div>
 
 

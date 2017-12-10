@@ -70,6 +70,111 @@ namespace HR_System.Controllers
             return View();
         }
 
+        public ActionResult StandardSearch(FormCollection formCollection)
+        {
+
+            ISalaryBLL bLL = new SalaryBLL();
+
+            ISalaryItemBLL salaryItemBLL = new SalaryItemBLL();
+
+            List<SalaryStandard> list = new List<SalaryStandard>();
+
+            List<SalaryStandard> tempList = new List<SalaryStandard>();
+
+            if (formCollection["Keyword"] != "")
+            {
+                list = bLL.GetAllSalaryStandardByKeyword(formCollection["Keyword"]);
+
+                tempList = list;
+
+                if (formCollection["BeginDate"] != "")
+                {
+                    var l = from s in list
+                            where s.RegistTime > Convert.ToDateTime(formCollection["BeginDate"])
+                            select s;
+                    tempList = l.ToList();
+
+                    if (formCollection["EndDate"] != "")
+                    {
+                        var l2 = from s in tempList
+                                 where s.RegistTime < Convert.ToDateTime(formCollection["EndDate"])
+                                 select s;
+                        tempList = l2.ToList();
+                    }
+                }
+
+                list = tempList;
+
+            }
+            else
+            {
+                list = bLL.GetAllSalaryStandard();
+
+                tempList = list;
+
+                if (formCollection["BeginDate"] != "")
+                {
+                    var l = from s in list
+                            where s.RegistTime > Convert.ToDateTime(formCollection["BeginDate"])
+                            select s;
+                    tempList = l.ToList();
+
+                    if (formCollection["EndDate"] != "")
+                    {
+                        var l2 = from s in tempList
+                                 where s.RegistTime < Convert.ToDateTime(formCollection["EndDate"])
+                                 select s;
+                        tempList = l2.ToList();
+                    }
+                }
+
+                list = tempList;
+            }
+
+
+
+            List<Models.SalaryStandard> standardListView = new List<Models.SalaryStandard>();
+
+            if (list != null)
+            {
+                //遍历所有薪酬标准，将其转换成视图模型中的薪酬标准
+                foreach (var s in list)
+                {
+                    //通过薪酬标准的id获取所有的映射关系
+                    List<StandardMapItem> tempMapList = bLL.GetAllStandardMapItemByStandardId(s.Id);
+
+                    Models.SalaryStandard tempStandard = new Models.SalaryStandard()
+                    {
+                        Id = s.Id,
+                        StandardName = s.StandardName,
+                        StandardFileNumber = s.StandardFileNumber,
+                        Registrant = s.Registrant,
+                        RegistTime = s.RegistTime,
+                        DesignBy = s.DesignBy,
+                        Total = s.Total,
+                        StandardState = s.StandardState,
+                        CheckDesc = s.CheckDesc,
+                        CheckBy = s.CheckBy
+                    };
+
+                    //遍历映射关系，分拆装载进视图模型薪酬标准中的字典
+                    foreach (var m in tempMapList)
+                    {
+                        SalaryItem tempSalaryItem = salaryItemBLL.GetSalaryItemById(m.ItemId);
+                        Models.SalaryItem salaryItemView = new Models.SalaryItem { Id = tempSalaryItem.Id, Name = tempSalaryItem.Name };
+                        tempStandard.ItemAmout.Add(salaryItemView, m.Amout);
+                    }
+
+                    standardListView.Add(tempStandard);
+                } 
+            }
+
+
+            ViewData["standardListView"] = standardListView;
+
+            return View("SalaryStandardManage");
+        }
+
         /// <summary>
         /// 处理复核薪酬标准的请求
         /// </summary>

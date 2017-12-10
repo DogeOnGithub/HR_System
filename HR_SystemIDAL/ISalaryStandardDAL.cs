@@ -27,5 +27,12 @@ namespace HR_SystemIDAL
         /// </summary>
         /// <returns>List类型，所有的待复核的薪酬标准</returns>
         List<SalaryStandard> GetAllSalaryStandardWaitCheck();
+
+        /// <summary>
+        /// 通过关键字获取薪酬标准
+        /// </summary>
+        /// <param name="keyword">关键字</param>
+        /// <returns>带有关键字的薪酬标准</returns>
+        List<SalaryStandard> GetAllSalaryStandardByKeyword(string keyword);
     }
 }

@@ -17,6 +17,13 @@ namespace HR_SystemIBLL
         List<SalaryStandard> GetAllSalaryStandard();
 
         /// <summary>
+        /// 通过关键字获取薪酬标准
+        /// </summary>
+        /// <param name="keyword">关键字</param>
+        /// <returns>带有关键字的薪酬标准</returns>
+        List<SalaryStandard> GetAllSalaryStandardByKeyword(string keyword);
+
+        /// <summary>
         /// 获取所有待复核的薪酬标准
         /// </summary>
         /// <returns>List类型，所有的待复核的薪酬标准</returns>

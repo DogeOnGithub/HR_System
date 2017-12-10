@@ -286,5 +286,15 @@ namespace HR_SystemBLL
             return dAL.GetAllSalaryStandardWaitCheck();
 
         }
+
+        public List<SalaryStandard> GetAllSalaryStandardByKeyword(string keyword)
+        {
+            //throw new NotImplementedException();
+
+            ISalaryStandardDAL dAL = new SalaryStandardDAL();
+
+            return dAL.GetAllSalaryStandardByKeyword(keyword);
+
+        }
     }
 }
