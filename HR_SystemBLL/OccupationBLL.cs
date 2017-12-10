@@ -155,6 +155,16 @@ namespace HR_SystemBLL
 
         }
 
+        public OccupationName GetOccupationNameByNameAndClass(string name, int classId)
+        {
+            //throw new System.NotImplementedException(); OccpationClassName
+
+            IOccupationNameDAL dAL = new OccupationNameDAL();
+
+            return dAL.GetOccupationNameByNameAndClass(name, classId);
+
+        }
+
         public TechnicalTitle GetTechnicalTitleById(int id)
         {
             //throw new System.NotImplementedException();

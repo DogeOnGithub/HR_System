@@ -197,20 +197,31 @@ namespace HR_System.Controllers
             IOrgBLL bLL = new OrgBLL();
 
             //装载所有2级机构，用于下拉框
-            List<Models.SecondeOrg> secondOrgList = new List<Models.SecondeOrg>();
-            foreach (var so in bLL.GetAllSecondOrg())
+            //List<Models.SecondeOrg> secondOrgList = new List<Models.SecondeOrg>();
+            //foreach (var so in bLL.GetAllSecondOrg())
+            //{
+            //    Models.SecondeOrg tempSecondOrg = new Models.SecondeOrg
+            //    {
+            //        Id = so.Id,
+            //        OrgName = so.OrgName,
+            //        OrgLevel = so.OrgLevel
+            //    };
+            //    FirstOrg tempFirstOrg = bLL.GetFirstOrgById(so.ParentOrgId);
+            //    tempSecondOrg.ParentOrg = new Models.FirstOrg { Id = tempFirstOrg.Id, OrgName = tempFirstOrg.OrgName, OrgLevel = tempFirstOrg.OrgLevel };
+            //    secondOrgList.Add(tempSecondOrg);
+            //}
+            //ViewData["secondOrgList"] = secondOrgList;
+
+            //装载所有1级机构，用于所属机构选择下拉框
+            List<Models.FirstOrg> firstOrgList = new List<Models.FirstOrg>();
+
+            foreach (var fo in bLL.GetAllFirstOrg())
             {
-                Models.SecondeOrg tempSecondOrg = new Models.SecondeOrg
-                {
-                    Id = so.Id,
-                    OrgName = so.OrgName,
-                    OrgLevel = so.OrgLevel
-                };
-                FirstOrg tempFirstOrg = bLL.GetFirstOrgById(so.ParentOrgId);
-                tempSecondOrg.ParentOrg = new Models.FirstOrg { Id = tempFirstOrg.Id, OrgName = tempFirstOrg.OrgName, OrgLevel = tempFirstOrg.OrgLevel };
-                secondOrgList.Add(tempSecondOrg);
+                Models.FirstOrg tempFirstOrg = new Models.FirstOrg { Id = fo.Id, OrgName = fo.OrgName, OrgLevel = fo.OrgLevel };
+                firstOrgList.Add(tempFirstOrg);
             }
-            ViewData["secondOrgList"] = secondOrgList;
+
+            ViewData["firstOrgList"] = firstOrgList;
 
             return View();
         }

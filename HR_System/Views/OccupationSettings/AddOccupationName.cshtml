@@ -17,10 +17,19 @@
         </div>
         <div class="form-group input-group-lg">
             <label for="OccpationClassName">职位类型</label>
-            <select name="classId" class="form-control" required>
+            <select name="classId" class="form-control" required id="OccpationClassName">
                 @foreach (var oc in (ViewData["occupationClassList"] as List<OccupationClass>))
                 {
                     <option value="@oc.Id">@oc.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group input-group-lg">
+            <label for="standard">薪酬标准</label>
+            <select name="standardId" class="form-control" required id="standard">
+                @foreach (var s in (ViewData["standardList"] as List<SalaryStandard>))
+                {
+                    <option value="@s.Id">@s.StandardName 总金额：￥@s.Total</option>
                 }
             </select>
         </div>

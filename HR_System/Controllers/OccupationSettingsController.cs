@@ -101,17 +101,35 @@ namespace HR_System.Controllers
         }
 
         //处理保存职位请求
-        public ActionResult SaveOccupationName(string OccpationNameId, string OccpationName, string classId)
+        public ActionResult SaveOccupationName(string OccpationNameId, string OccpationName, string classId, string standardId)
         {
 
             IOccupationBLL bLL = new OccupationBLL();
+
+            ISalaryBLL salaryBLL = new SalaryBLL();
 
             OccupationName occupationName = new OccupationName { Id = Convert.ToInt32(OccpationNameId), Name = OccpationName, ClassId = Convert.ToInt32(classId) };
 
             if (bLL.SaveOccupationName(occupationName))
             {
-                TempData["info"] = "保存成功";
-                return Redirect("/Settings/OccupationSettings");
+
+                occupationName = bLL.GetOccupationNameByNameAndClass(OccpationName, Convert.ToInt32(classId));
+
+                StandardMapOccupationName mapOcc = new StandardMapOccupationName { OccupationNameId = occupationName.Id, StandardId = Convert.ToInt32(standardId) };
+
+                if (salaryBLL.SaveMapOcc(mapOcc))
+                {
+                    TempData["info"] = "保存成功";
+                    return Redirect("/Settings/OccupationSettings");
+                }
+                else
+                {
+                    TempData["error"] = "保存失败";
+                    return Redirect(Request.UrlReferrer.AbsoluteUri);
+                }
+
+
+                
             }
             else
             {
@@ -236,6 +254,8 @@ namespace HR_System.Controllers
 
             IOccupationBLL bLL = new OccupationBLL();
 
+            ISalaryBLL salaryBLL = new SalaryBLL();
+
             //装载所有职位类型，作为下拉选择框
             List<Models.OccupationClass> occupationgClassList = new List<Models.OccupationClass>();
 
@@ -250,6 +270,21 @@ namespace HR_System.Controllers
             }
 
             ViewData["occupationClassList"] = occupationgClassList;
+
+
+            //装载所有薪酬标准
+            List<Models.SalaryStandard> standardList = new List<Models.SalaryStandard>();
+            foreach (var s in salaryBLL.GetAllSalaryStandard())
+            {
+                Models.SalaryStandard tempS = new Models.SalaryStandard
+                {
+                    Id = s.Id,
+                    StandardName = s.StandardName,
+                    Total = s.Total
+                };
+                standardList.Add(tempS);
+            }
+            ViewData["standardList"] = standardList;
 
 
             return View();

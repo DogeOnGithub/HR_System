@@ -49,6 +49,14 @@ namespace HR_SystemIBLL
         OccupationName GetOccupationNameById(int id);
 
         /// <summary>
+        /// 通过职位类型id和职位名字查找职位
+        /// </summary>
+        /// <param name="name">职位名称</param>
+        /// <param name="classId">职位类型的id</param>
+        /// <returns>符合条件的职位</returns>
+        OccupationName GetOccupationNameByNameAndClass(string name, int classId);
+
+        /// <summary>
         /// 通过Id获取职称
         /// </summary>
         /// <param name="id">主键id</param>
