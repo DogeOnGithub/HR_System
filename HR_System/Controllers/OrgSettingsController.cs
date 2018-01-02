@@ -11,10 +11,9 @@ using System.Web.Mvc;
 namespace HR_System.Controllers
 {
     [LoginUserAuthorization]
-    [SystemManagerAuthorization]
     public class OrgSettingsController : Controller
     {
-
+        [SystemManagerAuthorization]
         public ActionResult EditFirstOrg(string id)
         {
 
@@ -29,6 +28,7 @@ namespace HR_System.Controllers
             return View();
         }
 
+        [SystemManagerAuthorization]
         public ActionResult SaveFirstOrg(string FirstOrgId, string FirstOrgName, string FirstOrgLevel)
         {
 
@@ -51,7 +51,7 @@ namespace HR_System.Controllers
 
 
 
-
+        [SystemManagerAuthorization]
         public ActionResult EditSecondOrg(string id)
         {
 
@@ -85,6 +85,7 @@ namespace HR_System.Controllers
 
         }
 
+        [SystemManagerAuthorization]
         public ActionResult SaveSecondOrg(string SecondOrgId, string SecondOrgName, string SecondOrgLevel, string parentOrgId)
         {
 
@@ -107,7 +108,7 @@ namespace HR_System.Controllers
 
 
 
-
+        [SystemManagerAuthorization]
         public ActionResult EditThirdOrg(string id)
         {
 
@@ -162,6 +163,7 @@ namespace HR_System.Controllers
             return View();
         }
 
+        [SystemManagerAuthorization]
         public ActionResult SaveThirdOrg(string ThirdOrgId, string ThirdOrgName, string ThirdOrgLevel, string secondOrg)
         {
 
@@ -186,12 +188,13 @@ namespace HR_System.Controllers
 
 
 
-
+        [SystemManagerAuthorization]
         public ActionResult AddFirstOrg()
         {
             return View();
         }
 
+        [SystemManagerAuthorization]
         public ActionResult AddSecondOrg()
         {
             IOrgBLL bLL = new OrgBLL();
@@ -226,6 +229,7 @@ namespace HR_System.Controllers
             return View();
         }
 
+        [SystemManagerAuthorization]
         public ActionResult AddThirdOrg()
         {
 
@@ -265,7 +269,7 @@ namespace HR_System.Controllers
 
 
 
-
+        [SystemManagerAuthorization]
         public ActionResult DeleteFirstOrg(string id)
         {
 
@@ -284,6 +288,7 @@ namespace HR_System.Controllers
 
         }
 
+        [SystemManagerAuthorization]
         public ActionResult DeleteSecondOrg(string id)
         {
             IOrgBLL bLL = new OrgBLL();
@@ -301,6 +306,7 @@ namespace HR_System.Controllers
 
         }
 
+        [SystemManagerAuthorization]
         public ActionResult DeleteThirdOrg(string id)
         {
             IOrgBLL bLL = new OrgBLL();
@@ -324,6 +330,7 @@ namespace HR_System.Controllers
 
 
         //在编辑3级机构时,当1级机构的选择改变的时候,动态改变2级机构的下拉框选项
+        [StaffNormalAuthorization]
         public ActionResult DynamicSecondOrg(string id)
         {
 
@@ -346,6 +353,7 @@ namespace HR_System.Controllers
 
         }
 
+        [StaffNormalAuthorization]
         public ActionResult DynamicThirdOrg(string id)
         {
 

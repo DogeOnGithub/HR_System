@@ -11,11 +11,11 @@ using System.Web.Mvc;
 namespace HR_System.Controllers
 {
     [LoginUserAuthorization]
-    [SystemManagerAuthorization]
     public class OccupationSettingsController : Controller
     {
-       
+
         // 处理编辑职位类型请求
+        [SystemManagerAuthorization]
         public ActionResult EditOccupationClass(string id)
         {
 
@@ -35,6 +35,7 @@ namespace HR_System.Controllers
         }
 
         //处理保存职位类型请求
+        [SystemManagerAuthorization]
         public ActionResult SaveOccupationClass(string OccpationClassId, string OccpationClassName)
         {
             IOccupationBLL bLL = new OccupationBLL();
@@ -56,6 +57,7 @@ namespace HR_System.Controllers
 
 
         //处理编辑职位请求
+        [SystemManagerAuthorization]
         public ActionResult EditOccupationName(string id)
         {
 
@@ -101,6 +103,7 @@ namespace HR_System.Controllers
         }
 
         //处理保存职位请求
+        [SystemManagerAuthorization]
         public ActionResult SaveOccupationName(string OccpationNameId, string OccpationName, string classId, string standardId)
         {
 
@@ -141,6 +144,7 @@ namespace HR_System.Controllers
 
 
         //处理编辑职称请求
+        [SystemManagerAuthorization]
         public ActionResult EditTechnicalTitle(string id)
         {
 
@@ -161,6 +165,7 @@ namespace HR_System.Controllers
         }
 
         //处理保存职称请求
+        [SystemManagerAuthorization]
         public ActionResult SaveTechnicalTitle(string TitleId, string TitleName)
         {
 
@@ -185,6 +190,7 @@ namespace HR_System.Controllers
 
 
         //删除职位
+        [SystemManagerAuthorization]
         public ActionResult DeleteOccuptaionName(string id)
         {
 
@@ -204,6 +210,7 @@ namespace HR_System.Controllers
         }
 
         //删除职位类型
+        [SystemManagerAuthorization]
         public ActionResult DeleteOccupationClass(string id)
         {
             IOccupationBLL bLL = new OccupationBLL();
@@ -222,6 +229,7 @@ namespace HR_System.Controllers
         }
 
         //删除职称
+        [SystemManagerAuthorization]
         public ActionResult DeleteTechnicalTitle(string id)
         {
 
@@ -243,12 +251,14 @@ namespace HR_System.Controllers
 
 
         //添加职位类型
+        [SystemManagerAuthorization]
         public ActionResult AddOccupationClass()
         {
             return View();
         }
 
         //添加职位
+        [SystemManagerAuthorization]
         public ActionResult AddOccupationName()
         {
 
@@ -290,6 +300,7 @@ namespace HR_System.Controllers
             return View();
         }
 
+        [SystemManagerAuthorization]
         public ActionResult AddTechnicalTitle()
         {
             return View();
@@ -302,6 +313,7 @@ namespace HR_System.Controllers
         /// </summary>
         /// <param name="id">职位类型的id</param>
         /// <returns>返回json数据</returns>
+        [StaffNormalAuthorization]
         public ActionResult DynamicOccName(string id)
         {
             IOccupationBLL bLL = new OccupationBLL();
